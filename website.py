@@ -1,182 +1,154 @@
-from flask import Flask, render_template_string, request, redirect, session, jsonify
-import random
-from datetime import datetime
-
-app = Flask(__name__)
-app.secret_key = "timo_secret_2026"
-
-# Simple in-memory DB (resets on Render restart - good for practice)
-users = {"Admin": {"demo": 10000.0, "live": 0.0, "password": "Admin"}}
-
-HTML = """
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TimoTrader - EUR/USD H1 REAL</title>
+<title>TIMO TRADING</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <style>
-body { background:#0e0e0e; color:white; font-family:Arial; margin:0; padding:10px; }
-.top { display:flex; justify-content:space-between; padding:10px; background:#1a1a1a; border-radius:10px; }
-.balance { font-size:18px; font-weight:bold; color:#00ff88; }
-.chart-box { margin-top:15px; background:#1a1a1a; border-radius:10px; padding:10px; height:520px; }
-.btn { padding:12px 20px; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin:5px; width:48%; }
-.buy { background:#00c853; color:white; }
-.sell { background:#d50000; color:white; }
-input { padding:12px; width:90%; border-radius:8px; border:none; margin:10px 0; background:#2a2a2a; color:white; }
-.mode { padding:8px 15px; border-radius:20px; border:1px solid #555; background:#222; color:white; cursor:pointer; }
-.mode.active { background:#ffeb3b; color:black; }
+body{background:#0a0a0a;color:white;font-family:Arial;margin:0;padding:10px}
+button{padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:bold}
+.card{background:#151515;border:1px solid #222;padding:15px;border-radius:10px;margin-top:10px}
+#chart{height:350px}
 </style>
 </head>
 <body>
 
-<div class="top">
-  <div>EUR/USD <b style="color:#ffeb3b;">REAL H1</b> - Matches LiteFinance</div>
-  <div class="balance">DEMO: ${{ "%.2f"|format(user.demo) }} | LIVE: ${{ "%.2f"|format(user.live) }}</div>
+<h2>TIMO TRADING - LIVE H1</h2>
+<div>Balance: $<span id="balance">0.00</span> <small id="mode"></small></div>
+<div>EUR/USD: <span id="price">loading...</span></div>
+
+<div class="card">
+<input id="amount" type="number" value="10" style="width:100px;padding:8px"> 
+<button onclick="openTrade('BUY')" style="background:#00c950;color:black">BUY</button>
+<button onclick="openTrade('SELL')" style="background:#ff2c2c;color:white">SELL</button>
 </div>
 
-<div style="margin:10px 0;">
-  <button class="mode {{ 'active' if mode=='demo' else '' }}" onclick="setMode('demo')">DEMO</button>
-  <button class="mode {{ 'active' if mode=='live' else '' }}" onclick="setMode('live')">LIVE</button>
-  <span style="margin-left:15px; font-size:12px; color:#aaa;">Real Chart • Nairobi Time • 1 Hour</span>
-</div>
+<canvas id="chart"></canvas>
 
-<div class="chart-box">
-  <div id="tradingview_chart" style="height:500px;"></div>
-</div>
+<h3>Open Trades (close anytime)</h3>
+<div id="open-trades"></div>
 
-<div style="background:#1a1a1a; border-radius:10px; padding:15px; margin-top:15px;">
-  <h3>Trade EUR/USD H1</h3>
-  <input id="amount" type="number" placeholder="Amount $ e.g 1" value="1" min="0.5">
-  <div style="display:flex;">
-    <button class="btn buy" onclick="trade('buy')">BUY (UP)</button>
-    <button class="btn sell" onclick="trade('sell')">SELL (DOWN)</button>
-  </div>
-  <div id="result" style="margin-top:15px; font-weight:bold;"></div>
-  <div style="font-size:11px; color:#888; margin-top:10px;">Chart = REAL EUR/USD H1 from market (matches LiteFinance). Trade result = Simulated 70% win for practice. No M-Pesa needed for solo.</div>
-</div>
+<h3>History</h3>
+<div id="history"></div>
 
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-// REAL EUR/USD 1 Hour Chart - Matches LiteFinance H1
-new TradingView.widget({
-  "autosize": true,
-  "symbol": "FX:EURUSD",
-  "interval": "60",
-  "timezone": "Africa/Nairobi",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#0e0e0e",
-  "enable_publishing": false,
-  "hide_top_toolbar": false,
-  "allow_symbol_change": false,
-  "save_image": false,
-  "container_id": "tradingview_chart"
-});
+// ===== CONFIG - CHANGE FEE AT 18 =====
+const FEE_PERCENT = 0; // At 18 change to 0.20 = 20% of profit goes to you
+const ADMIN_EMAIL = "your email here"; // Your admin login email
+// =====================================
 
-function setMode(m){
-  fetch('/set_mode?mode='+m).then(()=>location.reload());
+let liveBalance = parseFloat(localStorage.getItem('liveBal') || '0');
+let demoBalance = parseFloat(localStorage.getItem('demoBal') || '1000');
+let isLive = localStorage.getItem('isLive') === 'true';
+let currentPrice = 1.08500;
+let openTrades = JSON.parse(localStorage.getItem('openTrades') || '[]');
+let adminBalance = parseFloat(localStorage.getItem('adminBal') || '0');
+
+document.getElementById('balance').innerText = (isLive?liveBalance:demoBalance).toFixed(2);
+document.getElementById('mode').innerText = isLive?'LIVE':'DEMO';
+
+// REAL H1 CHART FROM BINANCE
+let chart;
+async function loadChart(){
+  const res = await fetch('https://api.binance.com/api/v3/klines?symbol=EURUSDT&interval=1h&limit=100');
+  const data = await res.json();
+  const prices = data.map(c=>({x:new Date(c[0]), y:parseFloat(c[4])}));
+  currentPrice = prices[prices.length-1].y;
+  document.getElementById('price').innerText = currentPrice.toFixed(5);
+  
+  const ctx = document.getElementById('chart').getContext('2d');
+  chart = new Chart(ctx, {
+    type:'line',
+    data:{datasets:[{data:prices, borderColor:'#00c950', backgroundColor:'rgba(0,201,80,0.1)', pointRadius:0, tension:0.2}]},
+    options:{scales:{x:{type:'time'}, y:{beginAtZero:false}}, plugins:{legend:{display:false}}}
+  });
+  
+  // Update price live every 5 sec
+  setInterval(async()=>{
+    const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=EURUSDT');
+    const j = await r.json();
+    currentPrice = parseFloat(j.price);
+    document.getElementById('price').innerText = currentPrice.toFixed(5);
+    renderTrades();
+  },5000);
+}
+loadChart();
+
+function openTrade(type){
+  const amount = parseFloat(document.getElementById('amount').value);
+  let bal = isLive?liveBalance:demoBalance;
+  if(amount>bal){ alert('No balance'); return; }
+  
+  const trade = {
+    id: Date.now(),
+    type: type,
+    amount: amount,
+    openPrice: currentPrice,
+    openTime: new Date().toLocaleTimeString()
+  };
+  openTrades.push(trade);
+  
+  if(isLive) liveBalance -= amount; else demoBalance -= amount;
+  save();
+  renderTrades();
 }
 
-function trade(type){
-  let amt = document.getElementById('amount').value;
-  document.getElementById('result').innerHTML = "Trading...";
-  fetch('/trade', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({type:type, amount:amt})
-  }).then(r=>r.json()).then(d=>{
-    document.getElementById('result').innerHTML = d.message;
-    setTimeout(()=>location.reload(), 1500);
-  });
+function closeTrade(id){
+  const trade = openTrades.find(t=>t.id===id);
+  if(!trade) return;
+  
+  let diff = currentPrice - trade.openPrice;
+  if(trade.type==='SELL') diff = -diff;
+  let profit = (diff / trade.openPrice) * trade.amount * 100; // leverage 100
+  
+  let returnAmount = trade.amount + profit;
+  let fee = 0;
+  
+  if(profit>0 && FEE_PERCENT>0){
+    fee = profit * FEE_PERCENT;
+    returnAmount -= fee;
+    adminBalance += fee; // AUTO TO YOU
+    localStorage.setItem('adminBal', adminBalance);
+  }
+  
+  if(isLive) liveBalance += returnAmount; else demoBalance += returnAmount;
+  
+  // history
+  const h = document.getElementById('history');
+  h.innerHTML = `<div style="color:${profit>=0?'#00c950':'#ff2c2c'}">${trade.type} $${trade.amount} -> ${profit.toFixed(2)}$ fee:${fee.toFixed(2)}$ CLOSED</div>` + h.innerHTML;
+  
+  openTrades = openTrades.filter(t=>t.id!==id);
+  save();
+  renderTrades();
+}
+
+function renderTrades(){
+  document.getElementById('balance').innerText = (isLive?liveBalance:demoBalance).toFixed(2);
+  const div = document.getElementById('open-trades');
+  div.innerHTML = openTrades.map(t=>{
+    let diff = currentPrice - t.openPrice;
+    if(t.type==='SELL') diff = -diff;
+    let floating = (diff / t.openPrice) * t.amount * 100;
+    return `<div class="card"> ${t.type} $${t.amount} | Open:${t.openPrice.toFixed(5)} | Floating:<span style="color:${floating>=0?'#00c950':'#ff2c2c'}">${floating.toFixed(2)}$</span>
+      <button onclick="closeTrade(${t.id})" style="background:orange;margin-left:10px">CLOSE NOW</button></div>`;
+  }).join('');
+  if(openTrades.length===0) div.innerHTML='<small>No open trades - open stays until you close</small>';
+}
+
+function save(){
+  localStorage.setItem('liveBal', liveBalance);
+  localStorage.setItem('demoBal', demoBalance);
+  localStorage.setItem('openTrades', JSON.stringify(openTrades));
+  document.getElementById('balance').innerText = (isLive?liveBalance:demoBalance).toFixed(2);
+}
+renderTrades();
+
+// Simple /admin simulation - give yourself live balance
+if(window.location.pathname.includes('admin')){
+  let add = prompt('Add LIVE balance:');
+  if(add){ liveBalance+=parseFloat(add); save(); alert('Added'); }
 }
 </script>
-
 </body>
 </html>
-"""
-
-ADMIN_HTML = """
-<!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
-<style>body{background:#111;color:white;font-family:Arial;padding:20px;} input{padding:10px;width:90%;margin:5px 0;border-radius:5px;border:none;background:#222;color:white;} button{padding:10px 20px;background:#ffeb3b;border:none;border-radius:5px;font-weight:bold;cursor:pointer;}</style>
-</head><body>
-<h2>Admin - Free LIVE Credit (No M-Pesa)</h2>
-<p>Give yourself LIVE dollars FREE for solo practice</p>
-<form method="POST">
-<input name="username" placeholder="Username e.g Admin" required>
-<input name="amount" type="number" placeholder="Amount $ e.g 10" required>
-<button type="submit">Give LIVE Credit FREE</button>
-</form>
-<h3 style="margin-top:30px;">All Users:</h3>
-{% for u, d in users.items() %}
-<div style="background:#222;padding:10px;border-radius:8px;margin:5px 0;">{{u}} - DEMO: ${{d.demo}} | LIVE: ${{d.live}}</div>
-{% endfor %}
-<br><a href="/" style="color:#ffeb3b;">Back to Trading</a>
-</body></html>
-"""
-
-@app.route('/')
-def home():
-    if 'user' not in session:
-        session['user'] = 'Admin'
-    if session['user'] not in users:
-        users[session['user']] = {"demo": 10000.0, "live": 0.0, "password": ""}
-    if 'mode' not in session:
-        session['mode'] = 'demo'
-    return render_template_string(HTML, user=users[session['user']], mode=session['mode'])
-
-@app.route('/set_mode')
-def set_mode():
-    session['mode'] = request.args.get('mode','demo')
-    return "ok"
-
-@app.route('/trade', methods=['POST'])
-def do_trade():
-    data = request.json
-    try:
-        amount = float(data.get('amount',1))
-    except:
-        return jsonify({"message": "Invalid amount"})
-    if amount <=0:
-        return jsonify({"message": "Amount must be >0"})
-
-    user = session.get('user','Admin')
-    mode = session.get('mode','demo')
-
-    if user not in users:
-        return jsonify({"message": "Login first"})
-
-    bal = users[user][mode]
-    if bal < amount:
-        return jsonify({"message": f"Low balance! You have ${bal:.2f} {mode.upper()}"})
-
-    # 70% win simulation - chart is real, trade is simulated for practice
-    win = random.random() < 0.70
-    profit = amount * 0.70
-
-    if win:
-        users[user][mode] += profit
-        msg = f"✅ WIN! +${profit:.2f} | Balance: ${users[user][mode]:.2f} | EUR/USD H1 REAL"
-    else:
-        users[user][mode] -= amount
-        msg = f"❌ LOSS! -${amount:.2f} | Balance: ${users[user][mode]:.2f} | EUR/USD H1 REAL"
-
-    return jsonify({"message": msg})
-
-@app.route('/admin', methods=['GET','POST'])
-def admin():
-    if request.method == 'POST':
-        uname = request.form.get('username','').strip()
-        try:
-            amt = float(request.form.get('amount',0))
-        except:
-            amt = 0
-        if uname not in users:
-            users[uname] = {"demo": 10000.0, "live": 0.0, "password": ""}
-        users[uname]['live'] += amt
-        return redirect('/admin')
-    return render_template_string(ADMIN_HTML, users=users)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
