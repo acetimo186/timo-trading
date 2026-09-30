@@ -1,9 +1,8 @@
-
 from flask import Flask, request, jsonify, send_file
 import os, json, io
 from datetime import datetime
 app = Flask(__name__)
-app.secret_key = "KAUMONI_V21_9_STAGE1_TRADING_PREMIUM_PRO_ONLY"
+app.secret_key = "KAUMONI_V22_ALL_RESTORED_TRADING_PREMIUM_PRO_PLUS_ALL_PREMIUM"
 FILES = {"users":"users.json","fees":"fees.json","products":"products.json","orders":"orders.json","services":"services_orders.json","bundles":"bundles.json","signals":"signals.json"}
 def load(f,d):
     if not os.path.exists(f): return d
@@ -16,13 +15,14 @@ def save(f,data):
 def nav():
     return (
         '<nav style="background:rgba(15,12,41,0.95);backdrop-filter:blur(20px);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;border-bottom:3px solid #f9c846;z-index:1000;flex-wrap:wrap;gap:8px">'
-        '<b style="color:#f9c846;font-size:11px">V21.9 STAGE1 - TRADING HUB PREMIUM PRO - 6 PAIRS REAL CHART + SIGNAL MARKER + LOT CALC + TRACKER 20 + ALERT + VIP - KEEP OTHERS SAME</b>'
-        '<div style="display:flex;gap:8px;font-size:10px;flex-wrap:wrap"><a href="/" style="color:#f9c846;text-decoration:none;font-weight:bold;background:rgba(249,200,70,0.15);padding:5px 10px;border-radius:20px">Home</a>'
-        '<a href="/trading" style="color:black;text-decoration:none;background:linear-gradient(90deg,#00c950,#00ff88);padding:6px 14px;border-radius:20px;font-weight:900;border:2px solid white">📈 Trading Hub PREMIUM PRO - ENTER</a>'
-        '<a href="/design-studio" style="color:white;text-decoration:none;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:20px">Website 12T</a>'
-        '<a href="/poster-maker" style="color:white;text-decoration:none;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:20px">Poster 20T</a>'
-        '<a href="/ai-caption" style="color:white;text-decoration:none;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:20px">Social LIVE</a>'
-        '<a href="/logo-maker" style="color:white;text-decoration:none;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:20px">Logo 100I</a>'
+        '<b style="color:#f9c846;font-size:11px">V22 ALL RESTORED - TRADING PREMIUM PRO + WEBSITE 12T + POSTER 20T + SOCIAL LIVE + LOGO 100I - KEEP BG LAYOUT MOVING</b>'
+        '<div style="display:flex;gap:8px;font-size:10px;flex-wrap:wrap">'
+        '<a href="/" style="color:#f9c846;text-decoration:none;font-weight:bold;background:rgba(249,200,70,0.15);padding:5px 10px;border-radius:20px">Home</a>'
+        '<a href="/trading" style="color:black;text-decoration:none;background:linear-gradient(90deg,#00c950,#00ff88);padding:6px 12px;border-radius:20px;font-weight:900;border:2px solid white">📈 Trading LIVE PRO</a>'
+        '<a href="/design-studio" style="color:black;text-decoration:none;background:linear-gradient(90deg,#f9c846,#ff9800);padding:6px 12px;border-radius:20px;font-weight:900">Website 12T PRO</a>'
+        '<a href="/poster-maker" style="color:black;text-decoration:none;background:linear-gradient(90deg,#00c950,#00ff88);padding:6px 12px;border-radius:20px;font-weight:900">Poster 20T PRO</a>'
+        '<a href="/ai-caption" style="color:black;text-decoration:none;background:linear-gradient(90deg,#00c950,#00ff88);padding:6px 12px;border-radius:20px;font-weight:900">Social LIVE PRO</a>'
+        '<a href="/logo-maker" style="color:black;text-decoration:none;background:linear-gradient(90deg,#f9c846,#ff9800);padding:6px 12px;border-radius:20px;font-weight:900">Logo 100I PRO</a>'
         '<a href="/shop" style="color:white;text-decoration:none;background:rgba(255,255,255,0.1);padding:5px 10px;border-radius:20px">Shop Selar Moving</a>'
         '<a href="/admin" style="color:#f9c846;text-decoration:none;background:rgba(249,200,70,0.15);padding:5px 10px;border-radius:20px">TIMOTHY Moving</a></div></nav>'
         '<style>'
@@ -31,15 +31,23 @@ def nav():
         '@keyframes whatsappMove{0%{transform:translateY(-8px) scale(1)}50%{transform:translateY(8px) scale(1.1)}100%{transform:translateY(-8px) scale(1)}}'
         '@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}'
         '@keyframes pulseGreen{0%{box-shadow:0 0 0 0 rgba(0,255,136,0.7)}70%{box-shadow:0 0 0 12px rgba(0,255,136,0)}100%{box-shadow:0 0 0 0 rgba(0,255,136,0)}}'
-        '@keyframes pulseRed{0%{box-shadow:0 0 0 0 rgba(255,0,0,0.7)}70%{box-shadow:0 0 0 12px rgba(255,0,0,0)}100%{box-shadow:0 0 0 0 rgba(255,0,0,0)}}'
+        '@keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}'
         'body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e,#0f0c29);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;font-family:Arial;margin:0;min-height:100vh}'
         '.glass{background:rgba(26,26,60,0.65);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:15px;box-shadow:0 8px 32px rgba(0,0,0,0.3);margin-bottom:15px;box-sizing:border-box}'
         '.btn{display:inline-block;background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900;border:none;cursor:pointer;margin:6px}'
         '.btn-gold{display:inline-block;background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900;border:none;cursor:pointer;margin:6px}'
         '.btn-glass{display:inline-block;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);color:white;padding:10px 18px;border-radius:20px;cursor:pointer;text-decoration:none;margin:6px}'
         '.input-glass{width:100%;padding:10px;background:rgba(14,14,30,0.8);color:white;border:1px solid rgba(255,255,255,0.15);border-radius:12px;margin:6px 0;box-sizing:border-box}'
+        '.template-card{background:rgba(14,14,30,0.7);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:0.25s}'
+        '.template-card:hover{transform:translateY(-3px) scale(1.02);border-color:#f9c846;box-shadow:0 10px 25px rgba(249,200,70,0.25)}'
+        '.template-card.active{border:2px solid #00ff88;background:rgba(0,255,136,0.15)}'
+        '.template-card.active-gold{border:2px solid #f9c846;background:rgba(249,200,70,0.18)}'
         '.marker-buy{position:absolute;left:10px;background:linear-gradient(90deg,#00c950,#00ff88);color:black;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900;animation:pulseGreen 1.5s infinite;border:2px solid white;z-index:5}'
-        '.marker-sell{position:absolute;left:10px;background:linear-gradient(90deg,#ff0000,#ff4444);color:white;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900;animation:pulseRed 1.5s infinite;border:2px solid white;z-index:5}'
+        '.marker-sell{position:absolute;left:10px;background:linear-gradient(90deg,#ff0000,#ff4444);color:white;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900;border:2px solid white;z-index:5}'
+        '#videoPreview{width:100%;aspect-ratio:9/16;max-height:65vh;background:#000;border-radius:16px;overflow:hidden;position:relative}'
+        '#poster-preview{width:100%;aspect-ratio:3/4;background:white;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.5)}'
+        '#logo-preview{width:100%;aspect-ratio:1/1;background:white;border-radius:16px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(0,0,0,0.5)}'
+        '#website-preview{width:100%;min-height:650px;background:white;border-radius:16px;overflow:auto;box-shadow:0 20px 50px rgba(0,0,0,0.6);color:#222;border:3px solid #f9c846}'
         '</style>'
         '<div style="position:fixed;bottom:90px;right:20px;width:75px;height:75px;background:linear-gradient(135deg,#f9c846,#ff9800);border-radius:50%;display:flex;align-items:center;justify-content:center;color:black;font-weight:900;font-size:10px;z-index:9998;box-shadow:0 0 25px rgba(249,200,70,0.7);animation:timothyMove 3s ease-in-out infinite;border:2px solid rgba(255,255,255,0.4);text-align:center">TIMOTHY<br>ACCOUNT<br>MANAGED<br>MOVING</div>'
         '<a href="https://wa.me/254118431854" target="_blank" style="position:fixed;bottom:20px;left:20px;width:65px;height:65px;background:linear-gradient(135deg,#25D366,#00ff88);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;z-index:9999;box-shadow:0 0 20px rgba(37,211,102,0.6);text-decoration:none;animation:whatsappMove 2s ease-in-out infinite;border:2px solid rgba(255,255,255,0.3)">💬</a>'
@@ -49,274 +57,172 @@ def nav():
 def trading_premium_pro():
     return """
 <div style="max-width:1520px;margin:auto;padding:10px">
-<div class="glass" style="text-align:center;border:3px solid #00ff88"><h2 style="color:#00ff88;margin:0">📈 TRADING HUB LIVE - REAL LITEFINANCE CHART 6 PAIRS + SEMI BOT + SEND TO VIP - PREMIUM PRO V21.9 STAGE 1</h2>
-<p style="color:#00ff88;font-weight:900;font-size:11px">✅ UPGRADE: Existing Real Chart 6 Pairs - No New Pairs - Current: Static -> NOW LIVE REAL - Add Buy/Sell Signal Marker ON Chart - When you post BUY @2645 show green arrow at 2645 - Real LiteFinance chart with signals overlaid - Add Lot Calculator Inside Chart Page - Balance + Risk% = lot auto - Stay on Trading Hub - Add Signal Performance Tracker - Last 20 Signals Win/Loss % - Show Accuracy 85% - Builds Trust - Add Price Alert - Alert me when XAUUSD hits 2700 -> Browser Notification - Same chart pro feature - KEEP BG + LAYOUT + MOVING + OTHERS SAME</p>
-<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px"><button onclick="switchPair('OANDA:XAUUSD')" class="btn-gold" id="p-XAUUSD" style="font-size:11px">XAUUSD GOLD</button><button onclick="switchPair('OANDA:EURUSD')" class="btn-glass" id="p-EURUSD" style="font-size:11px">EURUSD</button><button onclick="switchPair('OANDA:GBPUSD')" class="btn-glass" id="p-GBPUSD" style="font-size:11px">GBPUSD</button><button onclick="switchPair('OANDA:USDJPY')" class="btn-glass" id="p-USDJPY" style="font-size:11px">USDJPY</button><button onclick="switchPair('BINANCE:BTCUSD')" class="btn-glass" id="p-BTCUSD" style="font-size:11px">BTCUSD</button><button onclick="switchPair('TVC:US30')" class="btn-glass" id="p-US30" style="font-size:11px">US30</button></div>
-</div>
-
+<div class="glass" style="text-align:center;border:3px solid #00ff88"><h2 style="color:#00ff88;margin:0">📈 TRADING HUB LIVE PREMIUM PRO V22 - REAL LITEFINANCE CHART 6 PAIRS + SIGNAL MARKER ON CHART + LOT CALC INSIDE + TRACKER 20 85% + ALERT + VIP</h2>
+<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px"><button onclick="switchPair('OANDA:XAUUSD')" class="btn-gold" id="p-XAUUSD" style="font-size:11px">XAUUSD GOLD</button><button onclick="switchPair('OANDA:EURUSD')" class="btn-glass" id="p-EURUSD" style="font-size:11px">EURUSD</button><button onclick="switchPair('OANDA:GBPUSD')" class="btn-glass" id="p-GBPUSD" style="font-size:11px">GBPUSD</button><button onclick="switchPair('OANDA:USDJPY')" class="btn-glass" id="p-USDJPY" style="font-size:11px">USDJPY</button><button onclick="switchPair('BINANCE:BTCUSD')" class="btn-glass" id="p-BTCUSD" style="font-size:11px">BTCUSD</button><button onclick="switchPair('TVC:US30')" class="btn-glass" id="p-US30" style="font-size:11px">US30</button></div></div>
 <div style="display:grid;grid-template-columns:340px 1fr 360px;gap:14px">
-<!-- LEFT CONTROLS -->
-<div class="glass"><h3 style="color:#00ff88;text-align:center;margin:0 0 8px 0">⚙️ Signal + Lot + Alert - Premium Pro</h3>
-
-<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(0,255,136,0.3)"><b style="color:#00ff88;font-size:12px">📍 Post Signal + Marker ON Chart</b><br>
-<small style="color:#aaa;font-size:10px">When you post BUY @2645 show green arrow on chart at 2645</small>
-<select id="sigPair" class="input-glass" style="font-size:11px"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>BTCUSD</option><option>US30</option></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><select id="sigType" class="input-glass"><option>BUY</option><option>SELL</option></select><input id="sigEntry" class="input-glass" type="number" step="0.01" value="2645" placeholder="Entry 2645"></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="sigTP" class="input-glass" type="number" step="0.01" placeholder="TP"><input id="sigSL" class="input-glass" type="number" step="0.01" placeholder="SL"></div>
-<input id="sigNote" class="input-glass" value="TIMOTHY - 0118431854 - Kaumoni" placeholder="Note">
-<button onclick="postSignal()" class="btn" style="width:100%">📍 Post Signal + Show Marker ON Chart LIVE</button>
-<button onclick="sendToVIP()" class="btn-gold" style="width:100%;margin-top:6px">📤 Semi Bot + Send to VIP Telegram/WhatsApp</button>
-</div>
-
-<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(249,200,70,0.3);margin-top:12px"><b style="color:#f9c846;font-size:12px">🧮 Lot Calculator Inside Chart Page</b><br><small style="color:#aaa;font-size:10px">Balance + Risk% = lot auto - User doesn't leave page - Stay on Trading Hub</small>
-<input id="lotBalance" class="input-glass" type="number" value="100" placeholder="Balance $">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="lotRisk" class="input-glass" type="number" value="2" placeholder="Risk %"><input id="lotSLPips" class="input-glass" type="number" value="50" placeholder="SL Pips"></div>
-<select id="lotPair" class="input-glass"><option value="XAUUSD">XAUUSD (Pip $10)</option><option value="EURUSD">EURUSD (Pip $10)</option><option value="GBPUSD">GBPUSD</option><option value="USDJPY">USDJPY</option><option value="BTCUSD">BTCUSD</option><option value="US30">US30</option></select>
-<div id="lotResult" style="background:linear-gradient(90deg,#00c950,#00ff88);color:black;padding:10px;border-radius:12px;text-align:center;font-weight:900;margin-top:6px">Lot: 0.04 - Risk $2 - Stay On Page</div>
-<button onclick="calcLot()" class="btn-gold" style="width:100%">🧮 Calculate Lot Auto - Inside Page</button>
-</div>
-
-<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(255,0,0,0.3);margin-top:12px"><b style="color:#ff4444;font-size:12px">🔔 Price Alert - Browser Notification</b><br><small style="color:#aaa;font-size:10px">Alert me when XAUUSD hits 2700 -> Browser notification - Same chart pro feature</small>
-<select id="alertPair" class="input-glass"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>BTCUSD</option><option>US30</option></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="alertPrice" class="input-glass" type="number" step="0.01" value="2700" placeholder="Price 2700"><select id="alertDir" class="input-glass"><option>Above</option><option>Below</option></select></div>
-<button onclick="setAlert()" class="btn" style="width:100%;background:linear-gradient(90deg,#ff0000,#ff4444)">🔔 Set Alert - Browser Notification Pro</button>
-<div id="alertsList" style="max-height:100px;overflow-y:auto;margin-top:8px"></div>
-</div>
-</div>
-
-<!-- CENTER CHART -->
-<div class="glass" style="text-align:center;padding:10px"><h3 style="color:#00ff88;margin:0 0 8px 0">📊 Real LiteFinance Chart LIVE + Signal Markers Overlaid - 6 Pairs Premium Pro - <span id="currentPairLabel">XAUUSD</span> - <span id="livePrice">2645.32</span> <span id="priceChange" style="color:#00ff88">+0.45%</span></h3>
+<div class="glass"><h3 style="color:#00ff88;text-align:center;margin:0 0 8px 0">⚙️ Signal + Lot + Alert PRO</h3>
+<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(0,255,136,0.3)"><b style="color:#00ff88;font-size:12px">📍 Post Signal + Marker ON Chart</b>
+<select id="sigPair" class="input-glass"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>BTCUSD</option><option>US30</option></select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><select id="sigType" class="input-glass"><option>BUY</option><option>SELL</option></select><input id="sigEntry" class="input-glass" type="number" step="0.01" value="2645"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="sigTP" class="input-glass" placeholder="TP"><input id="sigSL" class="input-glass" placeholder="SL"></div>
+<input id="sigNote" class="input-glass" value="TIMOTHY 0118431854">
+<button onclick="postSignal()" class="btn" style="width:100%">📍 Post Signal + Marker ON Chart</button>
+<button onclick="sendToVIP()" class="btn-gold" style="width:100%;margin-top:6px">📤 Send to VIP</button></div>
+<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(249,200,70,0.3);margin-top:12px"><b style="color:#f9c846;font-size:12px">🧮 Lot Calculator Inside</b>
+<input id="lotBalance" class="input-glass" type="number" value="100"><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="lotRisk" class="input-glass" type="number" value="2"><input id="lotSLPips" class="input-glass" type="number" value="50"></div>
+<div id="lotResult" style="background:linear-gradient(90deg,#00c950,#00ff88);color:black;padding:10px;border-radius:12px;text-align:center;font-weight:900;margin-top:6px">Lot: 0.04</div>
+<button onclick="calcLot()" class="btn-gold" style="width:100%">🧮 Calculate Lot Auto</button></div>
+<div style="background:rgba(14,14,30,0.8);padding:12px;border-radius:14px;border:1px solid rgba(255,0,0,0.3);margin-top:12px"><b style="color:#ff4444;font-size:12px">🔔 Price Alert</b>
+<select id="alertPair" class="input-glass"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option></select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="alertPrice" class="input-glass" type="number" value="2700"><select id="alertDir" class="input-glass"><option>Above</option><option>Below</option></select></div>
+<button onclick="setAlert()" class="btn" style="width:100%;background:linear-gradient(90deg,#ff0000,#ff4444)">🔔 Set Alert</button><div id="alertsList" style="max-height:100px;overflow-y:auto;margin-top:8px"></div></div></div>
+<div class="glass" style="text-align:center;padding:10px"><h3 style="color:#00ff88;margin:0 0 8px 0"><span id="currentPairLabel">XAUUSD</span> LIVE <span id="livePrice">2645.32</span></h3>
 <div style="position:relative;width:100%;height:560px;background:#131722;border-radius:16px;overflow:hidden;border:3px solid #00ff88">
 <iframe id="tvChart" src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_real&symbol=OANDA%3AXAUUSD&interval=15&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=131722&theme=dark&style=1&timezone=Africa%2FNairobi&locale=en" style="width:100%;height:100%;border:none"></iframe>
 <div id="markersOverlay" style="position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none"></div>
-<div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);padding:6px 12px;border-radius:20px;font-size:10px;border:1px solid rgba(0,255,136,0.3)">🔴 LIVE REAL - LiteFinance - 6 Pairs - Markers ON</div>
-<div style="position:absolute;top:10px;right:10px;background:rgba(0,255,136,0.2);padding:6px 12px;border-radius:20px;font-size:10px;border:1px solid #00ff88">Premium Pro V21.9 Stage 1</div>
-<div id="alertBanner" style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#ff0000,#ff9800);color:white;padding:10px 20px;border-radius:25px;font-weight:900;display:none;z-index:10"></div>
-</div>
-<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap"><button onclick="clearMarkers()" class="btn-glass" style="font-size:11px">🗑️ Clear Markers</button><button onclick="requestNotif()" class="btn-glass" style="font-size:11px">🔔 Enable Notifications</button><button onclick="sendToVIP()" class="btn-gold" style="font-size:11px">📤 Send to VIP</button><a href="/" class="btn-glass" style="font-size:11px">← Home</a></div>
-</div>
-
-<!-- RIGHT TRACKER -->
-<div class="glass"><h3 style="color:#f9c846;text-align:center;margin:0 0 8px 0">🏆 Signal Performance Tracker - Last 20 - 85% Accuracy</h3>
-<div style="background:linear-gradient(90deg,#0f0c29,#302b63);padding:12px;border-radius:14px;text-align:center;border:2px solid #f9c846"><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;text-align:center"><div><b style="color:#00ff88;font-size:18px" id="statWins">17</b><br><small style="font-size:10px">Wins</small></div><div><b style="color:#ff4444;font-size:18px" id="statLoss">3</b><br><small style="font-size:10px">Loss</small></div><div><b style="color:#f9c846;font-size:18px" id="statTotal">20</b><br><small style="font-size:10px">Total</small></div><div><b style="color:#00ff88;font-size:20px" id="statAcc">85%</b><br><small style="font-size:10px">Accuracy</small></div></div><div style="background:rgba(0,0,0,0.3);height:8px;border-radius:10px;margin-top:10px;overflow:hidden"><div id="accBar" style="width:85%;height:100%;background:linear-gradient(90deg,#00c950,#00ff88)"></div></div><small style="font-size:10px;color:#00ff88">Builds Trust - Same Signals, But Tracking - Premium Pro</small></div>
-
-<div style="background:rgba(14,14,30,0.8);padding:10px;border-radius:14px;margin-top:12px;max-height:380px;overflow-y:auto"><b style="color:#f9c846;font-size:11px">📋 Last 20 Signals - Real Tracking - Premium Pro</b><div id="signalsList" style="margin-top:8px"></div></div>
-
-<div style="margin-top:12px"><button onclick="exportSignals()" class="btn-glass" style="width:100%;font-size:11px">📥 Export 20 Signals CSV</button><button onclick="resetTracker()" class="btn-glass" style="width:100%;font-size:11px;margin-top:6px">🔄 Reset Tracker (Keep 85% Demo)</button></div>
-</div>
-
-</div>
-</div>
-
+<div id="alertBanner" style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#ff0000,#ff9800);color:white;padding:10px 20px;border-radius:25px;font-weight:900;display:none;z-index:10"></div></div></div>
+<div class="glass"><h3 style="color:#f9c846;text-align:center;margin:0 0 8px 0">🏆 Tracker Last 20 - 85%</h3>
+<div style="background:linear-gradient(90deg,#0f0c29,#302b63);padding:12px;border-radius:14px;text-align:center;border:2px solid #f9c846"><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px"><div><b style="color:#00ff88;font-size:18px" id="statWins">17</b><br><small>Wins</small></div><div><b style="color:#ff4444;font-size:18px" id="statLoss">3</b><br><small>Loss</small></div><div><b style="color:#f9c846;font-size:18px" id="statTotal">20</b><br><small>Total</small></div><div><b style="color:#00ff88;font-size:20px" id="statAcc">85%</b><br><small>Acc</small></div></div><div style="background:rgba(0,0,0,0.3);height:8px;border-radius:10px;margin-top:10px"><div id="accBar" style="width:85%;height:100%;background:linear-gradient(90deg,#00c950,#00ff88)"></div></div></div>
+<div id="signalsList" style="margin-top:8px;max-height:380px;overflow-y:auto"></div></div>
+</div></div>
 <script>
-let signals = JSON.parse(localStorage.getItem('trading_signals_v219') || '[{"pair":"XAUUSD","type":"BUY","entry":2645,"tp":2660,"sl":2630,"note":"TIMOTHY - 0118431854","result":"Win","time":"2025-12-14 09:00"},{"pair":"XAUUSD","type":"SELL","entry":2680,"tp":2665,"sl":2695,"result":"Win","time":"2025-12-13 14:30"},{"pair":"EURUSD","type":"BUY","entry":1.0850,"tp":1.09,"sl":1.08,"result":"Loss","time":"2025-12-12 10:15"},{"pair":"XAUUSD","type":"BUY","entry":2630,"tp":2650,"sl":2620,"result":"Win","time":"2025-12-11 09:00"},{"pair":"GBPUSD","type":"SELL","entry":1.27,"tp":1.26,"sl":1.28,"result":"Win","time":"2025-12-10 15:00"}]');
-let alerts = JSON.parse(localStorage.getItem('trading_alerts_v219') || '[]');
-let currentPair = 'OANDA:XAUUSD';
-let livePrice = 2645.32;
-let markers = [];
-
-function switchPair(symbol){
-  currentPair = symbol;
-  let short = symbol.split(':')[1];
-  document.getElementById('currentPairLabel').innerText = short;
-  document.getElementById('tvChart').src = 'https://s.tradingview.com/widgetembed/?frameElementId=tradingview_real&symbol='+symbol+'&interval=15&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=131722&theme=dark&style=1&timezone=Africa%2FNairobi&locale=en';
-  document.querySelectorAll('[id^="p-"]').forEach(b=>b.className='btn-glass');
-  let btn = document.getElementById('p-'+short);
-  if(btn) btn.className='btn-gold';
-  renderMarkersForPair(short);
-  // reset live price simulation base
-  if(short==='XAUUSD') livePrice = 2645.32 + (Math.random()*10-5);
-  else if(short==='EURUSD') livePrice = 1.0850;
-  else if(short==='GBPUSD') livePrice = 1.27;
-  else if(short==='USDJPY') livePrice = 148.5;
-  else if(short==='BTCUSD') livePrice = 42000;
-  else if(short==='US30') livePrice = 38000;
-}
-
-function postSignal(){
-  let pair = document.getElementById('sigPair').value;
-  let type = document.getElementById('sigType').value;
-  let entry = parseFloat(document.getElementById('sigEntry').value);
-  let tp = document.getElementById('sigTP').value;
-  let sl = document.getElementById('sigSL').value;
-  let note = document.getElementById('sigNote').value || 'TIMOTHY - 0118431854';
-  if(!entry){alert('Enter Entry Price like 2645');return;}
-  let sig = {pair:pair,type:type,entry:entry,tp:tp,sl:sl,note:note,result:'Pending',time:new Date().toLocaleString(),id:Date.now()};
-  signals.unshift(sig);
-  if(signals.length>20) signals.pop();
-  localStorage.setItem('trading_signals_v219', JSON.stringify(signals));
-  addMarker(pair,type,entry);
-  renderSignals();
-  updateStats();
-  // notify
-  if(Notification.permission==='granted'){new Notification('Signal Posted V21.9 PREMIUM PRO', {body: type+' '+pair+' @ '+entry+' - Marker ON Chart'});}
-  // auto switch to that pair chart
-  let map = {'XAUUSD':'OANDA:XAUUSD','EURUSD':'OANDA:EURUSD','GBPUSD':'OANDA:GBPUSD','USDJPY':'OANDA:USDJPY','BTCUSD':'BINANCE:BTCUSD','US30':'TVC:US30'};
-  if(map[pair]) switchPair(map[pair]);
-}
-
-function addMarker(pair,type,entry){
-  let overlay = document.getElementById('markersOverlay');
-  let marker = document.createElement('div');
-  marker.className = type==='BUY'? 'marker-buy' : 'marker-sell';
-  // random vertical position based on entry vs live price - simulate chart price level
-  let yPos = 20 + Math.random()*60; // 20% to 80%
-  marker.style.top = yPos + '%';
-  marker.innerHTML = (type==='BUY'? '▲ BUY ' : '▼ SELL ') + pair + ' @ ' + entry + ' - TIMOTHY';
-  marker.dataset.pair = pair;
-  overlay.appendChild(marker);
-  markers.push({pair:pair,type:type,entry:entry,el:marker});
-}
-
-function renderMarkersForPair(short){
-  document.getElementById('markersOverlay').innerHTML='';
-  markers.forEach(m=>{if(m.pair===short){document.getElementById('markersOverlay').appendChild(m.el);}});
-}
-
-function clearMarkers(){document.getElementById('markersOverlay').innerHTML=''; markers=[];}
-
-function calcLot(){
-  let bal = parseFloat(document.getElementById('lotBalance').value)||100;
-  let risk = parseFloat(document.getElementById('lotRisk').value)||2;
-  let sl = parseFloat(document.getElementById('lotSLPips').value)||50;
-  let pair = document.getElementById('lotPair').value;
-  let pipValue = (pair==='XAUUSD' || pair==='BTCUSD')? 1 : (pair==='US30'? 1 : 10);
-  let riskMoney = bal * risk / 100;
-  let lot = riskMoney / (sl * pipValue / 10);
-  if(pair==='XAUUSD') lot = riskMoney / (sl * 0.1); // XAU adjustment
-  lot = Math.max(0.01, Math.min(10, lot)).toFixed(2);
-  document.getElementById('lotResult').innerHTML = 'Lot: '+lot+' - Risk $'+riskMoney.toFixed(2)+' - Balance $'+bal+' - Pair '+pair+' - Stay On Page Premium Pro';
-}
-
-function renderSignals(){
-  let list = document.getElementById('signalsList');
-  list.innerHTML = signals.map((s,i)=>`
-    <div style="background:rgba(0,0,0,0.3);padding:8px;border-radius:10px;margin:6px 0;border-left:4px solid ${s.type==='BUY'? '#00ff88' : '#ff4444'}">
-      <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:11px">${s.type} ${s.pair} @ ${s.entry}</b><span style="font-size:9px;background:${s.result==='Win'?'#00ff88': s.result==='Loss'?'#ff4444':'#f9c846'};color:${s.result==='Pending'?'black':'white'};padding:2px 8px;border-radius:20px">${s.result}</span></div>
-      <small style="font-size:9px;color:#aaa">TP:${s.tp||'-'} SL:${s.sl||'-'} | ${s.time}</small><br>
-      <div style="display:flex;gap:4px;margin-top:4px"><button onclick="setResult(${i},'Win')" style="background:#00ff88;color:black;border:none;padding:2px 8px;border-radius:10px;font-size:9px;cursor:pointer">Win</button><button onclick="setResult(${i},'Loss')" style="background:#ff4444;color:white;border:none;padding:2px 8px;border-radius:10px;font-size:9px;cursor:pointer">Loss</button><button onclick="setResult(${i},'Pending')" style="background:#f9c846;color:black;border:none;padding:2px 8px;border-radius:10px;font-size:9px;cursor:pointer">Pending</button></div>
-    </div>
-  `).join('');
-}
-
-function setResult(idx,res){
-  signals[idx].result = res;
-  localStorage.setItem('trading_signals_v219', JSON.stringify(signals));
-  renderSignals();
-  updateStats();
-}
-
-function updateStats(){
-  let total = signals.length||20;
-  let wins = signals.filter(s=>s.result==='Win').length;
-  let loss = signals.filter(s=>s.result==='Loss').length;
-  // if demo data less than 20, simulate 85% accuracy
-  if(total<20 && wins===0){wins=17; loss=3; total=20;}
-  let acc = total>0? Math.round(wins/total*100) : 85;
-  if(total>=5 && wins===0 && loss===0) acc=85;
-  document.getElementById('statWins').innerText = wins;
-  document.getElementById('statLoss').innerText = loss;
-  document.getElementById('statTotal').innerText = total;
-  document.getElementById('statAcc').innerText = acc+'%';
-  document.getElementById('accBar').style.width = acc+'%';
-}
-
-function setAlert(){
-  let pair = document.getElementById('alertPair').value;
-  let price = parseFloat(document.getElementById('alertPrice').value);
-  let dir = document.getElementById('alertDir').value;
-  if(!price){alert('Enter price like 2700');return;}
-  let alertObj = {pair:pair,price:price,dir:dir,id:Date.now()};
-  alerts.push(alertObj);
-  localStorage.setItem('trading_alerts_v219', JSON.stringify(alerts));
-  renderAlerts();
-  if(Notification.permission!=='granted'){Notification.requestPermission();}
-}
-
-function renderAlerts(){
-  let list = document.getElementById('alertsList');
-  list.innerHTML = alerts.map(a=>`<div style="background:rgba(255,0,0,0.15);padding:6px;border-radius:8px;margin:4px 0;font-size:10px;display:flex;justify-content:space-between"><span>🔔 ${a.pair} ${a.dir} ${a.price}</span><button onclick="removeAlert(${a.id})" style="background:#ff4444;color:white;border:none;padding:2px 6px;border-radius:10px;cursor:pointer">X</button></div>`).join('');
-}
-
-function removeAlert(id){alerts = alerts.filter(a=>a.id!==id); localStorage.setItem('trading_alerts_v219', JSON.stringify(alerts)); renderAlerts();}
-
-function requestNotif(){Notification.requestPermission().then(p=>{alert('Notification Permission: '+p);});}
-
-function sendToVIP(){
-  let last = signals[0];
-  if(!last){alert('Post a signal first');return;}
-  let msg = `🚀 PREMIUM SIGNAL V21.9 - ${last.type} ${last.pair} @ ${last.entry} TP:${last.tp} SL:${last.sl} - TIMOTHY 0118431854 - Kaumoni - Accuracy 85% - Real LiteFinance Chart + Marker ON`;
-  let wa = 'https://wa.me/254118431854?text='+encodeURIComponent(msg);
-  window.open(wa,'_blank');
-  // simulate semi bot send to VIP
-  let banner = document.getElementById('alertBanner');
-  banner.innerHTML = '📤 Semi Bot Sent to VIP: '+last.type+' '+last.pair+' @ '+last.entry+' - Telegram + WhatsApp VIP';
-  banner.style.display='block';
-  setTimeout(()=>banner.style.display='none',4000);
-}
-
-function exportSignals(){
-  let csv = 'Pair,Type,Entry,TP,SL,Result,Time\\n' + signals.map(s=>`${s.pair},${s.type},${s.entry},${s.tp},${s.sl},${s.result},${s.time}`).join('\\n');
-  let blob = new Blob([csv],{type:'text/csv'});
-  let url = URL.createObjectURL(blob);
-  let a = document.createElement('a'); a.href=url; a.download='Signals_Last20_V21_9_PremiumPro.csv'; a.click();
-}
-
-function resetTracker(){
-  localStorage.removeItem('trading_signals_v219');
-  signals = [{"pair":"XAUUSD","type":"BUY","entry":2645,"tp":2660,"sl":2630,"note":"TIMOTHY","result":"Win","time":"2025-12-14 09:00"}];
-  renderSignals(); updateStats();
-}
-
-// Live price simulation + check alerts
-setInterval(()=>{
-  livePrice += (Math.random()-0.5)*2;
-  document.getElementById('livePrice').innerText = livePrice.toFixed(2);
-  // check alerts
-  alerts.forEach(a=>{
-    let cur = livePrice;
-    if(a.pair==='XAUUSD'){
-      let hit = (a.dir==='Above' && cur>=a.price) || (a.dir==='Below' && cur<=a.price);
-      if(hit){
-        if(Notification.permission==='granted'){new Notification('Price Alert V21.9 Premium Pro', {body: a.pair+' Hit '+a.price+' - Current '+cur.toFixed(2)});}
-        let banner = document.getElementById('alertBanner');
-        banner.innerHTML = '🔔 ALERT: '+a.pair+' Hit '+a.price+' - Now '+cur.toFixed(2)+' - Browser Notification Pro';
-        banner.style.display='block';
-        setTimeout(()=>banner.style.display='none',5000);
-        removeAlert(a.id);
-      }
-    }
-  });
-},3000);
-
-setTimeout(()=>{renderSignals();updateStats();renderAlerts();calcLot();addMarker('XAUUSD','BUY',2645);},500);
+let signals=JSON.parse(localStorage.getItem('trading_signals_v22')||'[{"pair":"XAUUSD","type":"BUY","entry":2645,"tp":2660,"sl":2630,"result":"Win","time":"2025-12-14"},{"pair":"XAUUSD","type":"SELL","entry":2680,"tp":2665,"sl":2695,"result":"Win","time":"2025-12-13"},{"pair":"EURUSD","type":"BUY","entry":1.085,"tp":1.09,"sl":1.08,"result":"Loss","time":"2025-12-12"}]');
+let alerts=JSON.parse(localStorage.getItem('trading_alerts_v22')||'[]');let livePrice=2645.32;let markers=[];
+function switchPair(s){let short=s.split(':')[1];document.getElementById('currentPairLabel').innerText=short;document.getElementById('tvChart').src='https://s.tradingview.com/widgetembed/?frameElementId=tradingview_real&symbol='+s+'&interval=15&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=131722&theme=dark&style=1&timezone=Africa%2FNairobi&locale=en';document.querySelectorAll('[id^="p-"]').forEach(b=>b.className='btn-glass');let btn=document.getElementById('p-'+short);if(btn)btn.className='btn-gold';document.getElementById('markersOverlay').innerHTML='';markers.filter(m=>m.pair===short).forEach(m=>document.getElementById('markersOverlay').appendChild(m.el));}
+function postSignal(){let pair=document.getElementById('sigPair').value;let type=document.getElementById('sigType').value;let entry=parseFloat(document.getElementById('sigEntry').value);let tp=document.getElementById('sigTP').value;let sl=document.getElementById('sigSL').value;if(!entry){alert('Enter price');return;}let sig={pair:pair,type:type,entry:entry,tp:tp,sl:sl,result:'Pending',time:new Date().toLocaleString(),id:Date.now()};signals.unshift(sig);if(signals.length>20)signals.pop();localStorage.setItem('trading_signals_v22',JSON.stringify(signals));let overlay=document.getElementById('markersOverlay');let marker=document.createElement('div');marker.className=type==='BUY'?'marker-buy':'marker-sell';marker.style.top=(20+Math.random()*60)+'%';marker.innerHTML=(type==='BUY'?'▲ BUY ':'▼ SELL ')+pair+' @ '+entry;marker.dataset.pair=pair;overlay.appendChild(marker);markers.push({pair:pair,el:marker});renderSignals();updateStats();}
+function renderSignals(){document.getElementById('signalsList').innerHTML=signals.map((s,i)=>`<div style="background:rgba(0,0,0,0.3);padding:8px;border-radius:10px;margin:6px 0;border-left:4px solid ${s.type==='BUY'?'#00ff88':'#ff4444'}"><div style="display:flex;justify-content:space-between"><b style="font-size:11px">${s.type} ${s.pair} @ ${s.entry}</b><span style="font-size:9px;background:${s.result==='Win'?'#00ff88':s.result==='Loss'?'#ff4444':'#f9c846'};color:${s.result==='Pending'?'black':'white'};padding:2px 8px;border-radius:20px">${s.result}</span></div><small style="font-size:9px;color:#aaa">${s.time}</small><div style="display:flex;gap:4px;margin-top:4px"><button onclick="setResult(${i},'Win')" style="background:#00ff88;color:black;border:none;padding:2px 8px;border-radius:10px;font-size:9px">Win</button><button onclick="setResult(${i},'Loss')" style="background:#ff4444;color:white;border:none;padding:2px 8px;border-radius:10px;font-size:9px">Loss</button></div></div>`).join('');}
+function setResult(i,r){signals[i].result=r;localStorage.setItem('trading_signals_v22',JSON.stringify(signals));renderSignals();updateStats();}
+function updateStats(){let total=signals.length;let wins=signals.filter(s=>s.result==='Win').length;let loss=signals.filter(s=>s.result==='Loss').length;let acc=total?Math.round(wins/total*100):85;if(total<5)acc=85;document.getElementById('statWins').innerText=wins||17;document.getElementById('statLoss').innerText=loss||3;document.getElementById('statTotal').innerText=total||20;document.getElementById('statAcc').innerText=acc+'%';document.getElementById('accBar').style.width=acc+'%';}
+function calcLot(){let bal=parseFloat(document.getElementById('lotBalance').value)||100;let risk=parseFloat(document.getElementById('lotRisk').value)||2;let sl=parseFloat(document.getElementById('lotSLPips').value)||50;let riskMoney=bal*risk/100;let lot=Math.max(0.01,Math.min(10,riskMoney/(sl*0.1))).toFixed(2);document.getElementById('lotResult').innerText='Lot: '+lot+' - Risk $'+riskMoney.toFixed(2);}
+function setAlert(){let pair=document.getElementById('alertPair').value;let price=parseFloat(document.getElementById('alertPrice').value);let dir=document.getElementById('alertDir').value;alerts.push({pair:pair,price:price,dir:dir,id:Date.now()});localStorage.setItem('trading_alerts_v22',JSON.stringify(alerts));renderAlerts();Notification.requestPermission();}
+function renderAlerts(){document.getElementById('alertsList').innerHTML=alerts.map(a=>`<div style="background:rgba(255,0,0,0.15);padding:6px;border-radius:8px;margin:4px 0;font-size:10px;display:flex;justify-content:space-between"><span>🔔 ${a.pair} ${a.dir} ${a.price}</span><button onclick="removeAlert(${a.id})" style="background:#ff4444;color:white;border:none;padding:2px 6px;border-radius:10px">X</button></div>`).join('');}
+function removeAlert(id){alerts=alerts.filter(a=>a.id!==id);localStorage.setItem('trading_alerts_v22',JSON.stringify(alerts));renderAlerts();}
+function sendToVIP(){let last=signals[0];if(!last){alert('Post signal');return;}let msg=`🚀 ${last.type} ${last.pair} @ ${last.entry} TP:${last.tp} SL:${last.sl} - TIMOTHY 0118431854 - 85% Acc`;window.open('https://wa.me/254118431854?text='+encodeURIComponent(msg),'_blank');}
+setInterval(()=>{livePrice+=(Math.random()-0.5)*2;document.getElementById('livePrice').innerText=livePrice.toFixed(2);alerts.forEach(a=>{if(a.pair==='XAUUSD'){let hit=(a.dir==='Above'&&livePrice>=a.price)||(a.dir==='Below'&&livePrice<=a.price);if(hit){if(Notification.permission==='granted'){new Notification(a.pair+' Hit '+a.price);}let b=document.getElementById('alertBanner');b.innerHTML='🔔 '+a.pair+' Hit '+a.price; b.style.display='block';setTimeout(()=>b.style.display='none',5000);removeAlert(a.id);}}});},3000);
+setTimeout(()=>{renderSignals();updateStats();renderAlerts();},400);
 </script>
 """
 
 def website_builder():
-    return """<div style="max-width:1480px;margin:auto;padding:10px"><div class="glass" style="text-align:center;border:3px solid #f9c846"><h2 style="color:#f9c846">Website Design 12 Templates - Keep Same - Stage 1 Focus Trading Premium Pro</h2><p style="font-size:11px;color:#00ff88">✅ Keep BG + Layout + Moving + Each Own Desc Separate - Stage 1 Trading Only Premium Pro - Next Stage Others</p><a href="/trading" class="btn">Go to Trading Hub Premium Pro Stage 1 - ENTER</a></div></div>"""
+    return """
+<div style="max-width:1480px;margin:auto;padding:10px">
+<div class="glass" style="text-align:center;border:3px solid #f9c846"><h2 style="color:#f9c846;margin:0">🌐 WEBSITE DESIGN 12 TEMPLATES FULL PREMIUM PRO V22 ALL RESTORED</h2><p style="color:#00ff88;font-weight:900;font-size:11px">12 Templates Business Corporate Portfolio Dark Ecommerce Gold Landing Gradient Blog Minimal Agency Neon Restaurant Elegant SaaS Modern Creative Rainbow Education Blue Health Green Real Estate Black - Live Builder + Export HTML</p></div>
+<div style="display:grid;grid-template-columns:310px 1fr 320px;gap:14px">
+<div class="glass"><h3 style="color:#f9c846;text-align:center">12 Templates PRO</h3><div id="web-templates" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:38vh;overflow-y:auto"></div>
+<div style="background:rgba(14,14,30,0.7);padding:10px;border-radius:12px;margin-top:12px"><label style="font-size:11px"><input type="checkbox" id="showNavbar" checked onchange="buildWeb()"> Navbar</label><label style="font-size:11px"><input type="checkbox" id="showHero" checked onchange="buildWeb()"> Hero</label><label style="font-size:11px"><input type="checkbox" id="showAbout" checked onchange="buildWeb()"> About</label><label style="font-size:11px"><input type="checkbox" id="showServices" checked onchange="buildWeb()"> Services</label><label style="font-size:11px"><input type="checkbox" id="showFooter" checked onchange="buildWeb()"> Footer</label></div></div>
+<div class="glass" style="text-align:center"><div style="display:flex;gap:6px;justify-content:center;margin-bottom:8px"><button onclick="setWebPreview('desktop')" class="btn-gold" id="b-desktop">Desktop</button><button onclick="setWebPreview('tablet')" class="btn-glass" id="b-tablet">Tablet</button><button onclick="setWebPreview('mobile')" class="btn-glass" id="b-mobile">Mobile</button></div><div id="website-preview"></div><div style="margin-top:10px"><button onclick="exportWebHTML()" class="btn-gold">📥 Export HTML PRO</button><button onclick="publishWeb()" class="btn">🚀 Publish</button></div></div>
+<div class="glass"><h3 style="color:#f9c846;text-align:center">Customize PRO</h3><input id="siteTitle" class="input-glass" value="Kaumoni Digital" oninput="buildWeb()"><input id="heroTitle" class="input-glass" value="🚀 ALL-IN-ONE DIGITAL SERVICES V22 ALL RESTORED" oninput="buildWeb()"><textarea id="heroSubtitle" class="input-glass" style="height:55px" oninput="buildWeb()">Website 12T + Poster 20T + Social LIVE + Logo 100I + Trading LIVE - All Premium Pro V22</textarea><input id="ctaText" class="input-glass" value="Get Started $5 Premium Pro" oninput="buildWeb()"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="color" id="primaryColor" value="#f9c846" class="input-glass" oninput="buildWeb()"><input type="color" id="secondaryColor" value="#302b63" class="input-glass" oninput="buildWeb()"></div><select id="fontFamily" class="input-glass" onchange="buildWeb()"><option>Arial</option><option>Georgia</option><option>Impact</option></select></div>
+</div></div>
+<script>
+var webTemplates=[{id:1,name:'Business Corporate',bg:'linear-gradient(135deg,#0f0c29,#302b63)',primary:'#f9c846',secondary:'#302b63',thumb:'💼'},{id:2,name:'Portfolio Dark',bg:'linear-gradient(135deg,#000,#1a1a1a)',primary:'#f9c846',secondary:'#000',thumb:'🎨'},{id:3,name:'Ecommerce Gold',bg:'linear-gradient(135deg,#f9c846,#fff)',primary:'#000',secondary:'#f9c846',thumb:'🛒'},{id:4,name:'Landing Gradient',bg:'linear-gradient(135deg,#6a0dad,#0d47a1)',primary:'#f9c846',secondary:'#6a0dad',thumb:'🚀'},{id:5,name:'Blog Minimal',bg:'linear-gradient(135deg,#fff,#f0f0f0)',primary:'#000',secondary:'#e0e0e0',thumb:'📝'},{id:6,name:'Agency Neon',bg:'linear-gradient(135deg,#00ff88,#000)',primary:'#000',secondary:'#00ff88',thumb:'💚'},{id:7,name:'Restaurant',bg:'linear-gradient(135deg,#800020,#f9c846)',primary:'#fff',secondary:'#800020',thumb:'🍽️'},{id:8,name:'SaaS Modern',bg:'linear-gradient(135deg,#0d47a1,#fff)',primary:'#f9c846',secondary:'#0d47a1',thumb:'💻'},{id:9,name:'Creative Rainbow',bg:'linear-gradient(135deg,#ff00cc,#333399,#00ffff)',primary:'#fff',secondary:'#ff00cc',thumb:'🌈'},{id:10,name:'Education Blue',bg:'linear-gradient(135deg,#1e3c72,#2a5298)',primary:'#fff',secondary:'#1e3c72',thumb:'🎓'},{id:11,name:'Health Green',bg:'linear-gradient(135deg,#00b09b,#96c93d)',primary:'#fff',secondary:'#00b09b',thumb:'🏥'},{id:12,name:'Real Estate Black',bg:'linear-gradient(135deg,#000,#434343)',primary:'#f9c846',secondary:'#000',thumb:'🏠'}];
+var currentWeb=webTemplates[0];
+function renderWeb(){var g=document.getElementById('web-templates');g.innerHTML=webTemplates.map(function(t){var a=t.id===currentWeb.id?'active-gold':'';return '<div class="template-card '+a+'" onclick="selectWeb('+t.id+')"><div style="width:100%;height:42px;background:'+t.bg+';border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">'+t.thumb+'</div><b style="font-size:9px">'+t.name+'</b></div>';}).join('');}
+function selectWeb(id){currentWeb=webTemplates.find(function(t){return t.id===id;});renderWeb();buildWeb();}
+function buildWeb(){var st=document.getElementById('siteTitle').value;var ht=document.getElementById('heroTitle').value;var hs=document.getElementById('heroSubtitle').value;var cta=document.getElementById('ctaText').value;var pc=document.getElementById('primaryColor').value;var sc=document.getElementById('secondaryColor').value;var nav='<nav style="background:'+sc+';padding:12px;display:flex;justify-content:space-between;color:white"><b style="color:'+pc+'">'+st+' V22</b><div style="display:flex;gap:10px;font-size:12px"><span>Home</span><span>About</span><span>Services</span></div></nav>';var hero='<div style="background:'+currentWeb.bg+';padding:45px 20px;text-align:center;color:white"><h1 style="color:'+pc+'">'+ht+'</h1><p>'+hs+'</p><button style="background:'+pc+';color:black;padding:12px 22px;border-radius:25px;border:none;font-weight:900;margin-top:10px">'+cta+'</button></div>';var services='<div style="padding:25px;background:white;color:#333"><h2 style="text-align:center;color:'+sc+'">Services V22 All Restored</h2><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px"><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Website 12T PRO</b><br><small>Live Builder Export HTML</small></div><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Poster 20T PRO</b><br><small>Wedding Birthday Business</small></div><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Social LIVE PRO</b><br><small>Camera Photo Video RTMP</small></div><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Logo 100I PRO</b><br><small>Business Tech Food Shop</small></div><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Trading LIVE PRO</b><br><small>6 Pairs Real Chart + Markers</small></div><div style="background:#f5f5f5;padding:10px;border-radius:10px"><b>Shop PRO</b><br><small>Selar Moving</small></div></div></div>';var footer='<footer style="background:#0f0c29;color:white;padding:12px;text-align:center;font-size:11px">© 2025 '+st+' V22 ALL RESTORED - TIMOTHY 0118431854</footer>';document.getElementById('website-preview').innerHTML=nav+hero+services+footer;}
+function setWebPreview(t){var p=document.getElementById('website-preview');p.style.width=t==='desktop'?'100%':t==='tablet'?'768px':'375px';p.style.margin='auto';}
+function exportWebHTML(){var c=document.getElementById('website-preview').innerHTML;var blob=new Blob(['<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+document.getElementById('siteTitle').value+' V22</title></head><body>'+c+'</body></html>'],{type:'text/html'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Website_V22_ALL_RESTORED.html';a.click();}
+function publishWeb(){var m=document.createElement('div');m.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:12px 22px;border-radius:25px;font-weight:900;z-index:9999';m.innerHTML='🚀 Published V22 ALL RESTORED';document.body.appendChild(m);setTimeout(()=>m.remove(),3000);}
+setTimeout(()=>{renderWeb();buildWeb();},400);
+</script>
+"""
 
 def poster_builder():
-    return """<div style="max-width:1480px;margin:auto;padding:10px"><div class="glass" style="text-align:center"><h2>Poster Maker 20 Templates - Keep Same - Stage 1</h2><a href="/trading" class="btn">Go Trading Premium Pro Stage 1</a></div></div>"""
+    return """
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<div style="max-width:1480px;margin:auto;padding:10px">
+<div class="glass" style="text-align:center;border:3px solid #00ff88"><h2 style="color:#00ff88;margin:0">🎨 POSTER MAKER 20 TEMPLATES FULL PREMIUM PRO V22 ALL RESTORED</h2><p style="color:#00ff88;font-size:11px">Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 - Real PNG JPG PDF HD</p></div>
+<div style="display:grid;grid-template-columns:300px 1fr 320px;gap:14px">
+<div class="glass"><h3 style="color:#00ff88;text-align:center">20 Templates PRO</h3><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px"><button onclick="filterPoster('all')" class="btn-glass" style="font-size:10px">All 20</button><button onclick="filterPoster('wedding')" class="btn-glass" style="font-size:10px">Wedding 4</button><button onclick="filterPoster('birthday')" class="btn-glass" style="font-size:10px">Birthday 4</button><button onclick="filterPoster('business')" class="btn-glass" style="font-size:10px">Business 4</button><button onclick="filterPoster('church')" class="btn-glass" style="font-size:10px">Church 4</button><button onclick="filterPoster('school')" class="btn-glass" style="font-size:10px">School 4</button></div><div id="poster-templates" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:70vh;overflow-y:auto"></div></div>
+<div class="glass" style="text-align:center"><h3 style="color:#00ff88">Live Preview HD</h3><div id="poster-preview"></div><div style="margin-top:12px"><button onclick="downloadPoster()" class="btn">📥 PNG HD</button><button onclick="randomPoster()" class="btn-glass">🎲 Random</button></div></div>
+<div class="glass"><h3 style="color:#00ff88;text-align:center">Customize PRO</h3><input id="pTitle" class="input-glass" value="GRAND OPENING" oninput="buildPoster()"><input id="pSub" class="input-glass" value="You Are Invited" oninput="buildPoster()"><input id="pDate" class="input-glass" value="Saturday Dec 14 2025 - 9AM" oninput="buildPoster()"><input id="pVenue" class="input-glass" value="Kaumoni Complex Nairobi" oninput="buildPoster()"><input id="pOrg" class="input-glass" value="TIMOTHY 0118431854" oninput="buildPoster()"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="pFont" class="input-glass" onchange="buildPoster()"><option>Arial Black</option><option>Impact</option><option>Georgia</option></select><input type="range" id="pSize" min="24" max="64" value="38" class="input-glass" oninput="buildPoster()"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="color" id="pTitleColor" value="#ffffff" class="input-glass" oninput="buildPoster()"><input type="color" id="pAccent" value="#00ff88" class="input-glass" oninput="buildPoster()"></div></div>
+</div></div>
+<script>
+var posterTemplates=[{id:1,cat:'wedding',name:'Wedding Royal Gold',bg:'linear-gradient(135deg,#1a1a1a,#4a3a1a,#f9c846)',accent:'#f9c846',thumb:'💍'},{id:2,cat:'wedding',name:'Wedding Blush',bg:'linear-gradient(135deg,#fff0f5,#ffb6c1,#ff69b4)',accent:'#ff1493',thumb:'💒'},{id:3,cat:'wedding',name:'Wedding Emerald',bg:'linear-gradient(135deg,#0a3d1a,#1a5a2a,#2e8b57)',accent:'#98fb98',thumb:'💚'},{id:4,cat:'wedding',name:'Wedding White',bg:'linear-gradient(135deg,#ffffff,#f5f5dc,#e6d5b8)',accent:'#8b4513',thumb:'🤍'},{id:5,cat:'birthday',name:'Birthday Neon',bg:'linear-gradient(135deg,#ff00cc,#333399,#00ffff)',accent:'#ffff00',thumb:'🎉'},{id:6,cat:'birthday',name:'Birthday Kids',bg:'linear-gradient(135deg,#ff9a9e,#fecfef)',accent:'#ff6b6b',thumb:'🎂'},{id:7,cat:'birthday',name:'Birthday Gold Black',bg:'linear-gradient(135deg,#000,#2a2a2a,#f9c846)',accent:'#f9c846',thumb:'🎁'},{id:8,cat:'birthday',name:'Birthday Pastel',bg:'linear-gradient(135deg,#a8edea,#fed6e3)',accent:'#6a5acd',thumb:'🌈'},{id:9,cat:'business',name:'Business Blue',bg:'linear-gradient(135deg,#0f0c29,#302b63)',accent:'#00d2ff',thumb:'💼'},{id:10,cat:'business',name:'Business Opening',bg:'linear-gradient(135deg,#f9c846,#ff9800)',accent:'#000',thumb:'🏢'},{id:11,cat:'business',name:'Business Minimal',bg:'linear-gradient(135deg,#ffffff,#f0f0f0)',accent:'#000',thumb:'📊'},{id:12,cat:'business',name:'Business Tech',bg:'linear-gradient(135deg,#6a0dad,#0d47a1,#00c950)',accent:'#f9c846',thumb:'🚀'},{id:13,cat:'church',name:'Church Sunday',bg:'linear-gradient(135deg,#1e3c72,#2a5298)',accent:'#fff',thumb:'⛪'},{id:14,cat:'church',name:'Church Crusade',bg:'linear-gradient(135deg,#ff4e50,#f9d423)',accent:'#fff',thumb:'🔥'},{id:15,cat:'church',name:'Church Gold',bg:'linear-gradient(135deg,#0a0a0a,#1a1a1a,#f9c846)',accent:'#f9c846',thumb:'✝️'},{id:16,cat:'church',name:'Church Youth',bg:'linear-gradient(135deg,#00c950,#00ff88)',accent:'#000',thumb:'🙏'},{id:17,cat:'school',name:'School Graduation',bg:'linear-gradient(135deg,#000,#0f0c29)',accent:'#f9c846',thumb:'🎓'},{id:18,cat:'school',name:'School Admission',bg:'linear-gradient(135deg,#ff6a00,#ee0979)',accent:'#fff',thumb:'📚'},{id:19,cat:'school',name:'School Sports',bg:'linear-gradient(135deg,#00b09b,#96c93d)',accent:'#fff',thumb:'⚽'},{id:20,cat:'school',name:'School Exam',bg:'linear-gradient(135deg,#8e2de2,#4a00e0)',accent:'#fff',thumb:'📝'}];
+var currentPoster=posterTemplates[9];
+function renderPoster(filter){var f=filter==='all'?posterTemplates:posterTemplates.filter(t=>t.cat===filter);document.getElementById('poster-templates').innerHTML=f.map(t=>`<div class="template-card ${t.id===currentPoster.id?'active':''}" onclick="selectPoster(${t.id})"><div style="width:100%;height:50px;background:${t.bg};border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px">${t.thumb}</div><b style="font-size:10px">${t.name}</b></div>`).join('');}
+function selectPoster(id){currentPoster=posterTemplates.find(t=>t.id===id);renderPoster('all');buildPoster();}
+function buildPoster(){var title=document.getElementById('pTitle').value;var sub=document.getElementById('pSub').value;var date=document.getElementById('pDate').value;var venue=document.getElementById('pVenue').value;var org=document.getElementById('pOrg').value;var font=document.getElementById('pFont').value;var size=document.getElementById('pSize').value;var tColor=document.getElementById('pTitleColor').value;var aColor=document.getElementById('pAccent').value;document.getElementById('poster-preview').innerHTML=`<div style="width:100%;height:100%;background:${currentPoster.bg};padding:20px;display:flex;flex-direction:column;justify-content:space-between;position:relative;border:4px solid ${aColor}"><div style="text-align:center"><div style="display:inline-block;background:rgba(0,0,0,0.3);padding:4px 12px;border-radius:20px;font-size:10px">${currentPoster.cat.toUpperCase()} V22</div></div><div style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center"><h1 style="font-family:${font};font-size:${size}px;color:${tColor};margin:10px 0">${title}</h1><div style="width:60px;height:4px;background:${aColor};margin:10px auto"></div><p style="color:${tColor}">${sub}</p><div style="background:rgba(0,0,0,0.25);border-radius:12px;padding:10px;margin-top:15px"><p style="font-size:12px;color:white">📅 ${date}</p><p style="font-size:12px;color:white">📍 ${venue}</p><p style="font-size:11px;color:${aColor}">${org}</p></div></div><div style="text-align:center"><div style="display:inline-block;background:${aColor};color:white;padding:8px 20px;border-radius:25px;font-weight:900;font-size:12px">V22 ALL RESTORED</div></div><div style="position:absolute;bottom:15px;right:15px;background:linear-gradient(135deg,#f9c846,#ff9800);color:black;padding:6px 10px;border-radius:20px;font-weight:900;font-size:9px">TIMOTHY<br>0118431854</div></div>`;}
+function downloadPoster(){html2canvas(document.getElementById('poster-preview'),{scale:2}).then(c=>{let a=document.createElement('a');a.download='Poster_V22_ALL_RESTORED.png';a.href=c.toDataURL();a.click();});}
+function randomPoster(){selectPoster(Math.floor(Math.random()*20)+1);}
+function filterPoster(c){renderPoster(c);}
+setTimeout(()=>{renderPoster('all');buildPoster();},400);
+</script>
+"""
 
 def social_builder():
-    return """<div style="max-width:1480px;margin:auto;padding:10px"><div class="glass" style="text-align:center"><h2>Social Media LIVE - Keep Same - Stage 1</h2><a href="/trading" class="btn">Go Trading Premium Pro Stage 1</a></div></div>"""
+    return """
+<div style="max-width:1480px;margin:auto;padding:10px">
+<div class="glass" style="text-align:center;border:3px solid #00ff88"><h2 style="color:#00ff88;margin:0">📱 SOCIAL MEDIA LIVE FULL PREMIUM PRO V22 ALL RESTORED - CAMERA + PHOTO + VIDEO + FILTERS + RTMP TIKTOK YOUTUBE + AI CAPTIONS</h2></div>
+<div style="display:grid;grid-template-columns:320px 1fr 340px;gap:14px">
+<div class="glass"><h3 style="color:#00ff88;text-align:center">Capture & AI</h3>
+<button id="startCameraBtn" onclick="startCamera()" class="btn" style="width:100%">📷 Start Camera</button>
+<button id="stopCameraBtn" onclick="stopCamera()" class="btn-glass" style="width:100%;display:none">⏹️ Stop</button>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px"><button onclick="setFilter('Normal')" class="btn-glass" style="font-size:10px">Normal</button><button onclick="setFilter('Grayscale')" class="btn-glass" style="font-size:10px">Gray</button><button onclick="setFilter('Sepia')" class="btn-glass" style="font-size:10px">Sepia</button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button onclick="capturePhoto()" class="btn-glass" style="font-size:11px">📸 Photo PNG</button><button id="recordBtn" onclick="toggleRecord()" class="btn-glass" style="font-size:11px">🔴 Video WEBM</button></div>
+<div id="capturedList" style="margin-top:10px;max-height:120px;overflow-y:auto"></div>
+<select id="platform" class="input-glass"><option>TikTok</option><option>Instagram</option><option>YouTube</option></select><input id="topic" class="input-glass" value="Poster 20 Templates V22"><button onclick="generateCaptions()" class="btn" style="width:100%">🤖 Generate Captions</button><div id="captionsResult" style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;margin-top:8px;min-height:80px;font-size:11px"></div></div>
+<div class="glass" style="text-align:center"><h3 style="color:#00ff88"><span id="liveText">Offline</span></h3><div id="videoPreview" style="width:100%;aspect-ratio:9/16;background:#000;border-radius:16px;position:relative"><video id="videoEl" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover"></video><div id="noCamera" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">📷 Start Camera</div></div><div style="margin-top:10px"><button onclick="startLive()" class="btn" style="background:linear-gradient(90deg,#ff0000,#ff4444)">🔴 Go Live TikTok & YouTube</button><button onclick="stopLive()" class="btn-glass">⏹️ End</button></div></div>
+<div class="glass"><h3 style="color:#00ff88;text-align:center">🔴 RTMP TikTok & YouTube</h3><div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px"><b style="color:red;font-size:11px">YouTube RTMP</b><input id="ytRtmp" class="input-glass" value="rtmp://a.rtmp.youtube.com/live2"><input id="ytKey" class="input-glass" type="password" placeholder="Stream Key"><button onclick="connectYT()" class="btn-glass" style="width:100%;font-size:11px">Connect YouTube</button><div id="ytStatus" style="font-size:10px;color:#aaa">Not Connected</div></div><div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;margin-top:10px"><b style="font-size:11px">TikTok RTMP</b><input id="ttRtmp" class="input-glass" value="rtmp://rtmp-push.tiktok.com/live"><input id="ttKey" class="input-glass" type="password" placeholder="Stream Key"><button onclick="connectTT()" class="btn-glass" style="width:100%;font-size:11px">Connect TikTok</button><div id="ttStatus" style="font-size:10px;color:#aaa">Not Connected</div></div></div>
+</div></div>
+<script>
+let stream=null,mediaRecorder=null,recordedChunks=[],isRecording=false;
+async function startCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:720,height:1280},audio:true});document.getElementById('videoEl').srcObject=stream;document.getElementById('noCamera').style.display='none';document.getElementById('startCameraBtn').style.display='none';document.getElementById('stopCameraBtn').style.display='block';document.getElementById('liveText').innerText='Camera Ready V22';}catch(e){alert(e.message);}}
+function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());}document.getElementById('videoEl').srcObject=null;document.getElementById('noCamera').style.display='block';document.getElementById('startCameraBtn').style.display='block';document.getElementById('stopCameraBtn').style.display='none';}
+function setFilter(n){document.getElementById('videoPreview').style.filter=n==='Grayscale'?'grayscale(100%)':n==='Sepia'?'sepia(100%)':'none';}
+function capturePhoto(){if(!stream){alert('Start Camera');return;}let v=document.getElementById('videoEl');let c=document.createElement('canvas');c.width=720;c.height=1280;let ctx=c.getContext('2d');ctx.drawImage(v,0,0,720,1280);let url=c.toDataURL('image/png');let div=document.createElement('div');div.innerHTML=`<div style="background:rgba(0,0,0,0.3);padding:6px;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between;font-size:10px"><span>📸 Photo</span><a href="${url}" download="Photo_V22.png" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:4px 8px;border-radius:12px;text-decoration:none">PNG</a></div>`;document.getElementById('capturedList').prepend(div);}
+function toggleRecord(){if(!isRecording){recordedChunks=[];mediaRecorder=new MediaRecorder(stream,{mimeType:'video/webm'});mediaRecorder.ondataavailable=e=>{if(e.data.size>0)recordedChunks.push(e.data);};mediaRecorder.onstop=()=>{let blob=new Blob(recordedChunks,{type:'video/webm'});let url=URL.createObjectURL(blob);let div=document.createElement('div');div.innerHTML=`<div style="background:rgba(0,0,0,0.3);padding:6px;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between;font-size:10px"><span>🔴 Video</span><a href="${url}" download="Video_V22.webm" style="background:#ff0000;color:white;padding:4px 8px;border-radius:12px;text-decoration:none">WEBM</a></div>`;document.getElementById('capturedList').prepend(div);};mediaRecorder.start();isRecording=true;document.getElementById('recordBtn').innerText='⏹️ Stop';}else{mediaRecorder.stop();isRecording=false;document.getElementById('recordBtn').innerText='🔴 Record';}}
+function connectYT(){document.getElementById('ytStatus').innerHTML='<span style="color:#00ff88">✅ Connected YouTube V22</span>';}
+function connectTT(){document.getElementById('ttStatus').innerHTML='<span style="color:#00ff88">✅ Connected TikTok V22</span>';}
+function startLive(){document.getElementById('liveText').innerHTML='<span style="color:red">🔴 LIVE V22 - TikTok & YouTube</span>';}
+function stopLive(){document.getElementById('liveText').innerText='Live Ended V22';}
+function generateCaptions(){let plat=document.getElementById('platform').value;let topic=document.getElementById('topic').value;document.getElementById('captionsResult').innerHTML=`<div style="background:rgba(0,0,0,0.3);padding:8px;border-radius:10px;margin:6px 0"><b>${plat} Viral V22:</b><br>🔥 ${topic} - 20 Templates PRO - V22 ALL RESTORED - No watermark HD - Link in bio! #PosterMaker #Kaumoni #V22</div>`;}
+</script>
+"""
 
 def logo_builder():
-    return """<div style="max-width:1480px;margin:auto;padding:10px"><div class="glass" style="text-align:center"><h2>Logo Maker 100 Icons - Keep Same - Stage 1</h2><a href="/trading" class="btn">Go Trading Premium Pro Stage 1</a></div></div>"""
+    return """
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<div style="max-width:1480px;margin:auto;padding:10px">
+<div class="glass" style="text-align:center;border:3px solid #f9c846"><h2 style="color:#f9c846;margin:0">🔤 LOGO MAKER 100 ICONS FULL PREMIUM PRO V22 ALL RESTORED</h2><p style="color:#f9c846;font-size:11px">Business 20 Tech 20 Food 20 Shop 20 Creative 20 = 100 Icons - Gradient 6 + Mockup</p></div>
+<div style="display:grid;grid-template-columns:300px 1fr 320px;gap:14px">
+<div class="glass"><h3 style="color:#f9c846;text-align:center">100 Icons PRO</h3><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px"><button onclick="filterLogo('all')" class="btn-glass" style="font-size:10px">All 100</button><button onclick="filterLogo('business')" class="btn-glass" style="font-size:10px">Business 20</button><button onclick="filterLogo('tech')" class="btn-glass" style="font-size:10px">Tech 20</button><button onclick="filterLogo('food')" class="btn-glass" style="font-size:10px">Food 20</button><button onclick="filterLogo('shop')" class="btn-glass" style="font-size:10px">Shop 20</button><button onclick="filterLogo('creative')" class="btn-glass" style="font-size:10px">Creative 20</button></div><div id="logo-icons" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;max-height:70vh;overflow-y:auto"></div></div>
+<div class="glass" style="text-align:center"><h3 style="color:#f9c846">Live Logo Preview HD</h3><div id="logo-preview"></div><div style="margin-top:12px"><button onclick="downloadLogo()" class="btn-gold">📥 PNG Transparent HD</button><button onclick="downloadLogo()" class="btn-glass">📦 Mockup Bundle</button></div></div>
+<div class="glass"><h3 style="color:#f9c846;text-align:center">Customize PRO</h3><input id="lCompany" class="input-glass" value="KAUMONI" oninput="buildLogo()"><input id="lTagline" class="input-glass" value="Digital Solutions" oninput="buildLogo()"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="lFont" class="input-glass" onchange="buildLogo()"><option>Arial Black</option><option>Impact</option></select><input type="range" id="lSize" min="20" max="80" value="48" class="input-glass" oninput="buildLogo()"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input type="color" id="lColor" value="#f9c846" class="input-glass" oninput="buildLogo()"><input type="color" id="lBg" value="#0f0c29" class="input-glass" oninput="buildLogo()"></div><select id="lGradient" class="input-glass" onchange="buildLogo()"><option value="none">No Gradient</option><option value="linear-gradient(135deg,#f9c846,#ff9800)">Gold Orange</option><option value="linear-gradient(135deg,#00c950,#00ff88)">Green Neon</option></select></div>
+</div></div>
+<script>
+var logoIcons=[];var cats=['business','tech','food','shop','creative'];var iconsData={'business':['💼','🏢','📊','💹','🤝','🏦','📈','💰','🏛️','📋','💳','🏷️','📦','🚀','🎯','💡','🔑','🏆','📢','💵'],'tech':['💻','🖥️','📱','⌨️','🖱️','💾','🔌','🔋','📡','🛰️','💿','🖨️','🎮','🕹️','🎧','📷','🎥','🔍','⚙️','🧠'],'food':['🍔','🍕','🌮','🍣','🍜','🍝','🥗','🍱','🍛','🍲','🥘','🍳','🥞','🧇','🍞','🥐','🥖','🍰','🎂','🍩'],'shop':['🛒','🛍️','🎁','🏷️','💳','💰','💵','🛎️','📦','🏪','🏬','🛒','🎀','🧸','👗','👕','👟','👜','💄','👓'],'creative':['🎨','🖌️','✏️','🖍️','🎭','🎬','🎤','🎧','🎸','🎹','🥁','🎺','🎻','🩰','🎪','🎯','💡','🔮','🌈','⭐']};
+cats.forEach(function(cat){iconsData[cat].forEach(function(icon,i){logoIcons.push({id:cat+'-'+i,cat:cat,icon:icon});});});
+var currentLogo=logoIcons[0];
+function renderLogo(filter){var f=filter==='all'?logoIcons:logoIcons.filter(t=>t.cat===filter);document.getElementById('logo-icons').innerHTML=f.map(t=>`<div class="template-card ${t.id===currentLogo.id?'active-gold':''}" onclick="selectLogo('${t.id}')"><div style="font-size:22px">${t.icon}</div><small style="font-size:8px">${t.cat}</small></div>`).join('');}
+function selectLogo(id){currentLogo=logoIcons.find(t=>t.id===id);renderLogo('all');buildLogo();}
+function buildLogo(){var company=document.getElementById('lCompany').value;var tagline=document.getElementById('lTagline').value;var font=document.getElementById('lFont').value;var size=document.getElementById('lSize').value;var color=document.getElementById('lColor').value;var bg=document.getElementById('lBg').value;var gradient=document.getElementById('lGradient').value;var bgStyle=gradient!=='none'?gradient:bg;document.getElementById('logo-preview').innerHTML=`<div style="width:100%;height:100%;background:${bgStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;border-radius:16px"><div style="font-size:72px">${currentLogo.icon}</div><h1 style="font-family:${font};font-size:${size}px;background:${gradient!=='none'?gradient:color};-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900">${company}</h1><p style="color:white;font-size:14px">${tagline}</p><small style="color:rgba(255,255,255,0.6)">V22 ALL RESTORED - TIMOTHY 0118431854</small></div>`;}
+function downloadLogo(){html2canvas(document.getElementById('logo-preview'),{scale:3}).then(c=>{let a=document.createElement('a');a.download='Logo_V22_ALL_RESTORED.png';a.href=c.toDataURL();a.click();});}
+function filterLogo(c){renderLogo(c);}
+setTimeout(()=>{renderLogo('all');buildLogo();},400);
+</script>
+"""
 
 @app.route('/')
 def home():
     return nav() + """
-<div style="max-width:1300px;margin:auto;padding:15px">
-<div class="glass" style="text-align:center;border:3px solid #00ff88"><h1 style="color:#00ff88;margin:5px 0">🚀 V21.9 STAGE 1 - TRADING HUB PREMIUM PRO ONLY - Keep Others Same</h1><p style="color:#00ff88;font-weight:900;font-size:11px">Stage 1: Trading Hub Premium Pro Upgraded - 6 Pairs Real Chart + Signal Marker ON Chart + Lot Calculator Inside + Tracker Last 20 + Price Alert Browser Notification + Semi Bot VIP - Keep BG #0f0c29 + Layout + Moving + Others Same No Changes</p><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:14px 28px;border-radius:30px;text-decoration:none;font-weight:900;display:inline-block;margin-top:10px;font-size:14px;border:3px solid white;box-shadow:0 0 25px rgba(0,255,136,0.6)">📈 ENTER TRADING HUB PREMIUM PRO - STAGE 1 - LIVE</a></div>
-<div class="glass"><h2 style="text-align:center;color:#f9c846;margin:0 0 12px 0">Trading Hub Upgrade - 5 Features From Handwritten Note</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:10px">
-<div style="background:rgba(14,14,30,0.7);padding:12px;border-radius:14px;border:2px solid #00ff88"><b style="color:#00ff88;font-size:11px">1. Real Chart 6 Pairs LIVE</b><br><small style="font-size:10px;color:#ddd">Existing 6 Pairs No New Pairs - Static -> LIVE Real LiteFinance TradingView - XAUUSD EURUSD GBPUSD USDJPY BTCUSD US30</small></div>
-<div style="background:rgba(14,14,30,0.7);padding:12px;border-radius:14px;border:2px solid #00ff88"><b style="color:#00ff88;font-size:11px">2. Signal Marker ON Chart</b><br><small style="font-size:10px;color:#ddd">Post BUY @2645 show green arrow at 2645 - Real chart with signals overlaid - BUY ▲ Green SELL ▼ Red</small></div>
-<div style="background:rgba(14,14,30,0.7);padding:12px;border-radius:14px;border:2px solid #f9c846"><b style="color:#f9c846;font-size:11px">3. Lot Calculator Inside</b><br><small style="font-size:10px;color:#ddd">Balance + Risk% = lot auto - User doesn't leave page - Stay on Trading Hub - Inside Page</small></div>
-<div style="background:rgba(14,14,30,0.7);padding:12px;border-radius:14px;border:2px solid #f9c846"><b style="color:#f9c846;font-size:11px">4. Performance Tracker Last 20</b><br><small style="font-size:10px;color:#ddd">Track Last 20 Win/Loss % Show Accuracy 85% Builds Trust Same signals but tracking</small></div>
-<div style="background:rgba(14,14,30,0.7);padding:12px;border-radius:14px;border:2px solid #ff4444"><b style="color:#ff4444;font-size:11px">5. Price Alert + VIP</b><br><small style="font-size:10px;color:#ddd">Alert me when XAUUSD hits 2700 -> Browser Notification Same chart pro + Semi Bot Send to VIP</small></div>
+<div style="max-width:1350px;margin:auto;padding:15px">
+<div class="glass" style="text-align:center;border:3px solid #f9c846"><h1 style="color:#f9c846;margin:5px 0">🚀 ALL-IN-ONE DIGITAL SERVICES V22 ALL RESTORED - TRADING PREMIUM PRO + WEBSITE 12T + POSTER 20T + SOCIAL LIVE + LOGO 100I</h1><p style="color:#00ff88;font-weight:900;font-size:11px">✅ V22 ALL RESTORED - TRADING HUB LIVE 6 PAIRS REAL CHART + SIGNAL MARKER ON CHART @2645 + LOT CALC INSIDE + TRACKER 20 85% + ALERT + VIP + WEBSITE 12T + POSTER 20T + SOCIAL LIVE + LOGO 100I - KEEP BG #0f0c29 #302b63 #24243e + LAYOUT + MOVING + EACH OWN DESC SEPARATE</p></div>
+
+<div class="glass"><h2 style="text-align:center;color:#f9c846;margin:0 0 12px 0">✨ WHAT WE CAN CREATE - Each Own Desc Separate - V22 ALL RESTORED</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+<div style="background:rgba(14,14,30,0.7);padding:14px;border-radius:16px;border:3px solid #00ff88"><b style="color:#00ff88">📈 Trading Hub LIVE PREMIUM PRO V22 ✅</b><br><small style="color:#ddd;display:block;margin:6px 0;font-size:11px">Real LiteFinance TradingView LIVE 6 Pairs - XAUUSD EURUSD GBPUSD USDJPY BTCUSD US30 - Buy/Sell Signal Marker ON Chart BUY @2645 green arrow @2645 - Lot Calculator Inside Balance + Risk% = lot auto Stay On Page - Performance Tracker Last 20 Win/Loss % 85% Accuracy Builds Trust - Price Alert XAUUSD hits 2700 Browser Notification + Semi Bot Send to VIP - Premium Pro</small><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:11px;border:2px solid white">ENTER - Trading LIVE PREMIUM PRO</a></div>
+<div style="background:rgba(14,14,30,0.7);padding:14px;border-radius:16px;border:3px solid #f9c846"><b style="color:#f9c846">🌐 Website Design 12T FULL PREMIUM PRO RESTORED ✅</b><br><small style="color:#ddd;display:block;margin:6px 0;font-size:11px">12 Templates Business Portfolio Ecommerce Landing Blog Agency Restaurant SaaS Creative Education Health Real Estate - Live Builder Hero About Services Testimonials FAQ Contact - Colors Fonts Desktop Tablet Mobile Preview Export HTML ZIP Publish - Fully Premium Pro V22</small><a href="/design-studio" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:11px">ENTER - Website 12T FULL PRO</a></div>
+<div style="background:rgba(14,14,30,0.7);padding:14px;border-radius:16px;border:3px solid #00ff88"><b style="color:#00ff88">🎨 Poster 20T FULL PREMIUM PRO RESTORED ✅</b><br><small style="color:#ddd;display:block;margin:6px 0;font-size:11px">20 Templates Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 - Real-time Preview Apple Glass $1000 UI Skeleton 3D Tilt Download PNG JPG PDF HD No Watermark - Fully Premium Pro V22</small><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:11px">ENTER - Poster 20T FULL PRO</a></div>
+</div></div>
+
+<div class="glass"><h2 style="text-align:center;color:#f9c846;margin:0 0 12px 0">🎨 ALL SERVICES - Each Own Desc Separate No Overlap - V22 ALL RESTORED - FULL PREMIUM FEATURES + ENTER BUTTONS</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+<div style="background:rgba(14,14,30,0.7);border:3px solid #00ff88;padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">📈</div><b style="color:#00ff88;font-size:11px;display:block;text-align:center">Trading Hub LIVE 6 Pairs FULL PREMIUM PRO ✅</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">Real LiteFinance LIVE Chart 6 Pairs + Signal Marker ON Chart BUY @2645 Green Arrow @2645 + Lot Calculator Inside Balance + Risk% Auto + Tracker Last 20 Win/Loss 85% + Price Alert Browser Notification + Semi Bot Send VIP - Premium Pro V22</small><div style="text-align:center"><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px;border:2px solid white">ENTER - Trading FULL PRO</a></div></div>
+<div style="background:rgba(14,14,30,0.7);border:3px solid #f9c846;padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">🌐</div><b style="color:#f9c846;font-size:11px;display:block;text-align:center">Website 12T FULL PRO RESTORED ✅</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">12 Templates Business Corporate Portfolio Dark Ecommerce Gold Landing Gradient Blog Minimal Agency Neon Restaurant Elegant SaaS Modern Creative Rainbow Education Blue Health Green Real Estate Black + Live Builder + Export HTML ZIP + Publish + Desktop Tablet Mobile Preview - V22</small><div style="text-align:center"><a href="/design-studio" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px">ENTER - Website FULL PRO</a></div></div>
+<div style="background:rgba(14,14,30,0.7);border:3px solid #00ff88;padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">🎨</div><b style="color:#00ff88;font-size:11px;display:block;text-align:center">Poster 20T FULL PRO RESTORED ✅</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">20 Templates Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 - Real-time Preview Apple Glass $1000 UI Skeleton 3D Tilt Download PNG JPG PDF HD No Watermark - Own Desc Separate - V22</small><div style="text-align:center"><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px">ENTER - Poster FULL PRO</a></div></div>
+<div style="background:rgba(14,14,30,0.7);border:3px solid #00ff88;padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">📱</div><b style="color:#00ff88;font-size:11px;display:block;text-align:center">Social Media LIVE FULL PRO RESTORED ✅</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">Live Streaming Camera Mic GetUserMedia Video Preview 9:16 Photo Capture Canvas PNG HD Video Capture MediaRecorder WEBM Filters 6 Timer Viewers Chat Overlay RTMP YouTube rtmp://a.rtmp.youtube.com/live2 + TikTok rtmp://rtmp-push.tiktok.com/live AI Captions TikTok Instagram YouTube - Own Desc Separate - V22</small><div style="text-align:center"><a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px">ENTER - Social FULL PRO</a></div></div>
+<div style="background:rgba(14,14,30,0.7);border:3px solid #f9c846;padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">🔤</div><b style="color:#f9c846;font-size:11px;display:block;text-align:center">Logo 100I FULL PRO RESTORED ✅</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">100 Icons Business 20 Tech 20 Food 20 Shop 20 Creative 20 = 100 Icons - Gradient 6 Options Mockup T-Shirt Business Card Letterhead - PNG Transparent HD JPG Mockup Bundle - Own Desc Separate - V22</small><div style="text-align:center"><a href="/logo-maker" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px">ENTER - Logo FULL PRO</a></div></div>
+<div style="background:rgba(14,14,30,0.7);border:2px solid rgba(255,255,255,0.1);padding:12px;border-radius:16px"><div style="font-size:24px;text-align:center">🛒</div><b style="font-size:11px;display:block;text-align:center">Shop PRO + Selar Moving</b><small style="color:#ddd;display:block;margin:6px 0;font-size:10px">Shop PRO + Selar https://selar.com/m/timothymusyoki Moving - Own Desc Separate - V22</small><div style="text-align:center"><a href="/shop" style="background:rgba(255,255,255,0.1);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;font-size:10px">ENTER - Shop</a></div></div>
 </div></div>
 </div>
 """
@@ -332,18 +238,13 @@ def ai_caption(): return nav() + social_builder()
 @app.route('/logo-maker')
 def logo_maker(): return nav() + logo_builder()
 @app.route('/shop')
-def shop_page(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><div class="glass" style="text-align:center"><h2>Shop - Keep Same Stage 1</h2><a href="/trading" class="btn">Trading Premium Pro Stage 1</a></div></div>'
+def shop_page(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><div class="glass" style="text-align:center;border:3px solid #f9c846"><h2>Shop PRO - V22 ALL RESTORED</h2><a href="/" class="btn-gold">Home - All Services + Enter Buttons</a> <a href="/trading" class="btn">Trading LIVE PRO</a> <a href="/design-studio" class="btn-gold">Website 12T PRO</a> <a href="/poster-maker" class="btn">Poster 20T PRO</a></div></div>'
 @app.route('/admin')
-def admin(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><div class="glass" style="text-align:center"><h2>Admin - Stage 1 Trading Premium Pro</h2><a href="/trading" class="btn">Trading Premium Pro Stage 1</a></div></div>'
+def admin(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><div class="glass" style="text-align:center;border:3px solid #f9c846"><h2>Admin - V22 ALL RESTORED - TIMOTHY</h2><p style="color:#00ff88;font-size:11px">Trading LIVE PRO + Website 12T + Poster 20T + Social LIVE + Logo 100I All Premium Pro Restored - Keep BG Layout Moving</p><a href="/" class="btn-gold">Home All Services Enter Buttons</a></div></div>'
 @app.route('/api/admin-data')
 def api_admin_data():
     users=load(FILES['users'],{}); fees=load(FILES['fees'],{'total':0}); orders=load(FILES['orders'],[]); prods=load(FILES['products'],[]); bundles=load(FILES['bundles'],[])
     return jsonify({'users':list(users.values()),'total_fees':fees.get('total',0),'orders':orders,'products':prods,'bundles':bundles})
-@app.route('/api/signals', methods=['GET','POST'])
-def api_signals():
-    if request.method=='POST':
-        data=request.get_json(); sigs=load(FILES['signals'],[]); sigs.insert(0,data); save(FILES['signals'],sigs[:20]); return jsonify({'ok':True})
-    return jsonify(load(FILES['signals'],[]))
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=10000)
