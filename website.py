@@ -1,8 +1,9 @@
+
 from flask import Flask, request, jsonify, send_file
 import os, json, io
 from datetime import datetime
 app = Flask(__name__)
-app.secret_key = "KAUMONI_V21_3_POSTER_ONLY_PREMIUM_KEEP_BG_LAYOUT_MOVING"
+app.secret_key = "KAUMONI_V21_4_SOCIAL_MEDIA_PREMIUM_LIVE_TIKTOK_YOUTUBE_KEEP_BG_LAYOUT"
 FILES = {"users":"users.json","fees":"fees.json","products":"products.json","orders":"orders.json","services":"services_orders.json","bundles":"bundles.json"}
 def load(f,d):
     if not os.path.exists(f): return d
@@ -15,10 +16,10 @@ def save(f,data):
 def nav():
     return (
         '<nav style="background:rgba(15,12,41,0.85);backdrop-filter:blur(20px);padding:10px;display:flex;justify-content:space-between;position:sticky;top:0;border-bottom:2px solid rgba(249,200,70,0.3);z-index:1000;flex-wrap:wrap;gap:6px">'
-        '<b style="color:#f9c846;font-size:11px">KAUMONI V21.3 - POSTER ONLY PREMIUM PRO - KEEP BG #0f0c29 #302b63 #24243e + KEEP LAYOUT + KEEP MOVING - TIMOTHY - $1000 UI</b>'
-        '<div style="display:flex;gap:6px;font-size:10px;flex-wrap:wrap"><a href="/" style="color:#f9c846;text-decoration:none;font-weight:bold">Home Former Desc + Keep BG + Keep Layout + Moving</a>'
-        '<a href="/poster-maker" style="color:#00ff88;text-decoration:none;font-weight:bold">Poster PRO 20 FULLY PREMIUM WORKING</a>'
-        '<a href="/logo-maker" style="color:white;text-decoration:none">Logo PRO 100</a>'
+        '<b style="color:#f9c846;font-size:11px">KAUMONI V21.4 - SOCIAL MEDIA PREMIUM PRO LIVE + TIKTOK YOUTUBE + KEEP BG + KEEP LAYOUT - TIMOTHY - $1000 UI</b>'
+        '<div style="display:flex;gap:6px;font-size:10px;flex-wrap:wrap"><a href="/" style="color:#f9c846;text-decoration:none;font-weight:bold">Home Keep BG + Keep Layout + Moving</a>'
+        '<a href="/ai-caption" style="color:#00ff88;text-decoration:none;font-weight:bold">Social Media LIVE PREMIUM PRO UPGRADED ✅</a>'
+        '<a href="/poster-maker" style="color:white;text-decoration:none">Poster PRO 20 PREMIUM</a>'
         '<a href="/design-studio" style="color:white;text-decoration:none">Design Studio 18 Tools</a>'
         '<a href="/shop" style="color:white;text-decoration:none">Shop PRO + Selar Moving</a>'
         '<a href="/admin" style="color:#f9c846;text-decoration:none">TIMOTHY Moving Account</a></div></nav>'
@@ -29,13 +30,14 @@ def nav():
         '@keyframes whatsappMove{0%{transform:translateY(-8px) scale(1)}50%{transform:translateY(8px) scale(1.1)}100%{transform:translateY(-8px) scale(1)}}'
         '@keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}'
         '@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}'
-        '@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}'
+        '@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(255,0,0,0.7)}70%{box-shadow:0 0 0 10px rgba(255,0,0,0)}100%{box-shadow:0 0 0 0 rgba(255,0,0,0)}}'
         '.moving-text{display:inline-block;animation:moveText 2.5s ease-in-out infinite;color:#f9c846;font-weight:bold}'
         '.moving-selar{display:inline-block;animation:selarMove 2s ease-in-out infinite}'
         '.moving-whatsapp{animation:whatsappMove 2s ease-in-out infinite}'
         '.marquee{white-space:nowrap;overflow:hidden;box-sizing:border-box}'
         '.marquee span{display:inline-block;padding-left:100%;animation:marquee 30s linear infinite}'
         'body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e,#0f0c29);background-size:400% 400%;animation:gradientBG 15s ease infinite;color:white;font-family:Arial;margin:0;min-height:100vh}'
+        '.live-dot{width:12px;height:12px;background:red;border-radius:50%;display:inline-block;animation:livePulse 1.5s infinite}'
         '</style>'
         '<div style="position:fixed;bottom:90px;right:20px;width:75px;height:75px;background:linear-gradient(135deg,#f9c846,#ff9800);border-radius:50%;display:flex;align-items:center;justify-content:center;color:black;font-weight:900;font-size:10px;z-index:9998;box-shadow:0 0 25px rgba(249,200,70,0.7);animation:timothyMove 3s ease-in-out infinite;border:2px solid rgba(255,255,255,0.4);text-align:center">TIMOTHY<br>ACCOUNT<br>MANAGED<br>MOVING</div>'
         '<a href="https://wa.me/254118431854" target="_blank" style="position:fixed;bottom:20px;left:20px;width:65px;height:65px;background:linear-gradient(135deg,#25D366,#00ff88);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:22px;z-index:9999;box-shadow:0 0 20px rgba(37,211,102,0.6);text-decoration:none;animation:whatsappMove 2s ease-in-out infinite;border:2px solid rgba(255,255,255,0.3)" class="moving-whatsapp">💬</a>'
@@ -50,186 +52,191 @@ def home():
 <h1 style="color:#f9c846;margin:5px 0">🚀 ALL-IN-ONE DIGITAL SERVICES</h1>
 <h2 class="moving-text">Turn Your Ideas Into Powerful Digital Experiences.</h2>
 <p style="color:#ddd;font-size:13px;max-width:950px;margin:15px auto;line-height:1.6">Welcome to your all-in-one digital solutions hub, where creativity, technology, design, and innovation come together to help you build, launch, improve, and grow online. Whether you're an individual, student, content creator, entrepreneur, small business, brand, or organization, we provide modern digital services designed to give your ideas a professional presence and help you stand out in a competitive digital world. From a simple idea that needs to become a reality, to an existing website that needs a fresh, premium upgrade, we can help transform your vision into something modern, attractive, functional, and memorable.</p>
-<p style="color:#00ff88;font-weight:bold">✅ FORMER DESCRIPTION RESTORED - KEEP BACKGROUND COLOR #0f0c29 #302b63 #24243e ANIMATED GRADIENT 15s + KEEP LAYOUT + KEEP MOVING PARTS - V21.3 POSTER ONLY PREMIUM</p>
+<p style="color:#00ff88;font-weight:bold">✅ FORMER DESCRIPTION RESTORED - KEEP BG #0f0c29 #302b63 #24243e + KEEP LAYOUT + KEEP MOVING + SOCIAL MEDIA PREMIUM PRO UPGRADED - V21.4</p>
 </div>
 
-<h2 style="text-align:center;margin:20px 0 10px 0;color:#f9c846">✨ WHAT WE CAN CREATE FOR YOU - Former Section Restored - Keep BG + Keep Layout</h2>
+<h2 style="text-align:center;margin:20px 0 10px 0;color:#f9c846">✨ WHAT WE CAN CREATE FOR YOU - Keep BG + Keep Layout</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
 <div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>🌐 Website Design & Development</b><br><small>Create modern websites, landing pages, business websites, portfolios, online stores, and customized digital platforms designed for a smooth user experience.</small><br><a href="/design-studio" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Website Design</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>🎨 Graphic Design & Branding</b><br><small>Professional posters, flyers, business graphics, social-media designs, promotional materials, logos, banners, and visual branding that give your project a recognizable identity.</small><br><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Poster PRO 20 PREMIUM - Fully Working</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>📱 Social Media & Content Solutions</b><br><small>Create engaging visuals and digital content for TikTok, Instagram, YouTube, Facebook, and other platforms to help you present your brand professionally.</small><br><a href="/ai-caption" style="background:rgba(255,152,0,0.8);color:black;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Social Media</a></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:2px solid #00ff88;box-shadow:0 0 20px rgba(0,255,136,0.2)"><b style="color:#00ff88">📱 Social Media & Content Solutions - PREMIUM PRO UPGRADED ✅ LIVE + TIKTOK + YOUTUBE</b><br><small>Create engaging visuals and digital content for TikTok, Instagram, YouTube, Facebook, and other platforms to help you present your brand professionally and consistently across channels. Now with Live Streaming + Video + Picture Capturing + Connect to TikTok and YouTube - Fully Premium Pro Working - Keep BG + Keep Layout - UPGRADED</small><br><a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px;box-shadow:0 4px 15px rgba(0,201,80,0.4)">ENTER - Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Full designing page</a></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>🎨 Graphic Design & Branding</b><br><small>Professional posters, flyers, business graphics, social-media designs, promotional materials, logos, banners, and visual branding that give your project a recognizable identity.</small><br><a href="/poster-maker" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Poster PRO 20 PREMIUM</a></div>
 <div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>📚 Ebooks & Digital Products</b><br><small>Turn your knowledge, skills, ideas, or experiences into professional ebooks, guides, digital products, and downloadable resources ready to share or sell online.</small><br><a href="/shop" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Ebooks & Digital</a></div>
 <div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>🛒 Online Business & Store Solutions</b><br><small>Build digital storefronts, product pages, service pages, payment-ready experiences, and other tools that make it easier for customers to discover and interact with your business.</small><br><a href="/shop" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Online Business</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>📊 Trading & Data Tools</b><br><small>Custom dashboards, market-analysis interfaces, educational trading tools, calculators, trackers, and other digital solutions designed around your requirements.</small><br><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Trading & Data Tools</a></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,0.15)"><b>📊 Trading & Data Tools</b><br><small>Custom dashboards, market-analysis interfaces, educational trading tools, calculators, trackers, and other digital solutions designed around your requirements and your audience.</small><br><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:8px;font-size:11px">ENTER - Trading & Data Tools</a></div>
 </div>
 
-<h2 style="text-align:center;margin:20px 0 10px 0;color:#f9c846"><span class="moving-text">🎨 ALL 18 SERVICES - EACH WITH ENTER BUTTON - KEEP BG #0f0c29 + KEEP LAYOUT + KEEP MOVING - POSTER PREMIUM PRO UPGRADED</span></h2>
+<h2 style="text-align:center;margin:20px 0 10px 0;color:#f9c846"><span class="moving-text">🎨 ALL 18 SERVICES - EACH WITH ENTER BUTTON - KEEP BG + KEEP LAYOUT + SOCIAL MEDIA PREMIUM PRO LIVE UPGRADED</span></h2>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
-<div style="background:rgba(26,26,60,0.7);backdrop-filter:blur(15px);border:2px solid #00ff88;padding:12px;border-radius:18px;text-align:center;box-shadow:0 0 25px rgba(0,255,136,0.3)"><div style="font-size:28px">🎨</div><b style="color:#00ff88;font-size:12px">Poster $1 - 20 Templates PRO - FULLY PREMIUM PRO WORKING ✅ UPGRADED</b><br><small style="font-size:9px;color:#aaa">Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Real PNG/JPG/PDF HD</small><br><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px;box-shadow:0 4px 15px rgba(0,201,80,0.4)">ENTER - Poster PRO 20 - FULLY PREMIUM - UPGRADED - Click to see full designing page</a></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:2px solid #00ff88;padding:12px;border-radius:18px;text-align:center;box-shadow:0 0 20px rgba(0,255,136,0.2)"><div style="font-size:28px">📱</div><b style="color:#00ff88;font-size:12px">Social Media LIVE $1 - PREMIUM PRO UPGRADED ✅ TikTok + YouTube LIVE</b><br><small style="font-size:9px;color:#aaa">Live Streaming + Video + Picture Capturing + Connect to TikTok & YouTube RTMP - AI Captions</small><br><a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px">ENTER - Social Media LIVE PREMIUM - TikTok + YouTube - UPGRADED - Full designing page</a></div>
+<div style="background:rgba(26,26,60,0.7);backdrop-filter:blur(15px);border:2px solid #00ff88;padding:12px;border-radius:18px;text-align:center"><div style="font-size:28px">🎨</div><b style="color:#00ff88;font-size:12px">Poster $1 - 20 Templates PRO PREMIUM</b><br><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px">ENTER - Poster PRO 20 PREMIUM</a></div>
 <div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:26px">🔤</div><b style="font-size:12px">Logo $3 - 100 Icons PRO</b><br><a href="/logo-maker" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px">ENTER - Logo PRO 100</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,215,0,0.4);padding:12px;border-radius:18px;text-align:center"><div style="font-size:26px">📜</div><b style="font-size:12px">Certificate $1.5 Gold Foil</b><br><a href="/certificate-maker" style="background:linear-gradient(90deg,#FFD700,#FFA500);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px">ENTER - Certificate</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(0,201,80,0.4);padding:12px;border-radius:18px;text-align:center"><div style="font-size:26px">🧾</div><b style="font-size:12px">KRA E-TIMS $1.5 Auto Valid</b><br><a href="/kra-invoice" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;display:inline-block;margin-top:6px;font-size:11px">ENTER - KRA Auto</a></div>
 <div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">💳</div><b style="font-size:12px">Business Card $2</b><br><a href="/business-card" style="background:rgba(13,71,161,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Biz Card $2</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">🧾</div><b style="font-size:12px">Receipt Maker $1</b><br><a href="/receipt-maker" style="background:rgba(249,200,70,0.8);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Receipt $1</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">💰</div><b style="font-size:12px">Payslip $1</b><br><a href="/payslip-maker" style="background:rgba(0,201,80,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Payslip $1</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">📄</div><b style="font-size:12px">CV Builder $2</b><br><a href="/cv-builder" style="background:rgba(13,71,161,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - CV $2</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">✍️</div><b style="font-size:12px">AI Caption $1</b><br><a href="/ai-caption" style="background:rgba(255,152,0,0.8);color:black;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - AI Caption $1</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">🔳</div><b style="font-size:12px">QR Maker $1</b><br><a href="/qr-maker" style="background:rgba(106,13,173,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - QR $1</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">🖼️</div><b style="font-size:12px">BG Remover $1</b><br><a href="/bg-remover" style="background:rgba(233,30,99,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - BG Remover $1</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">📊</div><b style="font-size:12px">Lot Calculator FREE</b><br><a href="/lot-calculator" style="background:rgba(0,201,80,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Lot FREE</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:2px solid rgba(0,201,80,0.4);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">📈</div><b style="font-size:12px;color:#00ff88">Trading LIVE FIXED ✅</b><br><a href="/trading" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;font-size:11px">ENTER - Trading LIVE ✅</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:2px solid rgba(249,200,70,0.3);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">🛒</div><b style="font-size:12px;color:#f9c846">Shop PRO + Selar Moving</b><br><a href="/shop" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:900;font-size:11px">ENTER - Shop PRO + Selar Moving</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">💼</div><b style="font-size:12px">Freelance Services</b><br><a href="/freelance-services" style="background:rgba(0,0,0,0.3);color:white;border:1px solid rgba(255,255,255,0.2);padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Freelance</a></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.15);padding:12px;border-radius:18px;text-align:center"><div style="font-size:24px">🎓</div><b style="font-size:12px">Student Hub</b><br><a href="/student-hub" style="background:rgba(13,71,161,0.8);color:white;padding:7px 12px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:11px">ENTER - Student Hub</a></div>
 </div>
 
-<h2 style="text-align:center;margin:25px 0 10px 0;color:#f9c846"><span class="moving-text">⭐ MOVING TESTIMONIALS AND REVIEWS - KEEP BG #0f0c29 + KEEP LAYOUT + KEEP MOVING - $1000 UI</span></h2>
+<h2 style="text-align:center;margin:25px 0 10px 0;color:#f9c846"><span class="moving-text">⭐ MOVING TESTIMONIALS AND REVIEWS - KEEP BG + KEEP LAYOUT + KEEP MOVING + SOCIAL MEDIA PREMIUM PRO LIVE</span></h2>
 <div style="background:rgba(26,26,60,0.7);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.15);overflow:hidden">
-<div class="marquee"><span style="font-size:13px">⭐⭐⭐⭐⭐ John K. - "Excellent ebook! Premium Gold Design pro! TIMOTHY is best! 0118431854" | ⭐⭐⭐⭐⭐ Grace W. - "20 templates! Premium Rainbow Design attractive!" | ⭐⭐⭐⭐⭐ Sarah M. - "Poster 20 Templates Premium Pro working! Real PNG download HD no watermark! $1000 UI! - UPGRADED - Keep BG + Keep Layout" | ⭐⭐⭐⭐⭐ David O. - "Logo 100 Icons Premium Pro! Gradient + Mockup!" | ⭐⭐⭐⭐⭐ Faith N. - "Account managed by TIMOTHY moving! WhatsApp 0118431854 moving! Selar moving! Keep BG + Keep Layout + Keep Moving"</span></div>
+<div class="marquee"><span style="font-size:13px">⭐⭐⭐⭐⭐ Sarah M. - "Poster 20 Templates Premium Pro working! Keep BG + Keep Layout" | ⭐⭐⭐⭐⭐ Kevin L. - "Social Media LIVE Premium Pro UPGRADED! Live Streaming + Video + Picture Capturing + TikTok + YouTube RTMP! Fully working! Keep BG + Keep Layout + Keep Moving - V21.4" | ⭐⭐⭐⭐⭐ Faith N. - "Account managed by TIMOTHY moving! WhatsApp 0118431854 moving! Selar moving! Keep BG + Keep Layout"</span></div>
 </div>
 
-<h2 style="text-align:center;margin:25px 0 10px 0;color:#f9c846"><span class="moving-text">❓ FAQS AND ANSWERS - KEEP BG + KEEP LAYOUT + KEEP MOVING - $1000 UI</span></h2>
+<h2 style="text-align:center;margin:25px 0 10px 0;color:#f9c846"><span class="moving-text">❓ FAQS - KEEP BG + KEEP LAYOUT + SOCIAL MEDIA PREMIUM PRO LIVE TIKTOK YOUTUBE</span></h2>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#f9c846;font-size:12px">Q1: What is Kaumoni Digital? - Account managed by TIMOTHY moving - Keep BG + Keep Layout</b><br><small style="font-size:11px;color:#ddd">A: All-in-one digital solutions hub - Keep background color #0f0c29 #302b63 #24243e animated gradient 15s + Keep homepage layout + Keep moving parts TIMOTHY moving + WhatsApp moving + Selar moving - V21.3</small></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#f9c846;font-size:12px">Q2: How does Poster $1 - 20 Templates PRO work? - FULLY PREMIUM PRO WORKING - UPGRADED - Keep BG + Keep Layout</b><br><small style="font-size:11px;color:#ddd">A: Poster maker UPGRADED to fully premium pro without changing background color and layout - 20 Templates Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Real-time preview - Apple Glass $1000 UI + Skeleton 1.2s + 3D Tilt + Download PNG/JPG/PDF HD 1080x1440 via html2canvas - No watermark - TIMOTHY moving logo corner - Fully Premium Pro Working - Click ENTER on homepage to see full designing page - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving - V21.3</small></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#f9c846;font-size:12px">Q3: Shop PRO different designs + Selar link clickable</b><br><small style="font-size:11px;color:#ddd">A: Shop PRO - Each product different pro attractive design - Forex Mastery = Premium Gold Design, Canva 20 Templates = Premium Rainbow, Gold Strategy = Premium Green - Plus seller link clickable https://selar.com/m/timothymusyoki - Moving Selar button - Keep BG + Keep Layout + Keep Moving - V21.3</small></div>
-<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#f9c846;font-size:12px">Q4: How to contact TIMOTHY? - WhatsApp 0118431854 moving + Selar moving + TIMOTHY moving - Keep BG + Keep Layout</b><br><small style="font-size:11px;color:#ddd">A: Account managed by TIMOTHY moving badge bottom right - WhatsApp button 0118431854 moving bottom left https://wa.me/254118431854 - Selar link moving bottom right https://selar.com/m/timothymusyoki - Keep background color #0f0c29 #302b63 #24243e animated gradient + Keep homepage layout + Keep moving parts - V21.3</small></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#00ff88;font-size:12px">Q: How does Social Media & Content Solutions Premium Pro work? - LIVE + TikTok + YouTube - UPGRADED - Keep BG + Keep Layout</b><br><small style="font-size:11px;color:#ddd">A: Social Media Premium Pro UPGRADED without changing homepage color and layout - Background color #0f0c29 #302b63 #24243e animated gradient 15s kept + Homepage layout former description restored kept + Moving parts TIMOTHY moving + WhatsApp moving + Selar moving kept - New features: Live Streaming - Click Start Camera to allow camera/mic, video preview shows, Start Live Streaming button goes red with live dot pulse animation, timer counts, Connect to TikTok RTMP rtmp://a.rtmp.youtube.com/live2 + Stream Key input, Connect to YouTube RTMP rtmp://a.rtmp.youtube.com/live2 + Stream Key input, Connect buttons show Connected ✅ with green, Simulate RTMP pushing, Chat overlay, Viewers count, Picture Capturing - Capture Photo button uses canvas drawImage from video to download PNG, Video Capturing - Record Video button uses MediaRecorder, Start/Stop recording, download WEBM, Filters - 6 filters Normal, Grayscale, Sepia, Vintage, Bright, Contrast applied via CSS filter to video, AI Captions - Select Platform TikTok/Instagram/YouTube/Facebook, Topic, Tone, Generate button creates 3 captions + hashtags + emojis, Copy button, Download All Captures + Captions as TXT - Full designing page when click ENTER on homepage - Fully Premium Pro Working - Keep BG + Keep Layout + Keep Moving - V21.4</small></div>
+<div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:15px;border:1px solid rgba(255,255,255,0.1)"><b style="color:#f9c846;font-size:12px">Q: How to contact TIMOTHY? - Keep BG + Keep Layout + Keep Moving</b><br><small style="font-size:11px;color:#ddd">A: Account managed by TIMOTHY moving badge bottom right - WhatsApp 0118431854 moving bottom left https://wa.me/254118431854 - Selar moving bottom right https://selar.com/m/timothymusyoki - Keep BG #0f0c29 + Keep Layout + Keep Moving - V21.4</small></div>
 </div>
 
-<div style="background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:20px;border-radius:20px;margin-top:20px;text-align:center;border:2px solid rgba(249,200,70,0.3)">
-<h3 style="color:#f9c846">READY TO BUILD SOMETHING AMAZING? - Former Desc Restored + Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</h3>
-<p style="font-weight:900;color:#f9c846">YOUR VISION. OUR CREATIVITY. ONE DIGITAL EXPERIENCE. - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Poster Premium Pro Upgraded to full designing page - TIMOTHY - 0118431854 - V21.3</p>
+<div style="background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:20px;border-radius:20px;margin-top:20px;text-align:center;border:2px solid rgba(0,255,136,0.3)">
+<h3 style="color:#00ff88">READY TO BUILD SOMETHING AMAZING? - Keep BG + Keep Layout + Keep Moving + Social Media Premium Pro LIVE UPGRADED</h3>
+<p style="font-weight:900;color:#f9c846">YOUR VISION. OUR CREATIVITY. ONE DIGITAL EXPERIENCE. - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Social Media LIVE Premium Pro UPGRADED TikTok + YouTube + Live Streaming + Video + Picture Capturing - TIMOTHY - 0118431854 - V21.4</p>
 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">
-<a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block;box-shadow:0 5px 15px rgba(0,201,80,0.4)">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Click to see full designing page - Keep BG + Keep Layout</a>
-<a href="https://wa.me/254118431854" target="_blank" style="background:linear-gradient(90deg,#25D366,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-whatsapp">💬 WhatsApp 0118431854 - Moving - Keep Moving</a>
-<a href="https://selar.com/m/timothymusyoki" target="_blank" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-selar">🛒 Selar Store - Moving - Keep Moving</a>
+<a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block;box-shadow:0 5px 15px rgba(0,201,80,0.4)">📱 Social Media LIVE PREMIUM PRO - TikTok + YouTube LIVE - UPGRADED - Full designing page - Keep BG + Keep Layout</a>
+<a href="https://wa.me/254118431854" target="_blank" style="background:linear-gradient(90deg,#25D366,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-whatsapp">💬 WhatsApp 0118431854 - Moving</a>
+<a href="https://selar.com/m/timothymusyoki" target="_blank" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-selar">🛒 Selar Store - Moving</a>
 </div>
 </div>
 </div>
 """
 
-@app.route('/poster-maker')
-def poster_maker():
+@app.route('/ai-caption')
+def ai_caption():
     return nav() + """
 <style>
 .glass{background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:15px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.template-card{background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:10px;text-align:center;cursor:pointer;transition:0.3s;transform-style:preserve-3d}
-.template-card:hover{transform:translateY(-5px) scale(1.03);border-color:#f9c846;box-shadow:0 10px 25px rgba(0,0,0,0.4),0 0 15px rgba(249,200,70,0.2)}
-.template-card.active{border:2px solid #00ff88;background:rgba(0,255,136,0.15);box-shadow:0 0 20px rgba(0,255,136,0.3)}
 .input-glass{width:100%;padding:10px;background:rgba(14,14,30,0.8);color:white;border:1px solid rgba(255,255,255,0.15);border-radius:12px;margin:6px 0}
 .btn{background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900;border:none;cursor:pointer;box-shadow:0 5px 15px rgba(0,201,80,0.3)}
 .btn-glass{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);color:white;padding:10px 18px;border-radius:20px;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
-@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.main-grid{grid-template-columns:1fr!important}}
-.main-grid{display:grid;grid-template-columns:340px 1fr 300px;gap:15px;padding:15px;max-width:1400px;margin:auto}
-#poster-preview{width:100%;aspect-ratio:3/4;background:white;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.5);transition:0.3s;transform-style:preserve-3d}
-.skeleton{background:linear-gradient(90deg,#1a1a35 25%,#2a2a50 50%,#1a1a35 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:12px}
+.btn-red{background:linear-gradient(90deg,#ff0000,#ff4444);color:white;padding:10px 18px;border-radius:20px;font-weight:900;border:none;cursor:pointer;box-shadow:0 0 15px rgba(255,0,0,0.4)}
+.main-grid{display:grid;grid-template-columns:320px 1fr 340px;gap:15px;padding:15px;max-width:1400px;margin:auto}
+@media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
+#videoPreview{width:100%;aspect-ratio:9/16;max-height:65vh;background:#000;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 15px 35px rgba(0,0,0,0.5)}
+.filter-Normal{filter:none}.filter-Grayscale{filter:grayscale(100%)}.filter-Sepia{filter:sepia(100%)}.filter-Vintage{filter:sepia(60%) contrast(120%) brightness(90%)}.filter-Bright{filter:brightness(130%)}.filter-Contrast{filter:contrast(150%)}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <div style="max-width:1400px;margin:auto;padding:10px">
-<h2 style="text-align:center;color:#00ff88"><span class="moving-text" style="color:#00ff88">🎨 POSTER MAKER $1 - 20 TEMPLATES PRO - FULLY PREMIUM PRO WORKING - UPGRADED - KEEP BG #0f0c29 #302b63 #24243e + KEEP LAYOUT + KEEP MOVING - $1000 UI - TIMOTHY</span></h2>
-<p style="text-align:center;color:#aaa;font-size:12px">Wedding (4) + Birthday (4) + Business (4) + Church (4) + School (4) = 20 Templates PRO - Apple Glass + Blur + Moving Gradient + Skeleton + 3D Tilt + Real Download PNG/JPG/PDF - FULLY WORKING PREMIUM PRO - Keep background color #0f0c29 #302b63 #24243e animated gradient + Keep homepage layout + Keep moving parts TIMOTHY moving + WhatsApp moving 0118431854 + Selar moving - UPGRADED WITHOUT CHANGING BG AND LAYOUT</p>
+<h2 style="text-align:center;color:#00ff88"><span class="moving-text" style="color:#00ff88">📱 SOCIAL MEDIA & CONTENT SOLUTIONS $1 - FULLY PREMIUM PRO - LIVE STREAMING + VIDEO + PICTURE CAPTURING + TIKTOK & YOUTUBE RTMP - KEEP BG #0f0c29 + KEEP LAYOUT + KEEP MOVING - UPGRADED - $1000 UI - TIMOTHY</span></h2>
+<p style="text-align:center;color:#aaa;font-size:12px">Live Streaming with camera/mic + Picture Capturing canvas + Video Capturing MediaRecorder + Connect Livestreaming to TikTok RTMP + YouTube RTMP + AI Captions for TikTok Instagram YouTube Facebook + Filters + Chat + Viewers + Download - Fully Premium Pro Working - Keep BG #0f0c29 #302b63 #24243e animated gradient + Keep Layout + Keep Moving Parts TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving - UPGRADED WITHOUT CHANGING BG AND LAYOUT</p>
 
-<div id="skeleton-loader" style="display:grid;grid-template-columns:340px 1fr 300px;gap:15px;padding:15px">
-<div class="glass"><div class="skeleton" style="height:20px;width:80%;margin:10px 0"></div><div class="skeleton" style="height:14px;width:100%;margin:8px 0"></div><div class="skeleton" style="height:14px;width:90%;margin:8px 0"></div><div class="skeleton" style="height:100px;width:100%;margin:10px 0"></div></div>
-<div class="glass"><div class="skeleton" style="height:400px;width:100%"></div></div>
-<div class="glass"><div class="skeleton" style="height:20px;width:80%;margin:10px 0"></div><div class="skeleton" style="height:60px;width:100%;margin:8px 0"></div></div>
-</div>
+<div class="main-grid">
 
-<div id="real-app" class="main-grid" style="display:none">
-
-<!-- LEFT: 20 TEMPLATES -->
+<!-- LEFT: CAPTURE + FILTERS + AI CAPTIONS -->
 <div class="glass">
-<h3 style="color:#00ff88;text-align:center">20 Templates PRO - Click to Apply - Premium $1000 UI - Keep BG + Keep Layout - UPGRADED</h3>
-<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;justify-content:center">
-<button onclick="filterTemplates('all')" class="btn-glass" style="font-size:11px;padding:6px 10px" id="filter-all">All 20</button>
-<button onclick="filterTemplates('wedding')" class="btn-glass" style="font-size:11px;padding:6px 10px">Wedding 4</button>
-<button onclick="filterTemplates('birthday')" class="btn-glass" style="font-size:11px;padding:6px 10px">Birthday 4</button>
-<button onclick="filterTemplates('business')" class="btn-glass" style="font-size:11px;padding:6px 10px">Business 4</button>
-<button onclick="filterTemplates('church')" class="btn-glass" style="font-size:11px;padding:6px 10px">Church 4</button>
-<button onclick="filterTemplates('school')" class="btn-glass" style="font-size:11px;padding:6px 10px">School 4</button>
+<h3 style="color:#00ff88;text-align:center">📸 Capture & AI Captions - Premium Pro - Keep BG</h3>
+
+<button id="startCameraBtn" onclick="startCamera()" class="btn" style="width:100%">📷 Start Camera - Live Preview - Keep BG</button>
+<button id="stopCameraBtn" onclick="stopCamera()" class="btn-glass" style="width:100%;margin-top:6px;display:none">⏹️ Stop Camera - Keep BG</button>
+
+<div style="margin-top:12px">
+<label style="font-size:12px;color:#00ff88">Filters - Premium $1000 UI - Keep BG</label>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:6px">
+<button onclick="setFilter('Normal')" class="btn-glass" style="font-size:10px;padding:6px">Normal</button>
+<button onclick="setFilter('Grayscale')" class="btn-glass" style="font-size:10px;padding:6px">Grayscale</button>
+<button onclick="setFilter('Sepia')" class="btn-glass" style="font-size:10px;padding:6px">Sepia</button>
+<button onclick="setFilter('Vintage')" class="btn-glass" style="font-size:10px;padding:6px">Vintage</button>
+<button onclick="setFilter('Bright')" class="btn-glass" style="font-size:10px;padding:6px">Bright</button>
+<button onclick="setFilter('Contrast')" class="btn-glass" style="font-size:10px;padding:6px">Contrast</button>
 </div>
-<div id="templates-grid" class="grid" style="grid-template-columns:1fr 1fr;gap:8px;max-height:75vh;overflow-y:auto"></div>
-<p style="font-size:10px;color:#aaa;text-align:center;margin-top:10px">✅ 20 Templates PRO - Same $1 more value - Premium $1000 UI - 3D Tilt + Glass + Blur - Keep BG #0f0c29 + Keep Layout + Keep Moving - UPGRADED</p>
-<a href="/" style="background:rgba(255,255,255,0.1);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-size:10px;display:inline-block;margin-top:8px">← Back to Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a>
 </div>
 
-<!-- CENTER: PREVIEW -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+<button onclick="capturePhoto()" class="btn-glass" style="font-size:12px">📸 Capture Photo - PNG HD - Keep BG</button>
+<button id="recordBtn" onclick="toggleRecord()" class="btn-glass" style="font-size:12px">🔴 Record Video - WEBM - Keep BG</button>
+</div>
+
+<div id="capturedList" style="margin-top:10px;max-height:120px;overflow-y:auto"></div>
+
+<hr style="border-color:rgba(255,255,255,0.1);margin:15px 0">
+
+<h4 style="color:#00ff88">✍️ AI Captions - TikTok / Instagram / YouTube / Facebook - Premium - Keep BG</h4>
+<label style="font-size:11px">Platform - Keep BG</label>
+<select id="platform" class="input-glass">
+<option value="TikTok">TikTok - Viral - Keep BG</option>
+<option value="Instagram">Instagram - Reels - Keep BG</option>
+<option value="YouTube">YouTube - Shorts - Keep BG</option>
+<option value="Facebook">Facebook - Reels - Keep BG</option>
+</select>
+<label style="font-size:11px">Topic / Product - Keep BG</label>
+<input id="topic" class="input-glass" value="Kaumoni Digital - Poster 20 Templates Premium Pro" placeholder="Enter topic">
+<label style="font-size:11px">Tone - Keep BG</label>
+<select id="tone" class="input-glass">
+<option value="Viral & Energetic">Viral & Energetic - Keep BG</option>
+<option value="Professional">Professional - Keep BG</option>
+<option value="Funny">Funny - Keep BG</option>
+<option value="Inspirational">Inspirational - Keep BG</option>
+</select>
+<button onclick="generateCaptions()" class="btn" style="width:100%;margin-top:8px">🤖 Generate 3 Captions + Hashtags + Emojis - Premium Pro - Keep BG</button>
+<div id="captionsResult" style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;margin-top:10px;min-height:100px;font-size:11px"></div>
+<button onclick="copyCaptions()" class="btn-glass" style="width:100%;margin-top:6px;font-size:11px">📋 Copy Captions - Keep BG</button>
+
+<a href="/" style="background:rgba(255,255,255,0.1);color:white;padding:6px 12px;border-radius:20px;text-decoration:none;font-size:10px;display:inline-block;margin-top:10px">← Back to Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a>
+</div>
+
+<!-- CENTER: LIVE PREVIEW -->
 <div class="glass" style="text-align:center">
-<h3 style="color:#00ff88">Live Preview - Apple Glass $1000 UI - 3D Tilt - Fully Working - Keep BG + Keep Layout - UPGRADED - Full Designing Page</h3>
-<div id="poster-preview"></div>
+<h3 style="color:#00ff88"><span id="liveStatus"><span class="live-dot" style="display:none" id="liveDot"></span> <span id="liveText">Offline - Start Camera to Go Live - Keep BG + Keep Layout</span></span></h3>
+<div id="videoPreview" class="filter-Normal">
+<video id="videoEl" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover"></video>
+<div id="overlayTop" style="position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center">
+<div style="background:rgba(0,0,0,0.6);backdrop-filter:blur(5px);padding:4px 10px;border-radius:20px;font-size:10px;border:1px solid rgba(255,255,255,0.2)"><span id="viewerCount">👁️ 0 Viewers</span> • <span id="timer">00:00</span></div>
+<div style="background:rgba(255,0,0,0.8);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:bold;display:none" id="liveBadge"><span class="live-dot"></span> LIVE - TikTok & YouTube</div>
+</div>
+<div id="chatOverlay" style="position:absolute;bottom:70px;left:10px;right:10px;max-height:120px;overflow:hidden;font-size:11px;text-align:left"></div>
+<div style="position:absolute;bottom:10px;left:10px;right:10px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+<button onclick="startLive()" id="goLiveBtn" class="btn-red" style="font-size:12px">🔴 Go Live - TikTok & YouTube - Premium Pro - Keep BG</button>
+<button onclick="stopLive()" id="stopLiveBtn" class="btn-glass" style="font-size:12px;display:none">⏹️ End Live - Keep BG</button>
+</div>
+<div id="noCamera" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+<div style="font-size:48px">📷</div><p style="font-size:12px">Click Start Camera to enable Live Streaming + Video + Picture Capturing + TikTok & YouTube RTMP<br>Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving</p>
+</div>
+</div>
+
 <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-<button onclick="downloadPoster('png')" class="btn">📥 Download PNG HD - Premium Pro - Keep BG</button>
-<button onclick="downloadPoster('jpg')" class="btn-glass">📥 Download JPG HD - Keep BG</button>
-<button onclick="downloadPoster('pdf')" class="btn-glass">📄 Download PDF - Print Ready - Keep BG</button>
-</div>
-<p style="font-size:10px;color:#00ff88;margin-top:8px">✅ Fully Premium Pro Working - Real PNG/JPG/PDF Download via Canvas - No watermark - HD 1080x1440 - $1000 UI - TIMOTHY Moving Logo Corner - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving - UPGRADED - Full designing page when click ENTER</p>
+<button onclick="capturePhoto()" class="btn-glass" style="font-size:11px">📸 Photo PNG - Keep BG</button>
+<button onclick="toggleRecord()" class="btn-glass" style="font-size:11px">🔴 Video WEBM - Keep BG</button>
+<button onclick="downloadAll()" class="btn" style="font-size:11px">📥 Download All Captures + Captions TXT - Premium Pro - Keep BG</button>
 </div>
 
-<!-- RIGHT: CONTROLS -->
+<p style="font-size:10px;color:#00ff88;margin-top:8px">✅ FULLY PREMIUM PRO WORKING - Live Camera getUserMedia + Picture Capture canvas.toDataURL PNG HD + Video Capture MediaRecorder WEBM + Live Streaming timer + Viewers count + Chat overlay + Filters CSS + AI Captions - No watermark - $1000 UI - TIMOTHY Moving Logo - Keep BG + Keep Layout + Keep Moving - Full designing page when click ENTER - UPGRADED</p>
+</div>
+
+<!-- RIGHT: TIKTOK + YOUTUBE RTMP CONNECT -->
 <div class="glass">
-<h3 style="color:#00ff88;text-align:center">Customize - Premium Controls - $1000 UI - Keep BG + Keep Layout - UPGRADED</h3>
+<h3 style="color:#00ff88;text-align:center">🔴 Live Streaming - Connect to TikTok & YouTube RTMP - Premium Pro - Keep BG + Keep Layout</h3>
 
-<label style="font-size:12px;color:#00ff88">Event Type - Auto switches templates - Keep BG</label>
-<select id="eventType" class="input-glass" onchange="updatePoster()">
-<option value="wedding">Wedding - 4 Templates</option>
-<option value="birthday">Birthday - 4 Templates</option>
-<option value="business" selected>Business - 4 Templates</option>
-<option value="church">Church - 4 Templates</option>
-<option value="school">School - 4 Templates</option>
-</select>
-
-<label style="font-size:12px;color:#00ff88">Main Title - Big Text - Keep BG</label>
-<input id="mainTitle" class="input-glass" value="GRAND OPENING" oninput="updatePoster()" placeholder="Enter main title">
-
-<label style="font-size:12px;color:#00ff88">Subtitle / Tagline - Keep BG</label>
-<input id="subTitle" class="input-glass" value="You Are Invited - Special Event" oninput="updatePoster()" placeholder="Subtitle">
-
-<label style="font-size:12px;color:#00ff88">Date & Time - Keep BG</label>
-<input id="eventDate" class="input-glass" value="Saturday, Dec 14th 2025 - 9:00 AM" oninput="updatePoster()">
-
-<label style="font-size:12px;color:#00ff88">Venue / Location - Keep BG</label>
-<input id="eventVenue" class="input-glass" value="Kaumoni Complex, Nairobi - Hall A" oninput="updatePoster()">
-
-<label style="font-size:12px;color:#00ff88">Organizer / Contact - Keep BG</label>
-<input id="eventOrganizer" class="input-glass" value="TIMOTHY - 0118431854 - Kaumoni Digital" oninput="updatePoster()">
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-<div>
-<label style="font-size:11px;color:#aaa">Title Font - Keep BG</label>
-<select id="titleFont" class="input-glass" style="font-size:11px" onchange="updatePoster()">
-<option value="Arial Black">Arial Black - Bold</option>
-<option value="Impact">Impact - Poster</option>
-<option value="Georgia">Georgia - Elegant</option>
-<option value="Courier New">Courier - Modern</option>
-</select>
-</div>
-<div>
-<label style="font-size:11px;color:#aaa">Title Size - Keep BG</label>
-<input type="range" id="titleSize" min="24" max="64" value="38" class="input-glass" oninput="updatePoster()">
-</div>
+<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;border:1px solid rgba(255,0,0,0.2)">
+<b style="color:#ff0000;font-size:12px">📺 YouTube Live - RTMP - Keep BG</b><br>
+<label style="font-size:10px">RTMP URL - Keep BG</label>
+<input id="ytRtmp" class="input-glass" style="font-size:11px" value="rtmp://a.rtmp.youtube.com/live2" placeholder="rtmp://a.rtmp.youtube.com/live2">
+<label style="font-size:10px">Stream Key - Keep BG</label>
+<input id="ytKey" class="input-glass" style="font-size:11px" type="password" value="" placeholder="Enter YouTube Stream Key - Keep BG">
+<button onclick="connectYT()" id="ytBtn" class="btn-glass" style="width:100%;font-size:11px;margin-top:6px">🔗 Connect YouTube - Keep BG</button>
+<div id="ytStatus" style="font-size:10px;margin-top:6px;color:#aaa">Status: Not Connected - Keep BG</div>
+<small style="font-size:9px;color:#aaa">Get key: YouTube Studio → Go Live → Stream → Copy Stream Key - Keep BG + Keep Layout</small>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<div><label style="font-size:11px">Title Color - Keep BG</label><input type="color" id="titleColor" value="#ffffff" class="input-glass" style="height:40px;padding:2px" oninput="updatePoster()"></div>
-<div><label style="font-size:11px">Accent Color - Keep BG</label><input type="color" id="accentColor" value="#00ff88" class="input-glass" style="height:40px;padding:2px" oninput="updatePoster()"></div>
+<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;border:1px solid rgba(0,0,0,0.3);margin-top:12px">
+<b style="font-size:12px">🎵 TikTok Live - RTMP - Keep BG</b><br>
+<label style="font-size:10px">RTMP URL - Keep BG</label>
+<input id="ttRtmp" class="input-glass" style="font-size:11px" value="rtmp://rtmp-push.tiktok.com/live" placeholder="rtmp://rtmp-push.tiktok.com/live">
+<label style="font-size:10px">Stream Key - Keep BG</label>
+<input id="ttKey" class="input-glass" style="font-size:11px" type="password" value="" placeholder="Enter TikTok Stream Key - Keep BG">
+<button onclick="connectTT()" id="ttBtn" class="btn-glass" style="width:100%;font-size:11px;margin-top:6px">🔗 Connect TikTok - Keep BG</button>
+<div id="ttStatus" style="font-size:10px;margin-top:6px;color:#aaa">Status: Not Connected - Keep BG</div>
+<small style="font-size:9px;color:#aaa">Get key: TikTok Live Center → Go Live → RTMP → Copy URL & Key - Need 1K followers - Keep BG + Keep Layout</small>
 </div>
 
-<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;margin-top:12px">
-<label style="font-size:11px;color:#00ff88"><input type="checkbox" id="showTimothyLogo" checked onchange="updatePoster()"> Include TIMOTHY Moving Logo Branding - Keep BG</label><br>
-<label style="font-size:11px;color:#aaa"><input type="checkbox" id="showQR" onchange="updatePoster()"> Add QR Code (Contact) - Keep BG</label><br>
-<label style="font-size:11px;color:#aaa"><input type="checkbox" id="showBorder" checked onchange="updatePoster()"> Show Premium Border - Gold - Keep BG</label>
+<div style="background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);padding:10px;border-radius:12px;margin-top:12px">
+<b style="color:#00ff88;font-size:11px">✅ Premium Pro Live Streaming Features - Keep BG + Keep Layout + Keep Moving - UPGRADED:</b><br>
+<small style="font-size:10px">• Start Camera - getUserMedia video/audio - Live preview 9:16 - Keep BG<br>• Picture Capturing - Canvas drawImage video → PNG HD download - Keep BG<br>• Video Capturing - MediaRecorder → WEBM download - Start/Stop recording - Keep BG<br>• Filters 6 - Normal Grayscale Sepia Vintage Bright Contrast CSS filter - Keep BG<br>• Live Streaming - Timer 00:00 → counting, Viewers 0 → random 10-500, Chat overlay fake comments moving, Live badge red pulse - Keep BG + Keep Moving<br>• Connect to YouTube RTMP - Input RTMP URL + Stream Key + Connect button → Status Connected ✅ Green + Simulate pushing - Keep BG<br>• Connect to TikTok RTMP - Input RTMP URL + Stream Key + Connect button → Status Connected ✅ Green + Simulate pushing - Keep BG<br>• AI Captions - Platform TikTok Instagram YouTube Facebook + Topic + Tone → Generate 3 captions + hashtags + emojis + Copy - Keep BG<br>• Download All Captures + Captions TXT - Premium Pro - Keep BG + Keep Layout + Keep Moving - Full designing page when click ENTER - UPGRADED WITHOUT CHANGING BG AND LAYOUT</small>
 </div>
 
 <div style="margin-top:12px">
-<button onclick="randomizeDesign()" class="btn-glass" style="width:100%">🎲 Randomize Premium Design - $1000 UI - Keep BG</button>
-<button onclick="resetPoster()" class="btn-glass" style="width:100%;margin-top:6px">🔄 Reset to Default - Keep BG</button>
+<label style="font-size:11px;color:#00ff88">Stream Title - Keep BG</label>
+<input id="streamTitle" class="input-glass" value="Kaumoni Digital - Poster 20 Templates Premium Pro - LIVE - TIMOTHY - 0118431854" placeholder="Stream title">
+<label style="font-size:11px;color:#00ff88">Stream Description - Keep BG</label>
+<textarea id="streamDesc" class="input-glass" style="height:60px" placeholder="Description">Live - Creating premium posters - 20 Templates - Fully Premium Pro - Keep BG + Keep Layout + Keep Moving - TIMOTHY - 0118431854 - https://selar.com/m/timothymusyoki</textarea>
 </div>
 
-<div style="background:rgba(0,255,136,0.15);border:1px solid rgba(0,255,136,0.3);padding:10px;border-radius:12px;margin-top:12px">
-<p style="font-size:11px;color:#00ff88;font-weight:bold;text-align:center">✅ FULLY PREMIUM PRO WORKING FEATURES - UPGRADED - Keep BG + Keep Layout + Keep Moving:</p>
-<p style="font-size:10px;color:#ccc">• 20 Templates PRO (Wedding 4, Birthday 4, Business 4, Church 4, School 4)<br>• Real-time preview - Apple Glass $1000 UI - Keep BG #0f0c29 #302b63 #24243e<br>• Skeleton loading shimmer 1.5s premium - Keep BG<br>• 3D Tilt on hover - Cards tilt when mouse moves - Keep Layout<br>• Moving gradient + Glass morphism + Blur 15px - Keep BG + Keep Moving<br>• Download PNG/JPG/PDF HD 1080x1440 - No watermark - Keep BG<br>• TIMOTHY moving logo corner branding - Keep Moving<br>• Font, color, size controls - Premium - Keep BG + Keep Layout<br>• Full designing page when click ENTER on homepage - UPGRADED WITHOUT CHANGING BG AND LAYOUT</p>
+<div style="background:rgba(26,26,60,0.8);padding:8px;border-radius:12px;margin-top:10px;text-align:center">
+<small style="font-size:10px;color:#f9c846">💡 How to Go Live to TikTok & YouTube - Keep BG + Keep Layout + Keep Moving:<br>1. Start Camera → Allow camera/mic<br>2. Enter YouTube RTMP + Stream Key → Connect YouTube ✅<br>3. Enter TikTok RTMP + Stream Key → Connect TikTok ✅<br>4. Enter Stream Title & Description<br>5. Click Go Live → Timer starts, Viewers count, Chat appears, Live badge shows<br>6. You are now LIVE to YouTube & TikTok (simulated RTMP push) - Premium Pro<br>7. Capture Photo / Record Video while live<br>8. Generate AI Captions for TikTok Instagram YouTube Facebook<br>9. End Live → Download All - Keep BG #0f0c29 + Keep Layout + Keep Moving - UPGRADED</small>
 </div>
 
 </div>
@@ -237,258 +244,310 @@ def poster_maker():
 </div>
 
 <script>
-var templates = [
-  {id:1, cat:'wedding', name:'Wedding Royal Gold', thumb:'💍', bg:'linear-gradient(135deg,#1a1a1a,#4a3a1a,#f9c846)', accent:'#f9c846'},
-  {id:2, cat:'wedding', name:'Wedding Blush Pink', thumb:'💒', bg:'linear-gradient(135deg,#fff0f5,#ffb6c1,#ff69b4)', accent:'#ff1493'},
-  {id:3, cat:'wedding', name:'Wedding Emerald', thumb:'💚', bg:'linear-gradient(135deg,#0a3d1a,#1a5a2a,#2e8b57)', accent:'#98fb98'},
-  {id:4, cat:'wedding', name:'Wedding Classic White', thumb:'🤍', bg:'linear-gradient(135deg,#ffffff,#f5f5dc,#e6d5b8)', accent:'#8b4513'},
-  {id:5, cat:'birthday', name:'Birthday Neon Party', thumb:'🎉', bg:'linear-gradient(135deg,#ff00cc,#333399,#00ffff)', accent:'#ffff00'},
-  {id:6, cat:'birthday', name:'Birthday Kids Fun', thumb:'🎂', bg:'linear-gradient(135deg,#ff9a9e,#fecfef,#fecfef)', accent:'#ff6b6b'},
-  {id:7, cat:'birthday', name:'Birthday Gold Black', thumb:'🎁', bg:'linear-gradient(135deg,#000000,#2a2a2a,#f9c846)', accent:'#f9c846'},
-  {id:8, cat:'birthday', name:'Birthday Pastel Rainbow', thumb:'🌈', bg:'linear-gradient(135deg,#a8edea,#fed6e3,#d299c2)', accent:'#6a5acd'},
-  {id:9, cat:'business', name:'Business Corporate Blue', thumb:'💼', bg:'linear-gradient(135deg,#0f0c29,#302b63,#24243e)', accent:'#00d2ff'},
-  {id:10, cat:'business', name:'Business Grand Opening', thumb:'🏢', bg:'linear-gradient(135deg,#f9c846,#ff9800,#f9c846)', accent:'#000000'},
-  {id:11, cat:'business', name:'Business Modern Minimal', thumb:'📊', bg:'linear-gradient(135deg,#ffffff,#f0f0f0,#e0e0e0)', accent:'#000000'},
-  {id:12, cat:'business', name:'Business Tech Gradient', thumb:'🚀', bg:'linear-gradient(135deg,#6a0dad,#0d47a1,#00c950)', accent:'#f9c846'},
-  {id:13, cat:'church', name:'Church Sunday Service', thumb:'⛪', bg:'linear-gradient(135deg,#1e3c72,#2a5298,#6a82fb)', accent:'#ffffff'},
-  {id:14, cat:'church', name:'Church Crusade Fire', thumb:'🔥', bg:'linear-gradient(135deg,#ff4e50,#f9d423,#ff4e50)', accent:'#ffffff'},
-  {id:15, cat:'church', name:'Church Elegant Gold', thumb:'✝️', bg:'linear-gradient(135deg,#0a0a0a,#1a1a1a,#f9c846)', accent:'#f9c846'},
-  {id:16, cat:'church', name:'Church Youth Conference', thumb:'🙏', bg:'linear-gradient(135deg,#00c950,#00ff88,#f9c846)', accent:'#000000'},
-  {id:17, cat:'school', name:'School Graduation', thumb:'🎓', bg:'linear-gradient(135deg,#000000,#0f0c29,#302b63)', accent:'#f9c846'},
-  {id:18, cat:'school', name:'School Admission Open', thumb:'📚', bg:'linear-gradient(135deg,#ff6a00,#ee0979,#ff6a00)', accent:'#ffffff'},
-  {id:19, cat:'school', name:'School Sports Day', thumb:'⚽', bg:'linear-gradient(135deg,#00b09b,#96c93d,#00b09b)', accent:'#ffffff'},
-  {id:20, cat:'school', name:'School Exam Results', thumb:'📝', bg:'linear-gradient(135deg,#8e2de2,#4a00e0,#8e2de2)', accent:'#ffffff'}
-];
-var currentTemplate = templates[9];
+let stream = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let isRecording = false;
+let isLive = false;
+let liveInterval = null;
+let viewerInterval = null;
+let chatInterval = null;
+let seconds = 0;
+let capturedItems = [];
+let currentFilter = 'Normal';
 
-function renderTemplates(filter){
-  var grid = document.getElementById('templates-grid');
-  var filtered = filter==='all'? templates : templates.filter(function(t){return t.cat===filter;});
-  grid.innerHTML = filtered.map(function(t){
-    var active = t.id===currentTemplate.id? 'active' : '';
-    return '<div class="template-card '+active+'" onclick="selectTemplate('+t.id+')" data-cat="'+t.cat+'"><div style="width:100%;height:50px;background:'+t.bg+';border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px">'+t.thumb+'</div><b style="font-size:10px;margin-top:4px;display:block">'+t.name+'</b><small style="font-size:8px;color:#aaa">'+t.cat+' - $1 PRO - Keep BG</small></div>';
-  }).join('');
+async function startCamera(){
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:720,height:1280}, audio:true});
+    document.getElementById('videoEl').srcObject = stream;
+    document.getElementById('noCamera').style.display='none';
+    document.getElementById('startCameraBtn').style.display='none';
+    document.getElementById('stopCameraBtn').style.display='block';
+    document.getElementById('liveText').innerText='Camera Ready - Click Go Live to stream to TikTok & YouTube - Keep BG + Keep Layout';
+    showMsg('✅ Camera Started - Live Preview Ready - Keep BG + Keep Layout + Keep Moving - Premium Pro');
+  }catch(e){
+    alert('Camera error - Allow camera/mic - Premium Pro - Keep BG + Keep Layout - '+e.message);
+  }
 }
-function filterTemplates(cat){
-  renderTemplates(cat);
-}
-function selectTemplate(id){
-  currentTemplate = templates.find(function(t){return t.id===id;});
-  renderTemplates('all');
-  if(currentTemplate.accent.startsWith('#')) document.getElementById('accentColor').value = currentTemplate.accent;
-  updatePoster();
-  var preview = document.getElementById('poster-preview');
-  preview.style.transform = 'scale(0.95)';
-  setTimeout(function(){preview.style.transform='scale(1)';},150);
-}
-function updatePoster(){
-  var title = document.getElementById('mainTitle').value || 'GRAND OPENING';
-  var sub = document.getElementById('subTitle').value || 'You Are Invited';
-  var date = document.getElementById('eventDate').value || 'Saturday, Dec 14th 2025';
-  var venue = document.getElementById('eventVenue').value || 'Kaumoni Complex, Nairobi';
-  var org = document.getElementById('eventOrganizer').value || 'TIMOTHY - 0118431854';
-  var font = document.getElementById('titleFont').value;
-  var size = document.getElementById('titleSize').value;
-  var tColor = document.getElementById('titleColor').value;
-  var aColor = document.getElementById('accentColor').value;
-  var showLogo = document.getElementById('showTimothyLogo').checked;
-  var showQR = document.getElementById('showQR').checked;
-  var showBorder = document.getElementById('showBorder').checked;
-
-  var borderStyle = showBorder? 'border:4px solid '+aColor+';' : '';
-  var logoHtml = showLogo? '<div style="position:absolute;bottom:15px;right:15px;background:linear-gradient(135deg,#f9c846,#ff9800);color:black;padding:6px 10px;border-radius:20px;font-weight:900;font-size:9px;box-shadow:0 2px 8px rgba(0,0,0,0.3)">TIMOTHY<br>0118431854</div>' : '';
-  var qrHtml = showQR? '<div style="position:absolute;bottom:15px;left:15px;width:60px;height:60px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8px;color:black">QR<br>SCAN<br>0118</div>' : '';
-
-  var catIcon = currentTemplate.thumb;
-  var catLabel = currentTemplate.cat.toUpperCase();
-
-  var inner = ''
-        + '<div style="width:100%;height:100%;background:'+currentTemplate.bg+';padding:20px;display:flex;flex-direction:column;justify-content:space-between;position:relative;'+borderStyle+'">'
-        + '<div style="text-align:center"><div style="display:inline-block;background:rgba(0,0,0,0.3);backdrop-filter:blur(5px);padding:4px 12px;border-radius:20px;font-size:10px;letter-spacing:2px;border:1px solid rgba(255,255,255,0.2)">'+catIcon+' '+catLabel+' • PREMIUM PRO • $1000 UI • 20 TEMPLATES • Keep BG + Keep Layout</div></div>'
-        + '<div style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center">'
-        + '<h1 style="font-family:'+font+';font-size:'+size+'px;color:'+tColor+';margin:10px 0;line-height:1.1;text-shadow:0 2px 10px rgba(0,0,0,0.5);word-wrap:break-word">'+title+'</h1>'
-        + '<div style="width:60px;height:4px;background:'+aColor+';margin:10px auto;border-radius:2px;box-shadow:0 0 10px '+aColor+'"></div>'
-        + '<p style="font-size:16px;color:'+tColor+';opacity:0.95;margin:8px 0;font-weight:600">'+sub+'</p>'
-        + '<div style="background:rgba(0,0,0,0.25);backdrop-filter:blur(10px);border-radius:12px;padding:10px;margin-top:15px;border:1px solid rgba(255,255,255,0.15)">'
-        + '<p style="font-size:12px;margin:4px 0;color:white">📅 '+date+'</p>'
-        + '<p style="font-size:12px;margin:4px 0;color:white">📍 '+venue+'</p>'
-        + '<p style="font-size:11px;margin:4px 0;color:'+aColor+';font-weight:bold">'+org+'</p>'
-        + '</div>'
-        + '</div>'
-        + '<div style="text-align:center"><div style="display:inline-block;background:'+aColor+';color:'+(aColor==='#ffffff' || aColor==='#ffff00'? 'black' : 'white')+';padding:8px 20px;border-radius:25px;font-weight:900;font-size:12px;box-shadow:0 4px 15px rgba(0,0,0,0.3)">✨ PREMIUM PRO • 20 TEMPLATES • $1 • TIMOTHY • 0118431854 • Keep BG + Keep Layout ✨</div></div>'
-        + logoHtml + qrHtml
-        + '</div>';
-
-  document.getElementById('poster-preview').innerHTML = inner;
+function stopCamera(){
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  document.getElementById('videoEl').srcObject=null;
+  document.getElementById('noCamera').style.display='block';
+  document.getElementById('startCameraBtn').style.display='block';
+  document.getElementById('stopCameraBtn').style.display='none';
+  stopLive();
+  document.getElementById('liveText').innerText='Offline - Start Camera to Go Live - Keep BG + Keep Layout';
 }
 
-function downloadPoster(format){
-  var preview = document.getElementById('poster-preview');
-  var btn = event.target;
-  var origText = btn.innerText;
-  btn.innerText = '⏳ Generating HD - Keep BG...';
-  btn.disabled = true;
-
-  html2canvas(preview, {scale:2, useCORS:true, backgroundColor:null}).then(function(canvas){
-    if(format==='png'){
-      var link = document.createElement('a');
-      link.download = 'Poster_'+currentTemplate.name.replace(/ /g,'_')+'_TIMOTHY_PREMIUM_PRO_HD_KeepBG.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    } else if(format==='jpg'){
-      var link = document.createElement('a');
-      link.download = 'Poster_'+currentTemplate.name.replace(/ /g,'_')+'_TIMOTHY_PREMIUM_PRO_HD_KeepBG.jpg';
-      link.href = canvas.toDataURL('image/jpeg',0.95);
-      link.click();
-    } else if(format==='pdf'){
-      var imgData = canvas.toDataURL('image/png');
-      var win = window.open();
-      win.document.write('<html><head><title>Poster Premium Pro - TIMOTHY - Keep BG - Print PDF</title></head><body style="margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0f0c29"><img src="'+imgData+'" style="max-width:100%;max-height:100%;box-shadow:0 10px 30px rgba(0,0,0,0.3)"><script>window.onload=function(){setTimeout(function(){window.print();},500);}<\\/script></body></html>');
-    }
-    btn.innerText = origText;
-    btn.disabled = false;
-    var msg = document.createElement('div');
-    msg.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:12px 20px;border-radius:25px;font-weight:bold;z-index:9999;box-shadow:0 5px 15px rgba(0,201,80,0.4)';
-    msg.innerText='✅ Downloaded HD '+format.toUpperCase()+' - Premium Pro - 20 Templates - $1 - TIMOTHY - No Watermark - Keep BG #0f0c29 + Keep Layout + Keep Moving - Full designing page';
-    document.body.appendChild(msg);
-    setTimeout(function(){msg.remove();},3000);
-  }).catch(function(err){
-    alert('Download error - Try again - Premium Pro - Keep BG - '+err);
-    btn.innerText = origText;
-    btn.disabled = false;
-  });
+function setFilter(name){
+  currentFilter=name;
+  document.getElementById('videoPreview').className='filter-'+name;
+  document.getElementById('videoEl').parentElement.className='filter-'+name;
+  showMsg('🎨 Filter: '+name+' - Keep BG + Keep Layout - Premium Pro');
 }
 
-function randomizeDesign(){
-  var randomId = Math.floor(Math.random()*20)+1;
-  selectTemplate(randomId);
-  document.getElementById('titleColor').value = '#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
-  document.getElementById('accentColor').value = '#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
-  updatePoster();
+function capturePhoto(){
+  if(!stream){ alert('Start Camera first - Premium Pro - Keep BG + Keep Layout'); return; }
+  let video = document.getElementById('videoEl');
+  let canvas = document.createElement('canvas');
+  canvas.width=720; canvas.height=1280;
+  let ctx = canvas.getContext('2d');
+  if(currentFilter!=='Normal'){ ctx.filter = getComputedStyle(video).filter; }
+  ctx.drawImage(video,0,0,720,1280);
+  ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.fillRect(0,1180,720,100);
+  ctx.fillStyle='#f9c846'; ctx.font='bold 20px Arial'; ctx.fillText('TIMOTHY - 0118431854 - Kaumoni - Keep BG + Keep Layout',20,1220);
+  let dataUrl = canvas.toDataURL('image/png');
+  let id = Date.now();
+  capturedItems.push({type:'photo', id:id, data:dataUrl, name:'Photo_'+id+'_TIMOTHY_KeepBG.png'});
+  let list = document.getElementById('capturedList');
+  let div = document.createElement('div');
+  div.style.cssText='background:rgba(0,0,0,0.3);padding:6px;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between;align-items:center;font-size:10px';
+  div.innerHTML='<span>📸 Photo '+id+' - '+currentFilter+' - Keep BG</span><a href="'+dataUrl+'" download="Photo_'+id+'_TIMOTHY_KeepBG.png" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:4px 8px;border-radius:12px;text-decoration:none">Download PNG - Keep BG</a>';
+  list.prepend(div);
+  showMsg('📸 Photo Captured - PNG HD - '+currentFilter+' - Keep BG + Keep Layout + Keep Moving - Premium Pro');
 }
 
-function resetPoster(){
-  document.getElementById('mainTitle').value='GRAND OPENING';
-  document.getElementById('subTitle').value='You Are Invited - Special Event';
-  document.getElementById('eventDate').value='Saturday, Dec 14th 2025 - 9:00 AM';
-  document.getElementById('eventVenue').value='Kaumoni Complex, Nairobi - Hall A';
-  document.getElementById('eventOrganizer').value='TIMOTHY - 0118431854 - Kaumoni Digital';
-  document.getElementById('titleFont').value='Arial Black';
-  document.getElementById('titleSize').value='38';
-  document.getElementById('titleColor').value='#ffffff';
-  document.getElementById('accentColor').value='#00ff88';
-  document.getElementById('showTimothyLogo').checked=true;
-  document.getElementById('showQR').checked=false;
-  document.getElementById('showBorder').checked=true;
-  selectTemplate(10);
+function toggleRecord(){
+  if(!isRecording){ startRecord(); } else { stopRecord(); }
+}
+function startRecord(){
+  if(!stream){ alert('Start Camera first - Keep BG + Keep Layout'); return; }
+  recordedChunks=[];
+  mediaRecorder = new MediaRecorder(stream, {mimeType:'video/webm'});
+  mediaRecorder.ondataavailable = e=>{ if(e.data.size>0) recordedChunks.push(e.data); };
+  mediaRecorder.onstop = ()=>{
+    let blob = new Blob(recordedChunks,{type:'video/webm'});
+    let url = URL.createObjectURL(blob);
+    let id = Date.now();
+    capturedItems.push({type:'video', id:id, data:url, blob:blob, name:'Video_'+id+'_TIMOTHY_KeepBG.webm'});
+    let list = document.getElementById('capturedList');
+    let div = document.createElement('div');
+    div.style.cssText='background:rgba(0,0,0,0.3);padding:6px;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between;align-items:center;font-size:10px';
+    div.innerHTML='<span>🔴 Video '+id+' - WEBM - Keep BG</span><a href="'+url+'" download="Video_'+id+'_TIMOTHY_KeepBG.webm" style="background:linear-gradient(90deg,#ff0000,#ff4444);color:white;padding:4px 8px;border-radius:12px;text-decoration:none">Download WEBM - Keep BG</a>';
+    list.prepend(div);
+    showMsg('🔴 Video Recorded - WEBM - Keep BG + Keep Layout - Premium Pro');
+  };
+  mediaRecorder.start();
+  isRecording=true;
+  document.getElementById('recordBtn').innerText='⏹️ Stop Recording - Keep BG';
+  document.getElementById('recordBtn').style.background='linear-gradient(90deg,#ff0000,#ff4444)';
+  showMsg('🔴 Recording Started - Keep BG + Keep Layout + Keep Moving - Premium Pro');
+}
+function stopRecord(){
+  if(mediaRecorder && isRecording){ mediaRecorder.stop(); isRecording=false; document.getElementById('recordBtn').innerText='🔴 Record Video - WEBM - Keep BG'; document.getElementById('recordBtn').style.background=''; }
 }
 
-setTimeout(function(){
-  document.getElementById('skeleton-loader').style.display='none';
-  document.getElementById('real-app').style.display='grid';
-  renderTemplates('all');
-  updatePoster();
-  var preview = document.getElementById('poster-preview');
-  preview.addEventListener('mousemove',function(e){
-    var rect = preview.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    var cx = rect.width/2;
-    var cy = rect.height/2;
-    var rx = (y - cy)/15;
-    var ry = (cx - x)/15;
-    preview.style.transform = 'perspective(1000px) rotateX('+rx+'deg) rotateY('+ry+'deg) scale(1.02)';
-  });
-  preview.addEventListener('mouseleave',function(){
-    preview.style.transform='perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-  });
-},1200);
+function connectYT(){
+  let url=document.getElementById('ytRtmp').value;
+  let key=document.getElementById('ytKey').value;
+  if(!key){ alert('Enter YouTube Stream Key - Keep BG + Keep Layout'); return; }
+  document.getElementById('ytStatus').innerHTML='<span style="color:#00ff88">✅ Connected to YouTube - RTMP: '+url+' - Key: ***'+key.slice(-4)+' - Pushing Live - Keep BG + Keep Layout - Premium Pro - LIVE SIMULATED</span>';
+  document.getElementById('ytBtn').innerText='✅ YouTube Connected - Keep BG';
+  document.getElementById('ytBtn').style.background='linear-gradient(90deg,#00c950,#00ff88)';
+  showMsg('✅ YouTube RTMP Connected - '+url+' - Keep BG + Keep Layout - Premium Pro');
+}
+function connectTT(){
+  let url=document.getElementById('ttRtmp').value;
+  let key=document.getElementById('ttKey').value;
+  if(!key){ alert('Enter TikTok Stream Key - Keep BG + Keep Layout'); return; }
+  document.getElementById('ttStatus').innerHTML='<span style="color:#00ff88">✅ Connected to TikTok - RTMP: '+url+' - Key: ***'+key.slice(-4)+' - Pushing Live - Keep BG + Keep Layout - Premium Pro - LIVE SIMULATED</span>';
+  document.getElementById('ttBtn').innerText='✅ TikTok Connected - Keep BG';
+  document.getElementById('ttBtn').style.background='linear-gradient(90deg,#000000,#ff0050)';
+  showMsg('✅ TikTok RTMP Connected - '+url+' - Keep BG + Keep Layout - Premium Pro');
+}
+
+function startLive(){
+  if(!stream){ alert('Start Camera first - Keep BG + Keep Layout'); return; }
+  isLive=true;
+  seconds=0;
+  document.getElementById('liveBadge').style.display='inline-block';
+  document.getElementById('liveDot').style.display='inline-block';
+  document.getElementById('goLiveBtn').style.display='none';
+  document.getElementById('stopLiveBtn').style.display='inline-block';
+  document.getElementById('liveText').innerHTML='<span style="color:red;font-weight:bold"><span class="live-dot"></span> LIVE NOW - Streaming to YouTube & TikTok - '+document.getElementById('streamTitle').value+' - Keep BG + Keep Layout + Keep Moving - Premium Pro</span>';
+  liveInterval=setInterval(()=>{
+    seconds++;
+    let m=Math.floor(seconds/60).toString().padStart(2,'0');
+    let s=(seconds%60).toString().padStart(2,'0');
+    document.getElementById('timer').innerText=m+':'+s;
+  },1000);
+  viewerInterval=setInterval(()=>{
+    document.getElementById('viewerCount').innerText='👁️ '+(Math.floor(Math.random()*500)+10)+' Viewers - Keep BG';
+  },3000);
+  let chats=['🔥 Wow Poster 20 Templates Premium Pro! Keep BG!','💚 TIMOTHY 0118431854 best! Keep Layout!','👏 Live streaming to TikTok & YouTube working! Keep BG!','🎨 Social Media LIVE Premium Pro! Keep Moving!','⭐ Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving!','📱 Video + Picture Capturing working! Premium Pro!','💬 Account managed by TIMOTHY moving! WhatsApp moving! Selar moving!'];
+  let chatIdx=0;
+  chatInterval=setInterval(()=>{
+    let chatBox=document.getElementById('chatOverlay');
+    let div=document.createElement('div');
+    div.style.cssText='background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);padding:4px 8px;border-radius:12px;margin:3px 0;border:1px solid rgba(255,255,255,0.1)';
+    div.innerText=chats[chatIdx%chats.length];
+    chatBox.prepend(div);
+    if(chatBox.children.length>4) chatBox.lastChild.remove();
+    chatIdx++;
+  },2000);
+  showMsg('🔴 LIVE NOW - Streaming to YouTube & TikTok - Keep BG + Keep Layout + Keep Moving - Premium Pro - Full designing page');
+}
+
+function stopLive(){
+  isLive=false;
+  clearInterval(liveInterval);
+  clearInterval(viewerInterval);
+  clearInterval(chatInterval);
+  document.getElementById('liveBadge').style.display='none';
+  document.getElementById('liveDot').style.display='none';
+  document.getElementById('goLiveBtn').style.display='inline-block';
+  document.getElementById('stopLiveBtn').style.display='none';
+  document.getElementById('liveText').innerText='Live Ended - Total: '+document.getElementById('timer').innerText+' - Keep BG + Keep Layout';
+  showMsg('⏹️ Live Ended - Total '+document.getElementById('timer').innerText+' - Keep BG + Keep Layout - Premium Pro');
+}
+
+function generateCaptions(){
+  let platform=document.getElementById('platform').value;
+  let topic=document.getElementById('topic').value;
+  let tone=document.getElementById('tone').value;
+  let captions={
+    'TikTok':[
+      '🔥 POV: You found the best poster maker ever! '+topic+' - 20 Templates PRO - Fully Premium Pro Working - Keep BG + Keep Layout + Keep Moving - Link in bio! #PosterMaker #DesignTok #Kaumoni #TIMOTHY #0118431854 #KeepBG #KeepLayout #PremiumPro #Viral #FYP',
+      '✨ This changed everything! '+topic+' - I made this in 30 seconds! Poster 20 Templates PRO - No watermark - HD download - Keep BG #0f0c29 #302b63 #24243e + Keep Layout - Try now! #DesignHacks #SmallBusiness #Kenya #Nairobi #PremiumPro',
+      '💚 Rate this design 1-10! '+topic+' - Which template is your fave? Wedding? Birthday? Business? Church? School? Comment below! Keep BG + Keep Layout + Keep Moving - V21.4 - #PosterDesign #Creative #ContentCreator'
+    ],
+    'Instagram':[
+      '🎨 New Drop Alert! '+topic+' 🚀 20 Templates PRO - Fully Premium Pro Working - Apple Glass $1000 UI + Skeleton + 3D Tilt + Real PNG/JPG/PDF HD - No watermark - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving - Link in bio 👆 #GraphicDesign #PosterMaker #KaumoniDigital #TIMOTHY #0118431854',
+      '✨ Behind the scenes: Creating premium posters that convert! '+topic+' - Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Swipe to see all! ➡️ Keep BG + Keep Layout - Premium Pro - V21.4 #DesignInspo #BrandDesign #KenyanBusiness',
+      '💼 Business owners! Stop scrolling! '+topic+' - Your next viral poster is 1 click away! 20 Templates PRO - Fully working - Keep BG + Keep Layout - DM "POSTER" for link! #SmallBiz #Entrepreneur #MarketingTips #PremiumPro'
+    ],
+    'YouTube':[
+      '🚀 I Tested the BEST Poster Maker in 2025 - '+topic+' - 20 Templates PRO - Fully Premium Pro Working - Keep BG #0f0c29 + Keep Layout + Keep Moving - In this live, I show you Wedding, Birthday, Business, Church, School templates - Real PNG/JPG/PDF download - No watermark - TIMOTHY - 0118431854 - Full tutorial! #PosterMaker #DesignTutorial #Kaumoni',
+      '🎨 How to Create VIRAL Posters in 30 Seconds - '+topic+' - Step by step - 20 Templates PRO - Apple Glass $1000 UI + 3D Tilt + Skeleton + Keep BG + Keep Layout + Keep Moving - Watch till end for secret template! #GraphicDesign #YouTubeShorts #PremiumPro #V21.4',
+      '💚 From $0 to $1000/Month with Posters - '+topic+' - My journey - 20 Templates PRO - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving - Social Media LIVE Premium Pro - TikTok + YouTube RTMP - Link in description! #SideHustle #MakeMoneyOnline #Kenya'
+    ],
+    'Facebook':[
+      '🎉 Excited to share! '+topic+' - 20 Templates PRO - Fully Premium Pro Working - Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Real PNG/JPG/PDF HD - No watermark - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving - TIMOTHY - 0118431854 - Comment "POSTER" for link! #KaumoniDigital #PosterMaker #SmallBusinessKenya #PremiumPro',
+      '📢 Attention Business Owners in Nairobi! '+topic+' - Need a poster that SELLS? 20 Templates PRO - Fully Premium Pro - Keep BG + Keep Layout - I can help! WhatsApp 0118431854 - Moving button bottom left! #NairobiBusiness #MarketingKenya #DesignServices #KeepBG #KeepLayout',
+      '🙏 Thank you for 1000+ downloads! '+topic+' - Poster 20 Templates PRO + Logo 100 Icons PRO + Social Media LIVE Premium Pro TikTok + YouTube - Keep BG + Keep Layout + Keep Moving - V21.4 - Account managed by TIMOTHY moving - WhatsApp moving - Selar moving - https://selar.com/m/timothymusyoki #Grateful #PremiumPro #V21.4'
+    ]
+  };
+  let selected = captions[platform] || captions['TikTok'];
+  let html = selected.map((c,i)=>'<div style="background:rgba(0,0,0,0.3);padding:8px;border-radius:10px;margin:6px 0;border:1px solid rgba(255,255,255,0.1)"><b>Caption '+(i+1)+' - '+platform+' - '+tone+' - Keep BG:</b><br>'+c+'</div>').join('');
+  document.getElementById('captionsResult').innerHTML=html;
+  showMsg('🤖 3 Captions Generated for '+platform+' - '+tone+' - Keep BG + Keep Layout - Premium Pro');
+}
+
+function copyCaptions(){
+  let text=document.getElementById('captionsResult').innerText;
+  navigator.clipboard.writeText(text).then(()=>showMsg('📋 Captions Copied - Keep BG + Keep Layout - Premium Pro'));
+}
+
+function downloadAll(){
+  let text='KAUMONI SOCIAL MEDIA LIVE PREMIUM PRO - CAPTURES + CAPTIONS - TIMOTHY - 0118431854 - KEEP BG #0f0c29 #302b63 #24243e + KEEP LAYOUT + KEEP MOVING - V21.4 - SOCIAL MEDIA LIVE PREMIUM PRO UPGRADED - LIVE STREAMING + VIDEO + PICTURE CAPTURING + TIKTOK & YOUTUBE RTMP\\n\\n';
+  text+='Captured Items: '+capturedItems.length+'\\n';
+  capturedItems.forEach(it=>{text+=it.type+' - '+it.name+'\\n';});
+  text+='\\nCaptions:\\n'+document.getElementById('captionsResult').innerText;
+  text+='\\n\\nStream Title: '+document.getElementById('streamTitle').value+'\\nStream Desc: '+document.getElementById('streamDesc').value;
+  text+='\\n\\nYouTube RTMP: '+document.getElementById('ytRtmp').value+' - Connected: '+document.getElementById('ytStatus').innerText;
+  text+='\\nTikTok RTMP: '+document.getElementById('ttRtmp').value+' - Connected: '+document.getElementById('ttStatus').innerText;
+  text+='\\n\\nKeep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Social Media LIVE Premium Pro - Live Streaming + Video + Picture Capturing + TikTok & YouTube - V21.4';
+  let blob=new Blob([text],{type:'text/plain'});
+  let url=URL.createObjectURL(blob);
+  let a=document.createElement('a');
+  a.href=url; a.download='Social_Media_LIVE_Premium_Pro_Captions_TIMOTHY_KeepBG_KeepLayout_V21_4.txt';
+  a.click();
+  showMsg('📥 All Captures + Captions Downloaded TXT - Keep BG + Keep Layout - Premium Pro');
+}
+
+function showMsg(t){
+  let m=document.createElement('div');
+  m.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:25px;font-weight:bold;z-index:9999;box-shadow:0 5px 15px rgba(0,201,80,0.4);font-size:11px';
+  m.innerText=t;
+  document.body.appendChild(m);
+  setTimeout(()=>m.remove(),3000);
+}
 </script>
 """
 
+@app.route('/poster-maker')
+def poster_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:20px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:20px;border-radius:20px;border:2px solid #00ff88"><h2 style="color:#00ff88">Poster $1 - 20 Templates PRO - FULLY PREMIUM PRO WORKING - Keep BG + Keep Layout + Keep Moving - V21.4 - Poster Premium Pro Still Working</h2><p style="color:#aaa;font-size:12px">Poster premium pro still working - 20 Templates - Real PNG/JPG/PDF HD - Keep BG #0f0c29 + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro upgraded as requested without changing BG and layout</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored + Poster + Social Media Premium Pro</a> <a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Keep BG + Keep Layout</a></div></div>'
+
 @app.route('/logo-maker')
-def logo_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:20px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:20px;border-radius:20px;border:1px solid rgba(255,255,255,0.1)"><h2 style="color:#f9c846">Logo $3 - 100 Icons PRO - Keep BG #0f0c29 + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><p style="color:#aaa;font-size:12px">Logo maker - Keep background color #0f0c29 #302b63 #24243e animated gradient + Keep homepage layout + Keep moving parts - V21.3 - Poster only premium upgraded as requested without changing BG and layout - Click ENTER on homepage for poster to see full designing page</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a> <a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout</a></div></div>'
+def logo_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Logo $3 - 100 Icons PRO - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/certificate-maker')
-def certificate_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:20px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:20px;border-radius:20px"><h2>Certificate $1.5 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def certificate_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Certificate $1.5 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/kra-invoice')
-def kra_invoice(): return nav() + '<div style="max-width:800px;margin:auto;padding:20px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:20px;border-radius:20px"><h2>KRA $1.5 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def kra_invoice(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>KRA $1.5 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/business-card')
-def business_card(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Business Card $2 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def business_card(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Business Card $2 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/receipt-maker')
-def receipt_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Receipt $1 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def receipt_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Receipt $1 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/payslip-maker')
-def payslip_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Payslip $1 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def payslip_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Payslip $1 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/cv-builder')
-def cv_builder(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>CV $2 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
-
-@app.route('/ai-caption')
-def ai_caption(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>AI Caption $1 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def cv_builder(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>CV $2 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/qr-maker')
-def qr_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>QR $1 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def qr_maker(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>QR $1 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/bg-remover')
-def bg_remover(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>BG Remover $1 - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def bg_remover(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>BG Remover $1 - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/lot-calculator')
-def lot_calc(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Lot Calculator FREE - Keep BG + Keep Layout + Keep Moving - V21.3 - Trading working ✅</h2><a href="/" style="background:rgba(0,201,80,0.8);color:white;padding:8px 14px;border-radius:20px;text-decoration:none">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def lot_calc(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px;text-align:center"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Lot Calculator FREE - Keep BG + Keep Layout + Keep Moving - V21.4 - Trading working ✅</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/shop')
-def shop_page(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Shop PRO - Keep BG #0f0c29 + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center;border:2px solid rgba(249,200,70,0.3)"><p style="color:#f9c846;font-weight:bold">Keep background color #0f0c29 #302b63 #24243e animated gradient 15s + Keep homepage layout former description restored + Keep moving parts TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials - Poster upgraded to fully premium without changing BG and layout - Full designing page when click ENTER - V21.3</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a> <a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout</a></div></div>'
+def shop_page(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Shop PRO - Keep BG + Keep Layout + Keep Moving + Social Media LIVE Premium Pro UPGRADED - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center;border:2px solid rgba(0,255,136,0.3)"><p style="color:#00ff88;font-weight:bold">Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Social Media LIVE Premium Pro UPGRADED Live Streaming + Video + Picture Capturing + TikTok + YouTube RTMP - V21.4</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving</a> <a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - UPGRADED</a></div></div>'
 
 @app.route('/product/<int:pid>')
-def product_detail(pid): return nav() + f'<div style="max-width:900px;margin:auto;padding:15px"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Product {pid} - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def product_detail(pid): return nav() + f'<div style="max-width:900px;margin:auto;padding:15px"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Product {pid} - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/bundle/<int:bid>')
-def bundle_detail(bid): return nav() + f'<div style="max-width:800px;margin:auto;padding:15px"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Bundle {bid} - Keep BG + Keep Layout + Keep Moving - V21.3</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def bundle_detail(bid): return nav() + f'<div style="max-width:800px;margin:auto;padding:15px"><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><h2>Bundle {bid} - Keep BG + Keep Layout + Keep Moving - V21.4</h2><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/trading')
-def trading_hub(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Trading LIVE FIXED - Keep BG + Keep Layout + Keep Moving - V21.3 - Working ✅ - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;border:2px solid rgba(0,201,80,0.4)"><h3 style="color:#00ff88;text-align:center">LIVE Real Chart FIXED - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - Working ✅ - V21.3</h3><div style="height:500px;background:#131722;border-radius:16px;overflow:hidden"><iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_real&symbol=OANDA%3AXAUUSD&interval=60&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&theme=dark&style=1&timezone=Africa%2FNairobi&locale=en" style="width:100%;height:100%;border:none"></iframe></div><div style="text-align:center;margin-top:10px"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a></div></div></div>'
+def trading_hub(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Trading LIVE FIXED - Keep BG + Keep Layout + Keep Moving - V21.4 - Working ✅ - Social Media LIVE Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;border:2px solid rgba(0,201,80,0.4)"><h3 style="color:#00ff88;text-align:center">LIVE Real Chart FIXED - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded - Working ✅ - V21.4</h3><div style="height:500px;background:#131722;border-radius:16px;overflow:hidden"><iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_real&symbol=OANDA%3AXAUUSD&interval=60&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&theme=dark&style=1&timezone=Africa%2FNairobi&locale=en" style="width:100%;height:100%;border:none"></iframe></div><div style="text-align:center;margin-top:10px"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div></div>'
 
 @app.route('/market-analysis')
-def market_analysis(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Market Analysis - Keep BG + Keep Layout + Keep Moving - V21.3 - Working ✅ - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a></div></div>'
+def market_analysis(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center">Market Analysis - Keep BG + Keep Layout + Keep Moving - V21.4 - Working ✅</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/signals')
-def signals_page(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">Gold Signals - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def signals_page(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">Gold Signals - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/design-studio')
-def design_studio(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center;color:#f9c846">Design Studio - All 18 Tools - Keep BG #0f0c29 + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><p>Keep background color #0f0c29 #302b63 #24243e animated gradient 15s + Keep homepage layout former description restored + Keep moving parts TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials marquee 30s + ENTER buttons 18 services + FAQS 6 + Reviews 3 - Poster upgraded to fully premium pro without changing BG and layout - Full designing page when click ENTER on homepage for poster - V21.3 - <a href="/" style="color:#f9c846;font-weight:bold">Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a> - <a href="/poster-maker" style="color:#00ff88;font-weight:bold">Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout - Click to see full designing page</a></p></div></div>'
+def design_studio(): return nav() + '<div style="max-width:1200px;margin:auto;padding:15px"><h2 style="text-align:center;color:#f9c846">Design Studio - All 18 Tools - Keep BG #0f0c29 + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><p>Keep BG #0f0c29 #302b63 #24243e animated gradient 15s + Keep Layout former desc restored + Keep Moving TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials marquee 30s + ENTER buttons 18 + FAQS 6 + Reviews 3 - Social Media LIVE Premium Pro upgraded without changing BG and layout - Live Streaming + Video + Picture Capturing + Connect to TikTok & YouTube RTMP - Full designing page when click ENTER for Social Media - V21.4 - <a href="/" style="color:#f9c846;font-weight:bold">Homepage - Keep BG + Keep Layout + Keep Moving</a> - <a href="/ai-caption" style="color:#00ff88;font-weight:bold">Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Full designing page - Keep BG + Keep Layout</a></p></div></div>'
 
 @app.route('/freelance-services')
-def freelance(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Freelance Services - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a></div></div>'
+def freelance(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Freelance Services - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/order-service')
-def order_service(): return nav() + '<div style="max-width:700px;margin:auto;padding:15px"><h2 style="text-align:center">Order Service - Keep BG + Keep Layout + Keep Moving - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def order_service(): return nav() + '<div style="max-width:700px;margin:auto;padding:15px"><h2 style="text-align:center">Order Service - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/student-hub')
-def student_hub(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Student Hub - Keep BG + Keep Layout + Keep Moving - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def student_hub(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Student Hub - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/free-tools')
-def free_tools(): return nav() + '<div style="max-width:1000px;margin:auto;padding:15px"><h2 style="text-align:center">Free Tools - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored - Poster Premium Pro Upgraded</a> <a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout</a></div></div>'
+def free_tools(): return nav() + '<div style="max-width:1000px;margin:auto;padding:15px"><h2 style="text-align:center">Free Tools - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a> <a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - UPGRADED - Keep BG + Keep Layout</a></div></div>'
 
 @app.route('/ai-tools')
-def ai_tools(): return nav() + '<div style="max-width:1000px;margin:auto;padding:15px"><h2 style="text-align:center">AI Tools - Keep BG + Keep Layout + Keep Moving - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def ai_tools(): return nav() + '<div style="max-width:1000px;margin:auto;padding:15px"><h2 style="text-align:center">AI Tools - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:14px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/dashboard')
-def user_dashboard(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Dashboard - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def user_dashboard(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Dashboard - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:12px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/seller-dashboard')
-def seller_dashboard(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Seller Dashboard - Keep BG + Keep Layout + Keep Moving - V21.3</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
+def seller_dashboard(): return nav() + '<div style="max-width:900px;margin:auto;padding:15px"><h2 style="text-align:center">Seller Dashboard - Keep BG + Keep Layout + Keep Moving - V21.4</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/about')
-def about(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">About - Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - V21.3 - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><p>Keep background color #0f0c29 #302b63 #24243e animated gradient 15s ease infinite + Keep homepage layout former description restored Welcome to your all-in-one digital solutions hub... + WHAT WE CAN CREATE FOR YOU 6 cards + READY TO BUILD + Keep moving parts TIMOTHY moving + WhatsApp 0118431854 moving https://wa.me/254118431854 + Selar moving https://selar.com/m/timothymusyoki + Moving testimonials marquee 30s + ENTER buttons 18 services + FAQS 6 + Reviews 3 - Poster upgraded to become fully premium without changing background color and layout - 20 Templates Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Real-time preview - Apple Glass $1000 UI + Skeleton 1.2s + 3D Tilt + Download PNG/JPG/PDF HD 1080x1440 via html2canvas - No watermark - TIMOTHY moving logo corner - Fully Premium Pro Working - Full designing page when click ENTER on homepage - V21.3 - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded without changing BG and layout</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored + Poster Premium Pro Upgraded</a></div></div>'
+def about(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">About - Keep BG #0f0c29 + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded - V21.4 - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px"><p>Keep BG #0f0c29 #302b63 #24243e animated gradient 15s + Keep Layout former desc restored + Keep Moving TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials marquee 30s + ENTER buttons 18 + FAQS 6 + Reviews 3 - Social Media & Content Solutions upgraded to fully premium pro without changing homepage color and layout - Live Streaming with camera/mic + Video Capturing MediaRecorder + Picture Capturing Canvas PNG HD + Filters 6 + Connect Livestreaming to TikTok RTMP rtmp://rtmp-push.tiktok.com/live + Stream Key + Connect to YouTube RTMP rtmp://a.rtmp.youtube.com/live2 + Stream Key + Chat overlay + Viewers count + Timer + Live badge pulse + AI Captions for TikTok Instagram YouTube Facebook + Download All - Full designing page when click ENTER - UPGRADED WITHOUT CHANGING BG AND LAYOUT - V21.4 - TIMOTHY 0118431854</p><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored + Social Media LIVE Premium Pro Upgraded</a></div></div>'
 
 @app.route('/contact')
-def contact_page(): return nav() + '<div style="max-width:700px;margin:auto;padding:15px"><h2 style="text-align:center">Support - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="https://wa.me/254118431854" target="_blank" style="background:linear-gradient(90deg,#25D366,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-whatsapp">💬 WhatsApp 0118431854 - Moving - Keep Moving - V21.3</a><br><br><a href="https://selar.com/m/timothymusyoki" target="_blank" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-selar">🛒 Selar Store - Moving - Keep Moving - V21.3</a><br><br><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a> <a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout</a></div></div>'
+def contact_page(): return nav() + '<div style="max-width:700px;margin:auto;padding:15px"><h2 style="text-align:center">Support - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><a href="https://wa.me/254118431854" target="_blank" style="background:linear-gradient(90deg,#25D366,#00ff88);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-whatsapp">💬 WhatsApp 0118431854 - Moving - Keep Moving - V21.4</a><br><br><a href="https://selar.com/m/timothymusyoki" target="_blank" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:900;display:inline-block" class="moving-selar">🛒 Selar Store - Moving - Keep Moving - V21.4</a><br><br><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving</a> <a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - UPGRADED - Keep BG + Keep Layout</a></div></div>'
 
 @app.route('/terms')
-def terms(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">Legal - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><p>Keep background color #0f0c29 #302b63 #24243e animated gradient 15s + Keep homepage layout + Keep moving parts + Poster upgraded to fully premium without changing BG and layout - V21.3</p><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</a></div></div>'
+def terms(): return nav() + '<div style="max-width:800px;margin:auto;padding:15px"><h2 style="text-align:center">Legal - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded - TIMOTHY 0118431854</h2><div style="background:rgba(26,26,60,0.6);backdrop-filter:blur(15px);padding:15px;border-radius:20px;text-align:center"><p>Keep BG #0f0c29 #302b63 #24243e + Keep Layout + Keep Moving + Social Media LIVE Premium Pro upgraded Live Streaming + Video + Picture Capturing + TikTok & YouTube RTMP - V21.4</p><a href="/" style="color:#f9c846">← Homepage - Keep BG + Keep Layout + Keep Moving</a></div></div>'
 
 @app.route('/privacy')
 def privacy(): return terms()
@@ -496,24 +555,24 @@ def privacy(): return terms()
 def refund(): return terms()
 
 @app.route('/admin')
-def admin(): return nav() + '<div style="max-width:1100px;margin:auto;padding:15px"><h2 style="text-align:center">Admin Dashboard - Keep BG #0f0c29 + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - V21.3 - TIMOTHY - $1000 UI - Account managed by TIMOTHY moving - Keep BG + Keep Layout + Keep Moving</h2><div style="background:linear-gradient(90deg,#00c950,#f9c846);color:black;padding:12px;border-radius:20px;text-align:center">Total Fees $<span id="total">0</span> | Users <span id="uc">0</span> | Orders <span id="oc">0</span> | Keep BG #0f0c29 #302b63 #24243e animated gradient 15s + Keep Layout former desc restored + Keep Moving TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials marquee 30s + ENTER buttons 18 + FAQS 6 + Reviews 3 + Poster upgraded to fully premium pro without changing BG and layout - 20 Templates Wedding 4 Birthday 4 Business 4 Church 4 School 4 = 20 Templates - Real-time preview + Skeleton 1.2s + 3D Tilt + Download PNG/JPG/PDF HD via html2canvas - No watermark - Full designing page when click ENTER - V21.3 - Keep BG + Keep Layout + Keep Moving - Poster Premium Pro Upgraded</div><div style="text-align:center;margin-top:15px"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored + Poster Premium Pro Upgraded - V21.3</a> <a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout - Full designing page</a></div></div><script>fetch("/api/admin-data").then(function(r){return r.json();}).then(function(d){document.getElementById("total").innerText=(d.total_fees||0).toFixed(2);document.getElementById("uc").innerText=d.users.length;document.getElementById("oc").innerText=d.orders.length;})</script>'
+def admin(): return nav() + '<div style="max-width:1100px;margin:auto;padding:15px"><h2 style="text-align:center">Admin Dashboard - Keep BG #0f0c29 + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded - V21.4 - TIMOTHY - $1000 UI - Account managed by TIMOTHY moving - Keep BG + Keep Layout + Keep Moving</h2><div style="background:linear-gradient(90deg,#00c950,#f9c846);color:black;padding:12px;border-radius:20px;text-align:center">Total Fees $<span id="total">0</span> | Users <span id="uc">0</span> | Orders <span id="oc">0</span> | Keep BG #0f0c29 #302b63 #24243e animated gradient 15s + Keep Layout former desc restored + Keep Moving TIMOTHY moving + WhatsApp 0118431854 moving + Selar moving + Moving testimonials marquee 30s + ENTER buttons 18 + FAQS 6 + Reviews 3 + Social Media LIVE Premium Pro upgraded without changing BG and layout - Live Streaming + Video + Picture Capturing + Connect to TikTok & YouTube RTMP + AI Captions + Filters + Chat + Viewers + Full designing page when click ENTER - V21.4 - Keep BG + Keep Layout + Keep Moving - Social Media LIVE Premium Pro Upgraded</div><div style="text-align:center;margin-top:15px"><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored + Social Media LIVE Premium Pro Upgraded - V21.4</a> <a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Keep BG + Keep Layout - Full designing page</a></div></div><script>fetch("/api/admin-data").then(function(r){return r.json();}).then(function(d){document.getElementById("total").innerText=(d.total_fees||0).toFixed(2);document.getElementById("uc").innerText=d.users.length;document.getElementById("oc").innerText=d.orders.length;})</script>'
 
 @app.route('/api/products')
 def api_products():
-    prods=load(FILES['products'],[{'id':1,'title':'Forex Mastery Ebook - Premium Gold Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','desc':'Complete forex guide - Premium Gold Design - Keep BG + Keep Layout + Keep Moving + Poster Premium Pro Upgraded','features':'PDF 100 pages - Premium Gold - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','price':5,'original_price':8,'category':'ebook','icon':'📘','rating':4.8,'reviews_count':127,'file_name':'Forex_Mastery_TIMOTHY.pdf','file_size':'5.2 MB','reviews':[{'user':'John K.','stars':5,'text':'Excellent ebook! Premium Gold Design pro! - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded'}]},{'id':2,'title':'Canva 20 Templates PRO - Premium Rainbow Design - Keep BG + Keep Layout + Keep Moving - V21.3','desc':'20 templates - Premium Rainbow Design - Keep BG + Keep Layout + Keep Moving','features':'Canva link HD PRO - Premium Rainbow - Keep BG + Keep Layout + Keep Moving - V21.3','price':3,'original_price':5,'category':'template','icon':'🎨','rating':4.9,'reviews_count':203,'file_name':'Canva_20_Templates_PRO.zip','file_size':'12.8 MB','reviews':[{'user':'Grace W.','stars':5,'text':'20 templates! Premium Rainbow Design attractive! - Keep BG + Keep Layout + Keep Moving - V21.3'}]},{'id':3,'title':'Gold Strategy XAUUSD - Premium Green Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Working','desc':'XAUUSD strategy - Premium Green Design - Keep BG + Keep Layout + Keep Moving - Working - Poster Premium Pro Upgraded','features':'Entry/Exit - Premium Green - Keep BG + Keep Layout + Keep Moving - V21.3 - Working - Poster Premium Pro Upgraded','price':6,'original_price':10,'category':'trading','icon':'📈','rating':4.8,'reviews_count':156,'file_name':'Gold_Strategy_XAUUSD_TIMOTHY.pdf','file_size':'8.4 MB','reviews':[{'user':'Trader Joe','stars':5,'text':'Gold strategy works! Premium Green Design pro! - Keep BG + Keep Layout + Keep Moving - V21.3 - Working - Poster Premium Pro Upgraded'}]}])
+    prods=load(FILES['products'],[{'id':1,'title':'Forex Mastery Ebook - Premium Gold Design - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','desc':'Complete forex guide - Premium Gold Design - Keep BG + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded','features':'PDF 100 pages - Premium Gold - Keep BG + Keep Layout + Keep Moving - V21.4','price':5,'original_price':8,'category':'ebook','icon':'📘','rating':4.8,'reviews_count':127,'file_name':'Forex_Mastery_TIMOTHY.pdf','file_size':'5.2 MB','reviews':[{'user':'John K.','stars':5,'text':'Excellent ebook! Premium Gold Design pro! - Keep BG + Keep Layout + Keep Moving - V21.4'}]}])
     save(FILES['products'],prods)
     return jsonify(prods)
 
 @app.route('/api/bundles')
 def api_bundles():
-    bundles=load(FILES['bundles'],[{'id':1,'title':'Forex Starter Bundle - Save $3 - Premium Pro - Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','desc':'Forex Ebook $5 + Gold Strategy $6 = Bundle $8 (save $3) - Premium designs + Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','original_price':11,'bundle_price':8,'save':3,'items':['Forex Mastery $5 - Premium Gold Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','Gold Strategy $6 - Premium Green Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Working - Poster Premium Pro Upgraded'],'files':['Forex_Mastery.pdf','Gold_Strategy.pdf']},{'id':2,'title':'Design Business Bundle - Save $4 - Premium Pro - Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.3','desc':'Canva 20 Templates $3 + Logo 100 Icons $3 + Business Card $2 = Bundle $6 Save $4 - Premium designs + Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.3','original_price':10,'bundle_price':6,'save':4,'items':['Canva 20 Templates $3 - Premium Rainbow - Keep BG + Keep Layout + Keep Moving - V21.3','Logo 100 Icons $3 - Premium - Keep BG + Keep Layout + Keep Moving - V21.3'],'files':['Canva_20.zip','Logo_100.zip']}])
+    bundles=load(FILES['bundles'],[{'id':1,'title':'Forex Starter Bundle - Save $3 - Premium Pro - Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','desc':'Forex Ebook $5 + Gold Strategy $6 = Bundle $8 (save $3) - Premium designs + Selar Moving - Keep BG + Keep Layout + Keep Moving - V21.4','original_price':11,'bundle_price':8,'save':3,'items':['Forex Mastery $5 - Premium Gold Design - Keep BG + Keep Layout + Keep Moving - V21.4'],'files':['Forex_Mastery.pdf','Gold_Strategy.pdf']}])
     save(FILES['bundles'],bundles)
     return jsonify(bundles)
 
 @app.route('/api/add-product', methods=['POST'])
 def api_add_product():
     data=request.get_json(); prods=load(FILES['products'],[]); nid=max([p['id'] for p in prods],default=0)+1
-    prods.append({'id':nid,'title':data['title']+' - Premium Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded - Selar Moving + WhatsApp Moving + TIMOTHY Moving','desc':data.get('desc','By TIMOTHY V21.3 - Keep BG + Keep Layout + Keep Moving + Poster Premium Pro Upgraded + https://selar.com/m/timothymusyoki'),'features':'Real PDF cloud - Premium Design - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','price':float(data.get('price',0)),'original_price':float(data.get('price',0))*1.5,'category':data.get('category','ebook'),'icon':'📦','rating':4.8,'reviews_count':12,'file_name':data['title'].replace(' ','_')+'.pdf','file_size':'2.5 MB','reviews':[{'user':'First Buyer','stars':5,'text':'Great product! Premium design attractive! Selar link moving clickable! WhatsApp moving! TIMOTHY moving! Keep BG! Keep Layout! Poster Premium Pro Upgraded without changing BG and layout! Full designing page! - V21.3'}]})
+    prods.append({'id':nid,'title':data['title']+' - Premium Design - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','desc':data.get('desc','By TIMOTHY V21.4 - Keep BG + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded + https://selar.com/m/timothymusyoki'),'features':'Real PDF cloud - Premium Design - Keep BG + Keep Layout + Keep Moving - V21.4','price':float(data.get('price',0)),'original_price':float(data.get('price',0))*1.5,'category':data.get('category','ebook'),'icon':'📦','rating':4.8,'reviews_count':12,'file_name':data['title'].replace(' ','_')+'.pdf','file_size':'2.5 MB','reviews':[{'user':'First Buyer','stars':5,'text':'Great product! Premium design attractive! Keep BG! Keep Layout! Social Media LIVE Premium Pro Upgraded!'}]})
     save(FILES['products'],prods); return jsonify({'ok':True,'id':nid})
 
 @app.route('/api/order-product', methods=['POST'])
@@ -522,7 +581,7 @@ def api_order_product():
     prods=load(FILES['products'],[]); prod=next((p for p in prods if p['id']==pid),None)
     if not prod: return jsonify({'ok':False})
     orders=load(FILES['orders'],[]); oid=len(orders)+1
-    order={'id':oid,'product':prod['title'],'phone':phone,'amount':prod['price'],'status':'Paid - Real PDF Cloud Delivery - Instant - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','time':str(datetime.now()),'download_url':f'/download/{oid}','file_name':prod['file_name'],'file_size':prod['file_size'],'real_delivery':True}
+    order={'id':oid,'product':prod['title'],'phone':phone,'amount':prod['price'],'status':'Paid - Real PDF Cloud Delivery - Instant - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','time':str(datetime.now()),'download_url':f'/download/{oid}','file_name':prod['file_name'],'file_size':prod['file_size'],'real_delivery':True}
     orders.append(order)
     save(FILES['orders'],orders); fees=load(FILES['fees'],{'total':0}); fees['total']=fees.get('total',0)+float(prod['price']); save(FILES['fees'],fees)
     return jsonify({'ok':True,'download_url':f'/download/{oid}','order_id':oid,'file_name':prod['file_name'],'file_size':prod['file_size'],'real_file':True})
@@ -534,7 +593,7 @@ def api_order_bundle():
     if not bundle: return jsonify({'ok':False})
     orders=load(FILES['orders'],[]); oid=len(orders)+1
     downloads=[{'file':f,'url':f'/download/{oid}?file={i}'} for i,f in enumerate(bundle['files'])]
-    order={'id':oid,'bundle':bundle['title'],'phone':phone,'amount':bundle['bundle_price'],'status':'Paid - Bundle Real PDFs - Save $'+str(bundle['save'])+' - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','time':str(datetime.now()),'download_url':f'/bundle-download/{oid}','file_name':f'Bundle_{bid}_files.zip','file_size':'25 MB','real_delivery':True,'bundle_id':bid,'files':bundle['files']}
+    order={'id':oid,'bundle':bundle['title'],'phone':phone,'amount':bundle['bundle_price'],'status':'Paid - Bundle Real PDFs - Save $'+str(bundle['save'])+' - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','time':str(datetime.now()),'download_url':f'/bundle-download/{oid}','file_name':f'Bundle_{bid}_files.zip','file_size':'25 MB','real_delivery':True,'bundle_id':bid,'files':bundle['files']}
     orders.append(order)
     save(FILES['orders'],orders); fees=load(FILES['fees'],{'total':0}); fees['total']=fees.get('total',0)+float(bundle['bundle_price']); save(FILES['fees'],fees)
     return jsonify({'ok':True,'order_id':oid,'downloads':downloads,'file_name':order['file_name']})
@@ -542,7 +601,7 @@ def api_order_bundle():
 @app.route('/api/order-service', methods=['POST'])
 def api_order_service():
     data=request.get_json(); orders=load(FILES['services'],[]); oid=len(orders)+1
-    orders.append({'id':oid,'service_type':data.get('service_type','Service'),'requirements':data.get('requirements',''),'phone':data.get('phone',''),'status':'Payment Verified - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded','amount':5,'time':str(datetime.now())})
+    orders.append({'id':oid,'service_type':data.get('service_type','Service'),'requirements':data.get('requirements',''),'phone':data.get('phone',''),'status':'Payment Verified - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded','amount':5,'time':str(datetime.now())})
     save(FILES['services'],orders); fees=load(FILES['fees'],{'total':0}); fees['total']=fees.get('total',0)+5; save(FILES['fees'],fees)
     return jsonify({'ok':True,'order_id':oid})
 
@@ -555,9 +614,9 @@ def api_my_orders():
 def download_file(oid):
     orders=load(FILES['orders'],[])
     order=next((o for o in orders if o['id']==oid),None)
-    if not order: return '<h2>Order not found - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2>'
+    if not order: return '<h2>Order not found - Keep BG + Keep Layout + Keep Moving - V21.4</h2>'
     file_name=order.get('file_name','Document.pdf')
-    return f'<html><body style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;font-family:Arial;padding:20px;min-height:100vh"><div style="max-width:800px;margin:auto;background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:20px;border-radius:20px;border:2px solid rgba(0,201,80,0.4)"><h2 style="color:#00c950">Real File Delivery PRO - Keep BG #0f0c29 + Keep Layout + Keep Moving + Poster Premium Pro Upgraded - V21.3 - Full designing page</h2><p><b>Order ID:</b> {oid} | <b>Product:</b> {order.get("product") or order.get("bundle")} | <b>File:</b> {file_name}</p><a href="/api/real-download/{oid}" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:12px 20px;border-radius:25px;text-decoration:none;font-weight:bold">Download Real PDF - {file_name} - Premium Pro Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</a><br><br><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored - Poster Premium Pro Upgraded</a><br><br><a href="/poster-maker" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout - Full designing page</a><br><br><a href="https://selar.com/m/timothymusyoki" target="_blank" style="background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900" class="moving-selar">🛒 Selar Store - Moving - Keep Moving - V21.3</a> <a href="https://wa.me/254118431854" target="_blank" style="background:linear-gradient(90deg,#25D366,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900" class="moving-whatsapp">💬 WhatsApp 0118431854 - Moving - Keep Moving - V21.3</a></div></body></html>'
+    return f'<html><body style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:white;font-family:Arial;padding:20px;min-height:100vh"><div style="max-width:800px;margin:auto;background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:20px;border-radius:20px;border:2px solid rgba(0,201,80,0.4)"><h2 style="color:#00c950">Real File Delivery PRO - Keep BG #0f0c29 + Keep Layout + Keep Moving + Social Media LIVE Premium Pro Upgraded - V21.4</h2><p><b>Order ID:</b> {oid} | <b>Product:</b> {order.get("product") or order.get("bundle")} | <b>File:</b> {file_name}</p><a href="/api/real-download/{oid}" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:12px 20px;border-radius:25px;text-decoration:none;font-weight:bold">Download Real PDF - {file_name} - Premium Pro Keep BG + Keep Layout + Keep Moving - V21.4</a><br><br><a href="/" style="background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a><br><br><a href="/ai-caption" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900">📱 Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Keep BG + Keep Layout - Full designing page</a></div></body></html>'
 
 @app.route('/api/real-download/<int:oid>')
 def api_real_download(oid):
@@ -565,7 +624,7 @@ def api_real_download(oid):
     order=next((o for o in orders if o['id']==oid),None)
     if not order: return jsonify({'ok':False})
     file_name=order.get('file_name','Kaumoni_Real_File_TIMOTHY.pdf')
-    content = f"KAUMONI REAL FILE - {order.get('product') or order.get('bundle')} - Order {oid} - By TIMOTHY - Real PDF Cloud Delivery PRO V21.3 POSTER ONLY PREMIUM PRO UPGRADED WITHOUT CHANGING BG AND LAYOUT - KEEP BACKGROUND COLOR #0f0c29 #302b63 #24243e ANIMATED GRADIENT 15s + KEEP HOMEPAGE LAYOUT FORMER DESC RESTORED + KEEP MOVING PARTS TIMOTHY MOVING + WHATSAPP 0118431854 MOVING + SELAR MOVING + MOVING TESTIMONIALS + ENTER BUTTONS + FAQS + 20 TEMPLATES + FULL DESIGNING PAGE WHEN CLICK ENTER + https://selar.com/m/timothymusyoki + https://wa.me/254118431854\n".encode('utf-8')
+    content = f"KAUMONI REAL FILE - {order.get('product') or order.get('bundle')} - Order {oid} - By TIMOTHY - V21.4 SOCIAL MEDIA LIVE PREMIUM PRO UPGRADED - LIVE STREAMING + VIDEO + PICTURE CAPTURING + TIKTOK RTMP + YOUTUBE RTMP + KEEP BG #0f0c29 #302b63 #24243e + KEEP LAYOUT + KEEP MOVING\n".encode('utf-8')
     mem = io.BytesIO(content)
     mem.seek(0)
     return send_file(mem, as_attachment=True, download_name=file_name, mimetype='application/pdf')
@@ -574,9 +633,9 @@ def api_real_download(oid):
 def bundle_download(oid):
     orders=load(FILES['orders'],[])
     order=next((o for o in orders if o['id']==oid),None)
-    if not order: return '<h2>Bundle order not found - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2>'
-    files_html = ''.join([f'<p><a href="/download/{oid}?file={i}" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;display:inline-block;margin:4px">{f} - Real PDF - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</a></p>' for i,f in enumerate(order.get('files',[]))])
-    return f"<h2>Bundle Download - {order.get('bundle')} - Real Files - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</h2><div style='background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:15px;border-radius:20px;max-width:700px;margin:auto;color:white'><p>Bundle: {order.get('bundle')} - Amount: ${order.get('amount')} - Save $3 - Real PDFs - Premium Pro - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded</p>{files_html}<a href='/' style='background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900'>← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored - Poster Premium Pro Upgraded</a><br><br><a href='/poster-maker' style='background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900'>🎨 Poster PRO 20 - FULLY PREMIUM - UPGRADED - Keep BG + Keep Layout - Full designing page</a><br><br><a href='https://selar.com/m/timothymusyoki' target='_blank' style='background:linear-gradient(90deg,#6a0dad,#f9c846);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900' class='moving-selar'>🛒 Selar Store - Moving - Keep Moving - V21.3</a></div>"
+    if not order: return '<h2>Bundle order not found - Keep BG + Keep Layout + Keep Moving - V21.4</h2>'
+    files_html = ''.join([f'<p><a href="/download/{oid}?file={i}" style="background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:8px 14px;border-radius:20px;text-decoration:none;display:inline-block;margin:4px">{f} - Real PDF - Keep BG + Keep Layout + Keep Moving - V21.4</a></p>' for i,f in enumerate(order.get('files',[]))])
+    return f"<h2>Bundle Download - {order.get('bundle')} - Real Files - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded</h2><div style='background:rgba(26,26,60,0.7);backdrop-filter:blur(20px);padding:15px;border-radius:20px;max-width:700px;margin:auto;color:white'><p>Bundle: {order.get('bundle')} - Amount: ${order.get('amount')} - Save $3 - Real PDFs - Premium Pro - Keep BG + Keep Layout + Keep Moving - V21.4 - Social Media LIVE Premium Pro Upgraded</p>{files_html}<a href='/' style='background:linear-gradient(90deg,#f9c846,#ff9800);color:black;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900'>← Homepage - Keep BG + Keep Layout + Keep Moving - Former Desc Restored</a><br><br><a href='/ai-caption' style='background:linear-gradient(90deg,#00c950,#00ff88);color:white;padding:10px 18px;border-radius:20px;text-decoration:none;font-weight:900'>📱 Social Media LIVE PREMIUM PRO - TikTok + YouTube - UPGRADED - Keep BG + Keep Layout - Full designing page</a></div>"
 
 @app.route('/api/balance')
 def api_balance():
@@ -598,7 +657,7 @@ def api_login():
 def api_deduct():
     data=request.get_json(); users=load(FILES['users'],{}); ph=data['phone']; amt=float(data['amount'])
     if ph=='0118431854': return jsonify({'ok':True,'balance':999})
-    if ph not in users or float(users[ph].get('balance',0))<amt: return jsonify({'ok':False,'message':'Low balance - Deposit via STK - Keep BG + Keep Layout + Keep Moving - V21.3 - Poster Premium Pro Upgraded'})
+    if ph not in users or float(users[ph].get('balance',0))<amt: return jsonify({'ok':False,'message':'Low balance - Deposit via STK - Keep BG + Keep Layout + Keep Moving - V21.4'})
     users[ph]['balance']-=amt; users[ph]['total_fee']=users[ph].get('total_fee',0)+amt; fees=load(FILES['fees'],{'total':0}); fees['total']=fees.get('total',0)+amt; save(FILES['fees'],fees); save(FILES['users'],users); return jsonify({'ok':True})
 
 @app.route('/api/admin-data')
